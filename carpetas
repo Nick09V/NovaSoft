@@ -1,0 +1,39 @@
+/mi-proyecto
+│
+├── /public/                  # Archivos accesibles públicamente (frontend)
+│   ├── index.html            # Página principal HTML
+│   ├── /css/                 # Estilos CSS
+│   │   └── styles.css
+│   ├── /js/                  # JavaScript del lado cliente
+│   │   └── main.js
+    │   └── app.js            # Código principal con fetch
+    │   └── api.js
+│   ├── /pages/               # Fragmentos HTML que se cargan dinámicamente
+│   │   └── home.html
+    │   └── about.html
+    │   └── contact.html
+│   ├── /images/              # Imágenes públicas
+│   └── /assets/              # Otros archivos estáticos (fuentes, videos, etc)
+│
+├── /src/                     # Código fuente backend (PHP)
+│   ├── /config/              # Configuraciones (BD, variables de entorno, etc)
+│   │   └── database.php      # Conexión a MySQL
+│   ├── /controllers/         # Lógica de controladores (acciones PHP)
+│   ├── /models/              # Modelos para manejar BD (MySQL)
+│   ├── /views/               # Plantillas PHP si hay renderizado en backend
+│   └── /helpers/             # Funciones auxiliares o librerías propias
+│
+├── /tests/                   # Pruebas (testing)
+│   ├── /unit/                # Tests unitarios (p. ej. PHPUnit para PHP)
+│   ├── /integration/         # Tests de integración (interacciones entre módulos)
+│   └── /e2e/                 # Tests end-to-end (p. ej. Selenium o Cypress)
+│
+├── /database/                # Scripts para BD (MySQL)
+│   ├── schema.sql            # Estructura tablas
+│   ├── seed.sql              # Datos iniciales (seed)
+│   └── migrations/           # Scripts de migración
+│
+├── .env                      # Variables de entorno (config sensible)
+├── composer.json             # Dependencias PHP (si usan Composer)
+├── package.json              # Dependencias JS (si usan npm)
+└── README.md                 # Documentación del proyecto
