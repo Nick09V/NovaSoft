@@ -20,20 +20,20 @@ $correo = $input['correo'];
 $contrasena = password_hash($input['contrasena'], PASSWORD_DEFAULT);
 
 try {
-    $pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8", $user, $pass);
-    $pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
+    #$pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8", $user, $pass);
+    #$pdo->setAttribute(PDO::ATTR_ERRMODE, PDO::ERRMODE_EXCEPTION);
 
     // Comprobar si el correo ya existe
-    $stmt = $pdo->prepare("SELECT COUNT(*) FROM instructores WHERE correo = ?");
-    $stmt->execute([$correo]);
-    if ($stmt->fetchColumn() > 0) {
-        echo json_encode(['error' => 'El correo ya está registrado']);
-        exit;
-    }
+    #$stmt = $pdo->prepare("SELECT COUNT(*) FROM instructores WHERE correo = ?");
+    #$stmt->execute([$correo]);
+    #if ($stmt->fetchColumn() > 0) {
+     #   echo json_encode(['error' => 'El correo ya está registrado']);
+      #  exit;
+    #}
 
     // Insertar nuevo instructor
-    $stmt = $pdo->prepare("INSERT INTO instructores (nombre, correo, contrasena) VALUES (?, ?, ?)");
-    $stmt->execute([$nombre, $correo, $contrasena]);
+    #$stmt = $pdo->prepare("INSERT INTO instructores (nombre, correo, contrasena) VALUES (?, ?, ?)");
+    #$stmt->execute([$nombre, $correo, $contrasena]);
 
     echo json_encode(['success' => 'Instructor registrado correctamente']);
 } catch (PDOException $e) {

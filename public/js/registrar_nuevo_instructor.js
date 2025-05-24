@@ -1,4 +1,5 @@
 document.addEventListener('DOMContentLoaded', () => {
+    // Escuchar submit del formulario de registro de instructor
     let form = document.getElementById('form-register-instructor');
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
@@ -8,7 +9,7 @@ document.addEventListener('DOMContentLoaded', () => {
         const data = Object.fromEntries(formData.entries());
         
         try {
-            const res = await fetch('../src/models/registrar_instructor.php', {
+            const res = await fetch('/NovaSoft/src/models/registrar_instructor.php', {
                 method: 'POST',
                 body: JSON.stringify(data),
                 headers: {'Content-Type': 'application/json'}
