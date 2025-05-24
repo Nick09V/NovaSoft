@@ -1,4 +1,4 @@
-Diagrama de clases para la Base de datos
+Diagrama de entidad relacion para la Base de datos
 https://drive.google.com/file/d/1U18k0uUBn8Ox7mFd_NZIytiwQ8mBP2eW/view?usp=sharing
 
 

@@ -1,8 +1,10 @@
 // Variable global que guarda el rol actual
 let rolActual = null;
-
+// Prevenir recarga de la página en formularios (ya está en el submit del login con e.preventDefault())
+e.preventDefault();
 // Login
 async function login(username, password) {
+  console.log('Intentando login con:', username, password);
   const res = await fetch('/models/login.php', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
@@ -10,12 +12,16 @@ async function login(username, password) {
   });
 
   if (!res.ok) throw new Error('Credenciales incorrectas');
+  if(res.ok){
+    // Si el login es exitoso, ocultar el formulario de login
+    console.log('Login exitoso');
+  }
 
   const data = await res.json();  // Ej: { rol: 'admin' }
   rolActual = data.rol;
 
-  mostrarMenu(rolActual);
-  cargarContenidoInicial(rolActual);
+  //mostrarMenu(rolActual);
+  //cargarContenidoInicial(rolActual);
 }
 
 // Mostrar menú según rol
@@ -60,7 +66,7 @@ function cargarContenidoInicial(rol) {
 async function cargarContenido(rol, tab) {
   const rutas = {
     admin: {
-      dashboard: '/admin/dashboard.html',
+      dashboard: '/../pages/instructor/dashboard.html',
       usuarios: '/admin/usuarios.html'
     },
     usuario: {
