@@ -74,7 +74,7 @@ function activarEventosMenu(menuId) {
 
 // Cargar contenido inicial (ej: dashboard) según rol
 function cargarContenidoInicial(rol) {
-  if (rol === 'admin') {
+  if (rol === 'instructor') {
     cargarContenido(rol, 'dashboard');
   } else if (rol === 'usuario') {
     cargarContenido(rol, 'perfil');
@@ -84,8 +84,8 @@ function cargarContenidoInicial(rol) {
 // Cargar contenido con fetch y mostrarlo en el div principal
 async function cargarContenido(rol, tab) {
   const rutas = {
-    admin: {
-      dashboard: '../pages/instructor/dashboard.html',
+    instructor: {
+      dashboard: '/NovaSoft/public/pages/instructor/dashboard.html',
       usuarios: '../pages/usuario/usuarios.html'
     },
     usuario: {
@@ -95,6 +95,7 @@ async function cargarContenido(rol, tab) {
   };
 
   const url = rutas[rol][tab];
+  console.log('Cargando contenido de:', url);
   if (!url) {
     document.getElementById('contenido').innerHTML = '<p>Página no encontrada</p>';
     return;
