@@ -1,11 +1,11 @@
 // Variable global que guarda el rol actual
 let rolActual = null;
-// Prevenir recarga de la página en formularios (ya está en el submit del login con e.preventDefault())
-e.preventDefault();
+document.addEventListener('DOMContentLoaded', () => {
+
 // Login
 async function login(username, password) {
   console.log('Intentando login con:', username, password);
-  const res = await fetch('/models/login.php', {
+  const res = await fetch('../src/models/login.php', {
     method: 'POST',
     headers: {'Content-Type': 'application/json'},
     body: JSON.stringify({username, password})
@@ -23,6 +23,23 @@ async function login(username, password) {
   //mostrarMenu(rolActual);
   //cargarContenidoInicial(rolActual);
 }
+
+
+
+
+// Escuchar submit login
+document.getElementById('form-login').addEventListener('submit', e => {
+  e.preventDefault();
+  console.log('Intentando login');
+  const username = e.target.username.value;
+  const password = e.target.password.value;
+  login(username, password).catch(err => alert(err.message));
+});
+
+
+
+});
+
 
 // Mostrar menú según rol
 function mostrarMenu(rol) {
@@ -91,10 +108,5 @@ async function cargarContenido(rol, tab) {
   }
 }
 
-// Escuchar submit login
-document.getElementById('login-form').addEventListener('submit', e => {
-  e.preventDefault();
-  const username = e.target.username.value;
-  const password = e.target.password.value;
-  login(username, password).catch(err => alert(err.message));
-});
+
+
