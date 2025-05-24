@@ -19,9 +19,10 @@ async function login(username, password) {
 
   const data = await res.json();  // Ej: { rol: 'admin' }
   rolActual = data.rol;
+  console.log('Rol del usuario:', rolActual);
 
-  //mostrarMenu(rolActual);
-  //cargarContenidoInicial(rolActual);
+  mostrarMenu(rolActual);
+  cargarContenidoInicial(rolActual);
 }
 
 
@@ -43,14 +44,15 @@ document.getElementById('form-login').addEventListener('submit', e => {
 
 // Mostrar menú según rol
 function mostrarMenu(rol) {
+  console.log('Rol del usuario:', rol + ' - Mostrando menú correspondiente');
   // Opciones:
   // 1. Mostrar menús ya en HTML ocultos y sólo mostrar el correcto
   // 2. Generar menú dinámicamente con JS o traer menú con fetch del backend
 
   // Ejemplo simple: mostrar menú preexistente
-  document.getElementById('login-form').style.display = 'none';
+  document.getElementById('form-login').style.display = 'none';
 
-  if (rol === 'admin') {
+  if (rol === 'instructor') {
     document.getElementById('menu-admin').style.display = 'block';
     activarEventosMenu('menu-admin');
   } else if (rol === 'usuario') {
@@ -83,8 +85,8 @@ function cargarContenidoInicial(rol) {
 async function cargarContenido(rol, tab) {
   const rutas = {
     admin: {
-      dashboard: '/../pages/instructor/dashboard.html',
-      usuarios: '/admin/usuarios.html'
+      dashboard: '../pages/instructor/dashboard.html',
+      usuarios: '../pages/usuario/usuarios.html'
     },
     usuario: {
       perfil: '/usuario/perfil.html',
