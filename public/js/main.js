@@ -51,6 +51,7 @@ function mostrarMenu(rol) {
 
   // Ejemplo simple: mostrar menú preexistente
   document.getElementById('form-login').style.display = 'none';
+  document.getElementById('containerIncial').style.display = 'none';
 
   if (rol === 'instructor') {
     document.getElementById('menu-admin').style.display = 'block';
