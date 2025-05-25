@@ -14,6 +14,10 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $username = $input['username'] ?? '';
     $password = $input['password'] ?? '';
 
+    // Validar los datos recibidos
+    //trabajr con mySQL en PHP y aqui traer la variable de config/connect.php
+
+
     // Simulación de verificación (si ambos campos no están vacíos)
     if (!empty($username) && !empty($password)) {
         echo json_encode(['status' => 'ok', 'rol' => 'instructor', 'usuario' => $usuario]);
