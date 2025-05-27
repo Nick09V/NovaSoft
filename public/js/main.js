@@ -82,7 +82,9 @@ function mostrarMenu(rol) {
   //document.getElementById('form-login').style.display = 'none';
   //document.getElementById('containerInicial').style.display = 'none';
   //document.getElementById('login').style.display = 'block';
+
   document.getElementById('form-login').style.display = 'none';
+  document.getElementById('registrarInstructor').style.display = 'none';
 
   document.getElementById('textoLogin').style.display = 'block';
   if (rol === 'instructor') {

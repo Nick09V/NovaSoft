@@ -16,7 +16,7 @@
     body {
       background: var(--color4);
       color: var(--color5);
-      display: flex;
+      display: inline;
       align-items: center;
       justify-content: center;
       height: 100vh;
@@ -30,6 +30,8 @@
       width: 100%;
       max-width: 400px;
       border: 3px solid var(--color2);
+      margin-right: auto;
+      margin-left: auto;
     }
 
     .login-container h2 {
@@ -86,3 +88,25 @@
     button[type="submit"]:active {
       transform: scale(0.98);
     }
+
+    #contenido{ 
+      display: flex;
+      flex-direction: column;
+      align-items: center;
+      justify-content: center;
+      height: 100vh;
+    }
+
+
+
+  a {
+    color: var(--color3);
+    text-decoration: none;
+    font-weight: 600;
+    transition: color 0.2s, text-decoration 0.2s;
+  }
+
+  a:hover, a:focus {
+    color: var(--color4);
+    text-decoration: underline;
+  }
