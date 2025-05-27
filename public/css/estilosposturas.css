@@ -1,0 +1,73 @@
+body {
+    font-family: Arial, sans-serif;
+    margin: 0;
+    padding: 0;
+    background-color: #f5f7ff;
+}
+
+header {
+    background-color: #1f3dbf;
+    color: white;
+    padding: 1em;
+    text-align: center;
+    margin-bottom: 0.5em;
+}
+
+.contenedor-posturas {
+    display: flex;
+    flex-wrap: wrap;
+    justify-content: center;
+    padding: 2em;
+    gap: 2em;
+}
+
+.postura {
+    background: white;
+    border-radius: 10px;
+    padding: 1em;
+    width: 250px;
+    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+    text-align: center;
+}
+
+.postura img {
+    width: 100%;
+    border-radius: 10px;
+    object-fit: cover;
+}
+
+.postura h3 {
+    margin-top: 1em;
+    color: #333;
+}
+
+.postura p {
+    color: #666;
+}
+
+.filtros {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  flex-wrap: wrap;
+  gap: 1em;
+  padding: 0.7em 1em;
+  background-color: #e6ebff;
+  border-radius: 10px;
+  width: max-content;
+  margin: 1em auto 0 auto; /* centro horizontal + poco margen superior */
+  box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
+}
+
+.filtros label {
+  font-weight: bold;
+}
+
+.filtros select,
+.filtros input {
+  padding: 0.5em;
+  border-radius: 5px;
+  border: 1px solid #ccc;
+  min-width: 200px;
+}
+
