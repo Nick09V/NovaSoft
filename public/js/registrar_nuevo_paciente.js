@@ -26,7 +26,7 @@ document.addEventListener('DOMContentLoaded', function() {
             });
 
             const result = await response.json();
-            console.log(result); // <-- Agrega esto
+            console.log(result); 
             alert(result.message || 'Paciente registrado exitosamente');
             if (result.success) form.reset(); // Limpiar el formulario si el registro fue exitoso
         } catch (error) {

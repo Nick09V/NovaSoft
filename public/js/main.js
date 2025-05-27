@@ -3,26 +3,55 @@ let rolActual = null;
 document.addEventListener('DOMContentLoaded', () => {
 
 // Login
+// Ricardo Villarreal
 async function login(username, password) {
   console.log('Intentando login con:', username, password);
-  const res = await fetch('../src/models/login.php', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({username, password})
-  });
 
-  if (!res.ok) throw new Error('Credenciales incorrectas');
-  if(res.ok){
-    // Si el login es exitoso, ocultar el formulario de login
+  try {
+    const res = await fetch('../src/models/login.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password })
+    });
+
+    const data = await res.json(); // Siempre intenta leer la respuesta
+
+     // ✅ Imprimir en consola el mensaje y estatus
+    console.log('Respuesta del servidor:', data);
+    console.log('Status:', data.status);
+    console.log('Mensaje:', data.message || 'Sin mensaje');
+
+    if (!res.ok || data.status !== 'ok') {
+      // Mostrar mensaje en pantalla si hay error
+      mostrarMensajeError(data.message || 'Credenciales incorrectas');
+      return; // No continuar con login
+    }
+
+    // Si el login fue exitoso
     console.log('Login exitoso');
+    rolActual = data.rol;
+    console.log('Rol del usuario:', rolActual);
+
+    mostrarMenu(rolActual);
+    cargarContenidoInicial(rolActual);
+
+  } catch (error) {
+    // Error de red o JSON
+    console.error('Error en login:', error);
+    mostrarMensajeError('Ocurrió un error inesperado. Intenta de nuevo.');
   }
+}
 
-  const data = await res.json();  // Ej: { rol: 'admin' }
-  rolActual = data.rol;
-  console.log('Rol del usuario:', rolActual);
-
-  mostrarMenu(rolActual);
-  cargarContenidoInicial(rolActual);
+function mostrarMensajeError(mensaje) {
+  let errorDiv = document.getElementById('mensaje-error');
+  if (!errorDiv) {
+    errorDiv = document.createElement('div');
+    errorDiv.id = 'mensaje-error';
+    errorDiv.style.color = 'red';
+    errorDiv.style.marginTop = '10px';
+    document.getElementById('form-login').appendChild(errorDiv);
+  }
+  errorDiv.textContent = mensaje;
 }
 
 
@@ -50,13 +79,16 @@ function mostrarMenu(rol) {
   // 2. Generar menú dinámicamente con JS o traer menú con fetch del backend
 
   // Ejemplo simple: mostrar menú preexistente
+  //document.getElementById('form-login').style.display = 'none';
+  //document.getElementById('containerInicial').style.display = 'none';
+  //document.getElementById('login').style.display = 'block';
   document.getElementById('form-login').style.display = 'none';
-  document.getElementById('containerIncial').style.display = 'none';
 
+  document.getElementById('textoLogin').style.display = 'block';
   if (rol === 'instructor') {
     document.getElementById('menu-admin').style.display = 'block';
     activarEventosMenu('menu-admin');
-  } else if (rol === 'usuario') {
+  } else if (rol === 'paciente') {
     document.getElementById('menu-usuario').style.display = 'block';
     activarEventosMenu('menu-usuario');
   }
@@ -87,7 +119,8 @@ async function cargarContenido(rol, tab) {
   const rutas = {
     instructor: {
       dashboard: '/NovaSoft/public/pages/instructor/dashboard.html',
-      usuarios: '../pages/usuario/usuarios.html'
+      usuarios: '../pages/usuario/usuarios.html',
+      registroPaciente: '/NovaSoft/public/pages/usuario/registrarPaciente.html',
     },
     usuario: {
       perfil: '/usuario/perfil.html',
@@ -111,6 +144,3 @@ async function cargarContenido(rol, tab) {
     document.getElementById('contenido').innerHTML = `<p>Error: ${e.message}</p>`;
   }
 }
-
-
-
