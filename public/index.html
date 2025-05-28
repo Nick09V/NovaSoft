@@ -15,6 +15,7 @@
 <body>
   <!-- Formulario login -->
   <div class="container">
+
     <div class="form-box login" id="form-login">
       <form action="#">
         <h1>Iniciar Sesión</h1>
@@ -34,43 +35,80 @@
         </div>
 
         <button type="submit" class="btn">Ingresar</button>
-        
+
         <div id="mensajeError" class="msgError" style="display: none;">
           <h1>Credenciales Incorrectas!!</h1>
         </div>
       </form>
     </div>
-  </div>
+
+    <div class="form-box register">
+      <form action="#">
+        <h1>Registrarse</h1>
+
+        <div class="input-box">
+          <input type="text" name="nombre" placeholder="Nombre completo" required>
+          <i class='bx bxs-user'></i>
+        </div>
+
+        <div class="input-box">
+          <input type="email" name="email" placeholder="Email" required>
+          <i class='bx bxs-envelope'></i>
+        </div>
+
+        <div class="input-box">
+          <input type="password" name="password" placeholder="Contraseña" required>
+          <i class='bx bxs-lock-alt'></i>
+        </div>
+
+        <button type="submit" class="btn">Registrar</button>
+      </form>
+    </div>
+
+
+    <div class="toggle-box">
+      <div class="toggle-panel toggle-left">
+        <h1>¡Hola, bienvenido!</h1>
+        <br>
+        <h1>A NOVASOFT</h1>
+        <br>
+        <button class="btn register-btn">Sobre nosotros</button>
+      </div>
+
+      <div class="toggle-panel toggle-right">
+        <h1>¡Bienvenido de nuevo!</h1>
+        <p>Gracias por preferirnos</p>
+        <button class="btn login-btn">Inicia Sesión</button>
+      </div>
+    </div>
 
 
 
 
-  <div id="textoLogin" style="display: none;">
-    <h1>cargando...........................</h1>
+    <div id="textoLogin" style="display: none;">
+      <h1>cargando...........................</h1>
 
-  </div>
-  <!-- Menú admin -->
-  <nav id="menu-admin" style="display:none;">
-    <button data-tab="dashboard">Dashboard</button>
-    <button data-tab="usuarios">Usuarios</button>
-    <button data-tab="registroPaciente">Registrar Paciente</button>
-  </nav>
+    </div>
+    <!-- Menú admin -->
+    <nav id="menu-admin" style="display:none;">
+      <button data-tab="dashboard">Dashboard</button>
+      <button data-tab="usuarios">Usuarios</button>
+      <button data-tab="registroPaciente">Registrar Paciente</button>
+    </nav>
 
-  <!-- Menú usuario -->
-  <nav id="menu-usuario" style="display:none;">
-    <button data-tab="perfil">Perfil</button>
-    <button data-tab="pedidos">Pedidos</button>
-  </nav>
+    <!-- Menú usuario -->
+    <nav id="menu-usuario" style="display:none;">
+      <button data-tab="perfil">Perfil</button>
+      <button data-tab="pedidos">Pedidos</button>
+    </nav>
 
 
-  <!--<a href="../public/pages/instructor/registrarInstructor.html">Ingresa como Instrcutor</a> -->
+    <!--<a href="../public/pages/instructor/registrarInstructor.html">Ingresa como Instrcutor</a> -->
 
-  <!-- Contenedor de contenido dinámico -->
-  <div id="contenido"></div>
-
-  <script src="js/main.js"></script>
-  
-  <script src="mainLogin.js"></script>
+    <!-- Contenedor de contenido dinámico -->
+    <div id="contenido"></div>
+    <script src="mainLogin.js"></script>
+    <script src="js/main.js"></script>
 
 
 
