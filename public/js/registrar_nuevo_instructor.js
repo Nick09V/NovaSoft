@@ -8,6 +8,17 @@ document.addEventListener('DOMContentLoaded', () => {
         const formData = new FormData(form);
         const data = Object.fromEntries(formData.entries());
         
+
+
+            // Validar que las contraseñas coincidan
+        if (data.contrasena !== data.confirmar_contrasena) {
+            alert('Las contraseñas no coinciden');
+            return;
+        }
+// ...existing code...
+
+
+
         try {
             const res = await fetch('/NovaSoft/src/models/registrar_instructor.php', {
                 method: 'POST',

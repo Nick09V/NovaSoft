@@ -18,6 +18,7 @@ if (!isset($input['nombre'], $input['correo'], $input['contrasena'])) {
 $nombre = $input['nombre'];
 $correo = $input['correo'];
 $contrasena = password_hash($input['contrasena'], PASSWORD_DEFAULT);
+$confContrasena = $input['contrasena'];
 
 try {
     #$pdo = new PDO("mysql:host=$host;dbname=$db;charset=utf8", $user, $pass);
@@ -41,3 +42,4 @@ try {
     echo json_encode(['error' => 'Error en la base de datos']);
 }
 ?>
+
