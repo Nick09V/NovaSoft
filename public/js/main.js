@@ -43,15 +43,7 @@ async function login(username, password) {
 }
 
 function mostrarMensajeError(mensaje) {
-  let errorDiv = document.getElementById('mensaje-error');
-  if (!errorDiv) {
-    errorDiv = document.createElement('div');
-    errorDiv.id = 'mensaje-error';
-    errorDiv.style.color = 'red';
-    errorDiv.style.marginTop = '10px';
-    document.getElementById('form-login').appendChild(errorDiv);
-  }
-  errorDiv.textContent = mensaje;
+  document.getElementById('mensajeError').style.display = 'block';
 }
 
 
