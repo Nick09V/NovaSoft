@@ -123,6 +123,7 @@ async function cargarContenido(rol, tab) {
       dashboard: '/NovaSoft/public/pages/instructor/dashboard.html',
       usuarios: '../pages/usuario/usuarios.html',
       registroPaciente: '/NovaSoft/public/pages/usuario/registrarPaciente.html',
+      nuevaSerieTerapeutica: '/NovaSoft/public/pages/instructor/nuevaSerieTerapeutica.html',
     },
     usuario: {
       perfil: '/usuario/perfil.html',

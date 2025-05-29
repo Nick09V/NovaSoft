@@ -1,6 +1,10 @@
 document.addEventListener('DOMContentLoaded', () => {
     let botonRegister = document.getElementById('buttonRegisterCrearInstructor');
-        
+    
+    botonRegister.disabled = true; // Deshabilitar el botón al cargar la página
+    botonRegister.classList.add('disabled'); // Agregar clase CSS para estilos visuales
+
+
     let texto1 = "";
     let texto2 = "";
     let texto3 = "";
@@ -144,7 +148,7 @@ document.addEventListener('DOMContentLoaded', () => {
                 
                 // Redirigir a la página de inicio o a otra página
                 window.location.href = '/NovaSoft/public/index.html';
-                form.reset(); // Limpiar el formulario
+                //form.reset(); // Limpiar el formulario
             } else {
                 alert('Respuesta inesperada del servidor');
             }
@@ -155,4 +159,7 @@ document.addEventListener('DOMContentLoaded', () => {
             alert(err.message || 'Error al registrar instructor');
         }
     });
+
+
+
 });
