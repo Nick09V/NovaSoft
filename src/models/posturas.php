@@ -1,7 +1,7 @@
 <?php
 require_once __DIR__ . '/../config/connect.php';
 
-$sql = "SELECT * FROM posturas";
+$sql = "SELECT * FROM postura";
 $stmt = $pdo->query($sql);
 ?>
 

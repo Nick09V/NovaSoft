@@ -1,95 +1,36 @@
 <!DOCTYPE html>
 <html lang="es">
 <head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    <title>Posturas de Yoga</title>
-    <link rel="stylesheet" href="../../css/estilosPosturas.css">
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Posturas de Yoga</title>
+  <link rel="stylesheet" href="../../css/estilosPosturas.css">
 </head>
 <body>
-    <header>
-        <h1>Posturas de Yoga</h1>
-    </header>
+  <header>
+    <h1>Posturas de Yoga</h1>
+  </header>
 
-    <!-- Filtros: ahora están FUERA del main -->
-    <section class="filtros">
-        <label for="malestar">Malestar:</label>
-        <select id="malestar">
-            <option value="">-- Selecciona un malestar --</option>
-            <option value="ansiedad">Ansiedad</option>
-            <option value="artritis">Artritis</option>
-            <option value="dolor-espalda">Dolor de espalda</option>
-            <option value="dolor-cabeza">Dolor de cabeza</option>
-            <option value="insomnio">Insomnio</option>
-            <option value="mala-postura">Mala postura</option>
-        </select>
+  <section class="filtros">
+    <label for="malestar">Malestar:</label>
+    <select id="malestar">
+      <option value="">-- Selecciona un malestar --</option>
+      <option value="ansiedad">Ansiedad</option>
+      <option value="artritis">Artritis</option>
+      <option value="dolor-espalda">Dolor de espalda</option>
+      <option value="dolor-cabeza">Dolor de cabeza</option>
+      <option value="insomnio">Insomnio</option>
+      <option value="mala-postura">Mala postura</option>
+    </select>
 
-        <label for="buscador">Nombre de la postura:</label>
-        <input type="text" id="buscador" placeholder="Coloca el nombre de la postura" />
-    </section>
+    <label for="buscador">Nombre de la postura:</label>
+    <input type="text" id="buscador" placeholder="Coloca el nombre de la postura" />
+  </section>
 
-    <!-- Main contiene solo las posturas -->
-    <main class="contenedor-posturas">
-        <div class="postura">
-            <img src="../../images/postura1.jpg" alt="Postura 1">
-            <h3>Postura del Guerrero</h3>
-            <p>Fortalece piernas y mejora el equilibrio.</p>
-        </div>
-        <div class="postura">
-            <img src="../../images/postura2.jpg" alt="Postura 2">
-            <h3>Postura del Árbol</h3>
-            <p>Desarrolla concentración y estabilidad.</p>
-        </div>
-        <div class="postura">
-            <img src="../../images/postura3.jpg" alt="Postura 3">
-            <h3>Postura del Árbol</h3>
-            <p>Desarrolla concentración y estabilidad.</p>
-        </div>
-        <div class="postura">
-            <img src="../../images/postura4.jpg" alt="Postura 4">
-            <h3>Postura del Árbol</h3>
-            <p>Desarrolla concentración y estabilidad.</p>
-        </div>
-        <div class="postura">
-            <img src="../../images/postura5.jpg" alt="Postura 5">
-            <h3>Postura del Árbol</h3>
-            <p>Desarrolla concentración y estabilidad.</p>
-        </div>
-        <div class="postura">
-            <img src="../../images/postura6.jpg" alt="Postura 6">
-            <h3>Postura del Árbol</h3>
-            <p>Desarrolla concentración y estabilidad.</p>
-        </div>
-        <div class="postura">
-            <img src="../../images/postura7.jpg" alt="Postura 7">
-            <h3>Postura del Árbol</h3>
-            <p>Desarrolla concentración y estabilidad.</p>
-        </div>
-        <div class="postura">
-            <img src="../../images/postura8.jpg" alt="Postura 8">
-            <h3>Postura del Árbol</h3>
-            <p>Desarrolla concentración y estabilidad.</p>
-        </div>
-        <div class="postura">
-            <img src="../../images/postura9.jpg" alt="Postura 9">
-            <h3>Postura del Árbol</h3>
-            <p>Desarrolla concentración y estabilidad.</p>
-        </div>
-        <div class="postura">
-            <img src="../../images/postura10.jpg" alt="Postura 10">
-            <h3>Postura del Árbol</h3>
-            <p>Desarrolla concentración y estabilidad.</p>
-        </div>
-        <div class="postura">
-            <img src="../../images/postura11.jpg" alt="Postura 11">
-            <h3>Postura del Árbol</h3>
-            <p>Desarrolla concentración y estabilidad.</p>
-        </div>
-        <div class="postura">
-            <img src="../../images/postura12.jpg" alt="Postura 12">
-            <h3>Postura del Árbol</h3>
-            <p>Desarrolla concentración y estabilidad.</p>
-        </div>
-    </main>
+  <main class="contenedor-posturas" id="contenedor-posturas">
+    <!-- Posturas cargadas dinámicamente -->
+  </main>
+
+  <script src="../../js/cargar_posturas.js"></script>
 </body>
 </html>
