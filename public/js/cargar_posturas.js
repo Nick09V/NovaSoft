@@ -11,7 +11,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       const div = document.createElement('div');
       div.classList.add('postura');
       div.innerHTML = `
-        <img src="${postura.imagen_url}" alt="Postura">
+        <img src="${postura.foto_url}" alt="Postura">
         <h3>${postura.nombre_es}</h3>
         <p><strong>Beneficios:</strong> ${postura.beneficios}</p>
         <p><strong>Instrucciones:</strong> ${postura.instrucciones}</p>
