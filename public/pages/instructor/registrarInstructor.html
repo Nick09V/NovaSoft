@@ -5,25 +5,30 @@
     <title>Registrar Instructor</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../css/estilosLogin.css">
+
 </head>
 <body>
-    <div class="container">
+    <div class="login-container">
         <h2>Registrar Instructor</h2>
         <form id="form-register-instructor">
-            <label for="nombre">Nombre:</label>
-            <input type="text" id="nombre" name="nombre" required>
-
-            <label for="correo">Correo electrónico:</label>
-            <input type="email" id="correo" name="correo" required>
-
-            <label for="contraseña">Contraseña:</label>
-            <input type="password" id="contrasena" name="contrasena" required>
-
-            <label for="Confirme contraseña">Contraseña:</label>
-            <input type="password" id="contrasenaDos" name="contrasenaDos" required>
-
-            <button type="submit">Registrar</button>
-        </form>
+    <div class="input-group">
+        <label for="nombre">Nombre:</label>
+        <input type="text" id="nombre" name="nombre" required>
+    </div>
+    <div class="input-group">
+        <label for="correo">Correo electrónico:</label>
+        <input type="email" id="correo" name="correo" required>
+    </div>
+    <div class="input-group">
+        <label for="contrasena">Contraseña:</label>
+        <input type="password" id="contrasena" name="contrasena" required>
+    </div>
+    <div class="input-group">
+        <label for="contrasenaDos">Confirmar contraseña:</label>
+        <input type="password" id="contrasenaDos" name="contrasenaDos" required>
+    </div>
+    <button type="submit" id="buttonRegisterCrearInstructor" disabled>Registrar</button>
+</form>
     </div>
     <script src="../../js/registrar_nuevo_instructor.js" ></script>
 </body>
