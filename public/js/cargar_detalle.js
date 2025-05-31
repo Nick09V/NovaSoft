@@ -8,6 +8,12 @@ document.addEventListener('DOMContentLoaded', async () => {
 
     const postura = await res.json();
 
+    // Convertir link de YouTube a embed si es necesario
+    let embedUrl = postura.video_url;
+    if (embedUrl.includes("watch?v=")) {
+      embedUrl = embedUrl.replace("watch?v=", "embed/");
+    }
+
     document.getElementById('titulo').textContent = `${postura.nombre_es} (${postura.nombre_sanskrito})`;
 
     contenedor.innerHTML = `
@@ -17,7 +23,15 @@ document.addEventListener('DOMContentLoaded', async () => {
       <p><strong>Beneficios:</strong> ${postura.beneficios}</p>
       <p><strong>Instrucciones:</strong> ${postura.instrucciones}</p>
       <p><strong>Modificaciones:</strong> ${postura.modificaciones || 'Ninguna'}</p>
-      <a href="posturas.html" class="btn-volver"> Volver al Listado</a>
+
+      <h4 style="margin-top: 1.5em; color: #1f3dbf;"> Video explicativo</h4>
+      <iframe width="100%" height="315"
+        src="${embedUrl}"
+        frameborder="0"
+        allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
+        allowfullscreen>
+      </iframe>
+      <a href="posturas.html" class="btn-volver">Volver al listado</a>
     `;
   } catch (e) {
     contenedor.innerHTML = `<p style="color:red">${e.message}</p>`;

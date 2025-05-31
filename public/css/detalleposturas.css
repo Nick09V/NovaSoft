@@ -57,3 +57,10 @@ header {
 .btn-volver:hover {
   background-color: #162d8c;
 }
+
+.titulovideo {
+  margin-top: 1.5em;
+  color: #1f3dbf;
+  font-size: 1.2em;
+  font-weight: bold;
+}
