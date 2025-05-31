@@ -146,3 +146,27 @@ header {
   font-style: italic;
   margin-top: 0.3em;
 }
+
+.filtros-superiores {
+  display: flex;
+  justify-content: center;
+  align-items: center;
+  gap: 1em;
+  padding: 1em;
+  margin-top: 1.5em; /* opcional si quieres que se acerque al título */
+}
+
+.filtro-select, .filtro-busqueda {
+  padding: 0.6em;
+  border-radius: 6px;
+  border: 1px solid #ccc;
+  font-size: 1em;
+}
+
+.filtro-select {
+  min-width: 220px;
+}
+
+.filtro-busqueda {
+  min-width: 280px;
+}
