@@ -11,14 +11,15 @@ document.addEventListener('DOMContentLoaded', async () => {
       const div = document.createElement('div');
       div.classList.add('postura');
       div.innerHTML = `
-        <img src="${postura.foto_url}" alt="Postura">
-        <h3>${postura.nombre_es}</h3>
-        <p><strong>Beneficios:</strong> ${postura.beneficios}</p>
-        <p><strong>Instrucciones:</strong> ${postura.instrucciones}</p>
+        <a href="detalle.html?id=${postura.id}" style="text-decoration: none; color: inherit;">
+          <img src="${postura.foto_url}" alt="${postura.nombre_es}">
+          <h3>${postura.nombre_es}</h3>
+          <p>${postura.nombre_sanskrito}</p>
+        </a>
       `;
       contenedor.appendChild(div);
     });
   } catch (error) {
-    contenedor.innerHTML = `<p style="color:red">Error: ${error.message}</p>`;
+    contenedor.innerHTML = `<p style="color:red">${error.message}</p>`;
   }
 });

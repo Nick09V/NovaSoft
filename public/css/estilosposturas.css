@@ -1,50 +1,21 @@
+/* ===== Reset General ===== */
 body {
-    font-family: Arial, sans-serif;
-    margin: 0;
-    padding: 0;
-    background-color: #f5f7ff;
+  font-family: Arial, sans-serif;
+  margin: 0;
+  padding: 0;
+  background-color: #f5f7ff;
 }
 
+/* ===== Encabezado ===== */
 header {
-    background-color: #1f3dbf;
-    color: white;
-    padding: 1em;
-    text-align: center;
-    margin-bottom: 0.5em;
+  background-color: #1f3dbf;
+  color: white;
+  padding: 1em;
+  text-align: center;
+  margin-bottom: 0.5em;
 }
 
-.contenedor-posturas {
-    display: flex;
-    flex-wrap: wrap;
-    justify-content: center;
-    padding: 2em;
-    gap: 2em;
-}
-
-.postura {
-    background: white;
-    border-radius: 10px;
-    padding: 1em;
-    width: 250px;
-    box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
-    text-align: center;
-}
-
-.postura img {
-    width: 100%;
-    border-radius: 10px;
-    object-fit: cover;
-}
-
-.postura h3 {
-    margin-top: 1em;
-    color: #333;
-}
-
-.postura p {
-    color: #666;
-}
-
+/* ===== Filtros ===== */
 .filtros {
   display: flex;
   justify-content: center;
@@ -55,7 +26,7 @@ header {
   background-color: #e6ebff;
   border-radius: 10px;
   width: max-content;
-  margin: 1em auto 0 auto; /* centro horizontal + poco margen superior */
+  margin: 1em auto 0 auto;
   box-shadow: 0 0 5px rgba(0, 0, 0, 0.1);
 }
 
@@ -71,15 +42,44 @@ header {
   min-width: 200px;
 }
 
-.postura {
-  border: 1px solid #ccc;
-  padding: 10px;
-  margin: 10px;
-  border-radius: 8px;
-  max-width: 300px;
-}
-.postura img {
-  max-width: 100%;
-  border-radius: 5px;
+/* ===== Contenedor Principal ===== */
+.contenedor-posturas {
+  display: flex;
+  flex-wrap: wrap;
+  justify-content: center;
+  padding: 2em;
+  gap: 2em;
 }
 
+/* ===== Tarjeta de Postura ===== */
+.postura {
+  background: white;
+  border-radius: 10px;
+  padding: 1em;
+  width: 220px;
+  box-shadow: 0 0 10px rgba(0, 0, 0, 0.1);
+  text-align: center;
+  transition: transform 0.2s ease;
+}
+
+.postura:hover {
+  transform: scale(1.03);
+}
+
+.postura img {
+  width: 100%;
+  height: 160px;
+  object-fit: cover;
+  border-radius: 8px;
+}
+
+.postura h3 {
+  margin-top: 0.8em;
+  color: #1f3dbf;
+}
+
+.postura p {
+  color: #555;
+  font-style: italic;
+  margin-top: 0.3em;
+}
