@@ -24,7 +24,7 @@ document.addEventListener('DOMContentLoaded', async () => {
       <p><strong>Instrucciones:</strong> ${postura.instrucciones}</p>
       <p><strong>Modificaciones:</strong> ${postura.modificaciones || 'Ninguna'}</p>
 
-      <h4 style="margin-top: 1.5em; color: #1f3dbf;"> Video explicativo</h4>
+      <h4 class="titulovideo"> Video explicativo </h4>
       <iframe width="100%" height="315"
         src="${embedUrl}"
         frameborder="0"
