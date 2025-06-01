@@ -170,3 +170,52 @@ header {
 .filtro-busqueda {
   min-width: 280px;
 }
+
+.menu {
+  list-style: none;
+  display: flex;
+  justify-content: center;
+  gap: 2em;
+  padding: 0;
+  margin: 0;
+}
+
+.menu > li {
+  position: relative;
+}
+
+.menu a {
+  color: white;
+  font-weight: bold;
+  text-decoration: none;
+  padding: 1em;
+  display: block;
+}
+
+.submenu {
+  display: none;
+  position: absolute;
+  top: 100%;
+  left: 0;
+  background-color: #1f3dbf;
+  border-radius: 0 0 8px 8px;
+  box-shadow: 0 8px 16px rgba(0,0,0,0.2);
+  list-style: none;
+  padding: 0;
+  margin: 0;
+  min-width: 180px;
+}
+
+.submenu li a {
+  padding: 0.8em 1em;
+  color: white;
+  font-weight: normal;
+}
+
+.menu li:hover .submenu {
+  display: block;
+}
+
+.submenu li a:hover {
+  background-color: #162d8c;
+}
