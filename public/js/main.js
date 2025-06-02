@@ -75,14 +75,18 @@ function mostrarMenu(rol) {
   //document.getElementById('containerInicial').style.display = 'none';
   //document.getElementById('login').style.display = 'block';
 
-  document.getElementById('form-login').style.display = 'none';
-  document.getElementById('registrarInstructor').style.display = 'none';
+  
+  //document.getElementById('form-login').style.display = 'none';
+  //document.getElementById('registrarInstructor').style.display = 'none';
+  //document.getElementById('textoLogin').style.display = 'block';
 
-  document.getElementById('textoLogin').style.display = 'block';
+  document.getElementById('containerLogin').style.display = 'none';
+
   if (rol === 'instructor') {
     document.getElementById('menu-admin').style.display = 'block';
     activarEventosMenu('menu-admin');
   } else if (rol === 'paciente') {
+
     document.getElementById('menu-usuario').style.display = 'block';
     activarEventosMenu('menu-usuario');
   }
@@ -103,8 +107,9 @@ function activarEventosMenu(menuId) {
 function cargarContenidoInicial(rol) {
   if (rol === 'instructor') {
     cargarContenido(rol, 'dashboard');
-  } else if (rol === 'usuario') {
-    cargarContenido(rol, 'perfil');
+  } else if (rol === 'paciente') {
+    console.log('ingresooooooooooooo al paciente');
+    cargarContenido(rol, 'usuarios');
   }
 }
 
@@ -117,9 +122,8 @@ async function cargarContenido(rol, tab) {
       registroPaciente: '/NovaSoft/public/pages/usuario/registrarPaciente.html',
       nuevaSerieTerapeutica: '/NovaSoft/public/pages/instructor/nuevaSerieTerapeutica.html',
     },
-    usuario: {
-      perfil: '/usuario/perfil.html',
-      pedidos: '/usuario/pedidos.html'
+    paciente: {
+      usuarios: '/NovaSoft/public/pages/usuario/usuarios.html',
     }
   };
 
@@ -131,9 +135,8 @@ async function cargarContenido(rol, tab) {
     registroPaciente: '/NovaSoft/public/js/registrar_paciente.js',
     nuevaSerieTerapeutica: '/NovaSoft/public/js/nueva_serie.js',
   },
-  usuario: {
-    perfil: '/NovaSoft/public/js/perfil.js',
-    pedidos: '/NovaSoft/public/js/pedidos.js'
+  paciente: {
+    /*usuarios: '/NovaSoft/public/js/usuarios.js',*/
   }
 };
   const jsUrl = jsRutas[rol][tab];
