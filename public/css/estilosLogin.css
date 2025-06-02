@@ -45,6 +45,15 @@ body {
   margin: -10px 0;
 }
 
+h2 {
+  font-size: 24px;
+  font-weight: 600;
+  color: #e8eaeb;
+  margin-bottom: 18px;
+  letter-spacing: 1px;
+  text-align: center;
+}
+
 .container p {
   font-size: 14.5px;
   margin: 15px 0;

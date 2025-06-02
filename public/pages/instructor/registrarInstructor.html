@@ -5,31 +5,30 @@
     <title>Registrar Instructor</title>
     <meta name="viewport" content="width=device-width, initial-scale=1.0">
     <link rel="stylesheet" href="../../css/estilosLogin.css">
-
 </head>
 <body>
-    <div class="login-container">
-        <h2>Registrar Instructor</h2>
-        <form id="form-register-instructor">
-    <div class="input-group">
-        <label for="nombre">Nombre:</label>
-        <input type="text" id="nombre" name="nombre" required>
+    <div class="container containerRegistroInstructor">
+        <h2 style="margin-bottom: 1rem;">Registrar Instructor</h2>
+        <form id="form-register-instructor" style="width:100%;">
+            <div class="input-box">
+                <input type="text" id="nombre" name="nombre" placeholder="Nombre completo" required>
+                <i class='bx bxs-user'></i>
+            </div>
+            <div class="input-box">
+                <input type="email" id="correo" name="correo" placeholder="Correo electrónico" required>
+                <i class='bx bxs-envelope'></i>
+            </div>
+            <div class="input-box">
+                <input type="password" id="contrasena" name="contrasena" placeholder="Contraseña" required>
+                <i class='bx bxs-lock-alt'></i>
+            </div>
+            <div class="input-box">
+                <input type="password" id="contrasenaDos" name="contrasenaDos" placeholder="Confirmar contraseña" required>
+                <i class='bx bxs-lock-alt'></i>
+            </div>
+            <button type="submit" id="buttonRegisterCrearInstructor" class="btn" disabled>Registrar</button>
+        </form>
     </div>
-    <div class="input-group">
-        <label for="correo">Correo electrónico:</label>
-        <input type="email" id="correo" name="correo" required>
-    </div>
-    <div class="input-group">
-        <label for="contrasena">Contraseña:</label>
-        <input type="password" id="contrasena" name="contrasena" required>
-    </div>
-    <div class="input-group">
-        <label for="contrasenaDos">Confirmar contraseña:</label>
-        <input type="password" id="contrasenaDos" name="contrasenaDos" required>
-    </div>
-    <button type="submit" id="buttonRegisterCrearInstructor" disabled>Registrar</button>
-</form>
-    </div>
-    <script src="../../js/registrar_nuevo_instructor.js" ></script>
+    <script src="../../js/registrar_nuevo_instructor.js"></script>
 </body>
-</html></div></html>
+</html>
