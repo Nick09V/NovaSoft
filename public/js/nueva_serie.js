@@ -1,30 +1,54 @@
-document.addEventListener('DOMContentLoaded', () => {
+(function () {
+    const terapiaSelect = document.getElementById('terapia');
+    const formulario = document.getElementById('formularioNuevaSerieTerapeutica');
+    const botonRegistrar = document.getElementById('botonNuevaSerie');
+    const inputBotonSerie = document.getElementById('nombreSerieTerapeutica');
 
-    let terapiaSelect = document.getElementById('terapia');
-    let formulario = document.getElementById('formularioNuevaSerieTerapeutica');
-    let botonRegistrar = document.getElementById('botonNuevaSerie');
+    if (inputBotonSerie) {
+        inputBotonSerie.addEventListener('keyup', () => {
+            console.log('Ingreso:', inputBotonSerie.value);
+        });
+    }
 
-    formulario.addEventListener('submit', (e) => {
-        e.preventDefault(); // Evitar el envío del formulario por defecto
+    if (formulario) {
+    formulario.addEventListener('submit', async (e) => {
+        e.preventDefault();
+        console.log('Formulario enviado para nueva serie terapéutica');
+        const formData = new FormData(formulario);
+        const data = Object.fromEntries(formData.entries());
 
-        let terapiaSeleccionada = terapiaSelect.value;
-        if (terapiaSeleccionada === '') {
-            alert('Por favor, selecciona una terapia.');
-            return;
+        try {
+            const res = await fetch('/NovaSoft/src/models/serieTerapeutica.php', {
+                method: 'POST',
+                body: JSON.stringify(data),
+                headers: {'Content-Type': 'application/json'}
+            });
+
+            if (!res.ok) throw new Error('Error al registrar serie');
+
+            const result = await res.json();
+
+            if (result.error) {
+                alert(result.error);
+            } else if (result.ok) {
+                alert(result.message || 'Serie registrada exitosamente');
+                console.log('Serie registrada exitosamente');
+                formulario.reset();
+            } else {
+                alert('Respuesta inesperada del servidor');
+            }
+
+        } catch (error) {
+            console.error('Error al enviar el formulario:', error);
+            alert('Ocurrió un error al registrar la serie terapéutica. Inténtalo de nuevo.');
         }
-
-        // Aquí puedes agregar la lógica para enviar los datos al servidor
-        console.log('Terapia seleccionada:', terapiaSeleccionada);
-        
-        // Simulación de envío exitoso
-        alert('Serie terapéutica registrada exitosamente para la terapia: ' + terapiaSeleccionada);
-        
-        // Limpiar el formulario después del registro
-        formulario.reset();
     });
+}
 
 
 
-});
+})();
+
+
 
 
