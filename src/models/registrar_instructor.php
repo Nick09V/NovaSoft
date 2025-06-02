@@ -1,12 +1,13 @@
 <?php
-// Conexión a la base de datos (ajusta los valores según tu configuración)
-require_once __DIR__ . '/../config/connect.php';
-// Se espera que $conn esté definido en connect.php
+ini_set('display_errors', 1);
+ini_set('display_startup_errors', 1);
+error_reporting(E_ALL);
 
+
+require_once __DIR__ . '/../config/connect.php'; // Asegúrate de que este archivo define $pdo
 
 header('Content-Type: application/json');
 
-// Obtener el JSON recibido
 $input = json_decode(file_get_contents('php://input'), true);
 
 if (!isset($input['nombre'], $input['correo'], $input['contrasena'])) {
@@ -15,34 +16,30 @@ if (!isset($input['nombre'], $input['correo'], $input['contrasena'])) {
     exit;
 }
 
-$nombre = $input['nombre'] ?? '';
-$email = $input['correo'] ?? '';
+$nombre = $input['nombre'];
+$email = $input['correo'];
 $contrasena = password_hash($input['contrasena'], PASSWORD_DEFAULT);
 
-
-// Insertar el nuevo paciente en la base de datos
-try{
-    
-    
-    // Comprobar si el correo ya existe
+try {
+    // Verifica si el correo ya está registrado
     $stmt = $pdo->prepare("SELECT COUNT(*) FROM instructor WHERE correo = ?");
     $stmt->execute([$email]);
+    
     if ($stmt->fetchColumn() > 0) {
-       echo json_encode(['error' => 'El correo ya está registrado', 'ok' => false]);
+        echo json_encode(['error' => 'El correo ya está registrado', 'ok' => false]);
         exit;
-    }else {
-        // Insertar nuevo instructor
-        $stmt = $pdo->prepare("INSERT INTO instructor (nombre, correo, contrasena) VALUES (?, ?, ?)");
-        $stmt->execute([$nombre, $email, $contrasena]);
-        echo json_encode(['ok' => true]);
     }
 
-    
+    // Inserta nuevo instructor
+    $stmt = $pdo->prepare("INSERT INTO instructor (nombre, correo, contrasena) VALUES (?, ?, ?)");
+    $stmt->execute([$nombre, $email, $contrasena]);
 
- 
+    echo json_encode(['ok' => true]);
 } catch (PDOException $e) {
     http_response_code(500);
-    echo json_encode(['error' => 'Error en la base de datos', 'ok' => false]);
+    echo json_encode([
+        'error' => 'Error en la base de datos',
+        'message' => $e->getMessage(), // Muestra el error real para depurar
+        'ok' => false
+    ]);
 }
-?>
-
