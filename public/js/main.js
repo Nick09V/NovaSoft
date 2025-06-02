@@ -87,7 +87,8 @@ async function cargarContenido(rol, tab) {
   const rutas = {
     instructor: {
       dashboard: '/NovaSoft/public/pages/instructor/dashboard.html',
-      usuarios: '../pages/usuario/usuarios.html'
+      usuarios: '../pages/usuario/usuarios.html',
+      postura: '/NovaSoft/public/pages/posturas/posturas.html',
     },
     usuario: {
       perfil: '/usuario/perfil.html',
