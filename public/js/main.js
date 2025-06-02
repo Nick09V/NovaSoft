@@ -82,7 +82,9 @@ function mostrarMenu(rol) {
   //document.getElementById('form-login').style.display = 'none';
   //document.getElementById('containerInicial').style.display = 'none';
   //document.getElementById('login').style.display = 'block';
+
   document.getElementById('form-login').style.display = 'none';
+  document.getElementById('registrarInstructor').style.display = 'none';
 
   document.getElementById('textoLogin').style.display = 'block';
   if (rol === 'instructor') {
@@ -121,6 +123,7 @@ async function cargarContenido(rol, tab) {
       dashboard: '/NovaSoft/public/pages/instructor/dashboard.html',
       usuarios: '../pages/usuario/usuarios.html',
       registroPaciente: '/NovaSoft/public/pages/usuario/registrarPaciente.html',
+      nuevaSerieTerapeutica: '/NovaSoft/public/pages/instructor/nuevaSerieTerapeutica.html',
     },
     usuario: {
       perfil: '/usuario/perfil.html',
@@ -128,6 +131,20 @@ async function cargarContenido(rol, tab) {
     }
   };
 
+
+  const jsRutas = {
+  instructor: {
+    dashboard: '/NovaSoft/public/js/dashboard.js',
+    usuarios: '/NovaSoft/public/js/usuarios.js',
+    registroPaciente: '/NovaSoft/public/js/registrar_paciente.js',
+    nuevaSerieTerapeutica: '/NovaSoft/public/js/nueva_serie.js',
+  },
+  usuario: {
+    perfil: '/NovaSoft/public/js/perfil.js',
+    pedidos: '/NovaSoft/public/js/pedidos.js'
+  }
+};
+  const jsUrl = jsRutas[rol][tab];
   const url = rutas[rol][tab];
   console.log('Cargando contenido de:', url);
   if (!url) {
@@ -140,6 +157,21 @@ async function cargarContenido(rol, tab) {
     if (!res.ok) throw new Error('No se pudo cargar la página');
     const html = await res.text();
     document.getElementById('contenido').innerHTML = html;
+
+    // Cargar JS específico de la página
+    console.log('Intentando Cargar script:', jsUrl);
+    if (jsUrl) {
+      
+      const script = document.createElement('script');
+      script.src = jsUrl;
+      script.async = true;
+      document.body.appendChild(script);
+      console.log('Se ha cargado el script en:', jsUrl);
+    }else {
+      console.log('No hay script asociado para esta página:', tab);
+    }
+
+    
   } catch (e) {
     document.getElementById('contenido').innerHTML = `<p>Error: ${e.message}</p>`;
   }
