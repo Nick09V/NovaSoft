@@ -17,7 +17,7 @@ document.addEventListener('DOMContentLoaded', function() {
         data.telefono = data.telefono.replace(/[^0-9]/g, ''); // Asegurarse de que el teléfono solo contenga números
 
         try {
-            const response = await fetch('/NovaSoft/src/models/registrar_paciente.php', {
+            const response = await fetch('/NovaSoft/NovaSoft/src/models/registrar_paciente.php', {
                 method: 'POST',
                 body: JSON.stringify(data),
                 headers: {
