@@ -126,14 +126,13 @@ document.addEventListener('DOMContentLoaded', () => {
         console.log('Intentando registrar instructor');
         
         const formData = new FormData(form);
-        const data = Object.fromEntries(formData.entries());
+        //const data = Object.fromEntries(formData.entries());
         
 
         try {
             const res = await fetch('/NovaSoft/src/models/registrar_instructor.php', {
                 method: 'POST',
-                body: JSON.stringify(data),
-                headers: {'Content-Type': 'application/json'}
+                body: formData
             });
             
             if (!res.ok) throw new Error('Error al registrar instructor');
