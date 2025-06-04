@@ -10,7 +10,6 @@
 }
 
 body {
-  display: flex;
   background: linear-gradient(90deg,#0f684b , #1c232e);
 }
 
@@ -301,7 +300,7 @@ form {
     }
   }
     #contenido{ 
-      
+      width: 100%;
     }
 
 
