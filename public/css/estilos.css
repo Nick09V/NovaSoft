@@ -23,7 +23,34 @@
     padding: 20px 60px 20px; 
     text-align: center;
     border-radius: 25px;
-    margin: 900px 0;
+    margin: 0 auto;
+}
+
+input {
+    background-color: #515966 !important; /* Forzar fondo oscuro */
+    color: #FFFFFF !important; /* Forzar texto blanco */
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    padding: 14px 15px;
+    width: 100%;
+}
+
+input::placeholder{
+    color: #FFFFFF !important;
+}
+
+input:focus::placeholder{
+    color: transparent !important;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    box-shadow: 0 0 0px 1000px #515966 inset !important;
+    -webkit-text-fill-color: #FFFFFF !important;
+    transition: background-color 5000s ease-in-out 0s;
 }
 
 .form-content h1 {
@@ -54,15 +81,6 @@
    transition: max-height 0.5s;
    overflow: hidden;
    width: 100%;
-}
-
-input{
-    width: 100%;
-    background: transparent;
-    border: 0;
-    outline: none;
-    padding: 14px 15px;
-    color: #FFFFFF;
 }
 
 input::placeholder{
@@ -158,11 +176,9 @@ input:-webkit-autofill,
 input:-webkit-autofill:hover,
 input:-webkit-autofill:focus,
 input:-webkit-autofill:active {
-    -webkit-box-shadow: 0 0 0 30px #515966 inset !important;
+    box-shadow: 0 0 0px 1000px #515966 inset !important;
     -webkit-text-fill-color: #FFFFFF !important;
     transition: background-color 5000s ease-in-out 0s;
 }
 
-
-
-
+    

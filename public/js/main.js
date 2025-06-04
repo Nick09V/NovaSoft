@@ -43,15 +43,7 @@ async function login(username, password) {
 }
 
 function mostrarMensajeError(mensaje) {
-  let errorDiv = document.getElementById('mensaje-error');
-  if (!errorDiv) {
-    errorDiv = document.createElement('div');
-    errorDiv.id = 'mensaje-error';
-    errorDiv.style.color = 'red';
-    errorDiv.style.marginTop = '10px';
-    document.getElementById('form-login').appendChild(errorDiv);
-  }
-  errorDiv.textContent = mensaje;
+  document.getElementById('mensajeError').style.display = 'block';
 }
 
 
@@ -73,35 +65,27 @@ document.getElementById('form-login').addEventListener('submit', e => {
 
 // Mostrar menú según rol
 function mostrarMenu(rol) {
-  console.log('Rol del usuario:', rol + ' - Mostrando menú correspondiente');
-  // Opciones:
-  // 1. Mostrar menús ya en HTML ocultos y sólo mostrar el correcto
-  // 2. Generar menú dinámicamente con JS o traer menú con fetch del backend
-
-  // Ejemplo simple: mostrar menú preexistente
-  //document.getElementById('form-login').style.display = 'none';
-  //document.getElementById('containerInicial').style.display = 'none';
-  //document.getElementById('login').style.display = 'block';
-
-  document.getElementById('form-login').style.display = 'none';
-  document.getElementById('registrarInstructor').style.display = 'none';
-
-  document.getElementById('textoLogin').style.display = 'block';
-  if (rol === 'instructor') {
-    document.getElementById('menu-admin').style.display = 'block';
-    activarEventosMenu('menu-admin');
-  } else if (rol === 'paciente') {
-    document.getElementById('menu-usuario').style.display = 'block';
-    activarEventosMenu('menu-usuario');
-  }
+  const loginContainer = document.getElementById('containerLogin');
+  loginContainer.classList.add('fade-out');
+  setTimeout(() => {
+    loginContainer.style.display = 'none';
+    // Mostrar menú y contenido
+    if (rol === 'instructor') {
+      document.getElementById('menu-admin').style.display = 'block';
+      activarEventosMenu('menu-admin');
+    } else if (rol === 'paciente') {
+      document.getElementById('menu-usuario').style.display = 'block';
+      activarEventosMenu('menu-usuario');
+    }
+  }, 500); // Espera a que termine la transición
 }
-
 // Activar evento click en los botones del menú para cargar contenido
 function activarEventosMenu(menuId) {
   const menu = document.getElementById(menuId);
   menu.querySelectorAll('button').forEach(btn => {
     btn.onclick = () => {
       const tab = btn.getAttribute('data-tab');
+      console.log('Cargando tab:', tab , 'para rol:', rolActual);
       cargarContenido(rolActual, tab);
     };
   });
@@ -111,8 +95,9 @@ function activarEventosMenu(menuId) {
 function cargarContenidoInicial(rol) {
   if (rol === 'instructor') {
     cargarContenido(rol, 'dashboard');
-  } else if (rol === 'usuario') {
-    cargarContenido(rol, 'perfil');
+  } else if (rol === 'paciente') {
+    console.log('ingresooooooooooooo al paciente');
+    cargarContenido(rol, 'usuarios');
   }
 }
 
@@ -125,9 +110,8 @@ async function cargarContenido(rol, tab) {
       registroPaciente: '/NovaSoft/public/pages/usuario/registrarPaciente.html',
       nuevaSerieTerapeutica: '/NovaSoft/public/pages/instructor/nuevaSerieTerapeutica.html',
     },
-    usuario: {
-      perfil: '/usuario/perfil.html',
-      pedidos: '/usuario/pedidos.html'
+    paciente: {
+      usuarios: '/NovaSoft/public/pages/usuario/usuarios.html',
     }
   };
 
@@ -136,12 +120,11 @@ async function cargarContenido(rol, tab) {
   instructor: {
     dashboard: '/NovaSoft/public/js/dashboard.js',
     usuarios: '/NovaSoft/public/js/usuarios.js',
-    registroPaciente: '/NovaSoft/public/js/registrar_paciente.js',
+    registroPaciente: '/NovaSoft/public/js/registrar_nuevo_paciente.js',
     nuevaSerieTerapeutica: '/NovaSoft/public/js/nueva_serie.js',
   },
-  usuario: {
-    perfil: '/NovaSoft/public/js/perfil.js',
-    pedidos: '/NovaSoft/public/js/pedidos.js'
+  paciente: {
+    /*usuarios: '/NovaSoft/public/js/usuarios.js',*/
   }
 };
   const jsUrl = jsRutas[rol][tab];

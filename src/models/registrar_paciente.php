@@ -14,22 +14,22 @@ if (!$input){
 
 $nombre = $input['nombre'] ?? '';
 $apellido = $input['apellido'] ?? '';
-$email = $input['email'] ?? '';
-$contraseña = $input['contraseña'] ?? '';
+$correo = $input['correo'] ?? '';
+$contrasena = $input['contrasena'] ?? '';
 $telefono = $input['telefono'] ?? '';
 $direccion = $input['direccion'] ?? '';
 $ciudad = $input['ciudad'] ?? '';
 
 // Validar que los campos requeridos no estén vacíos
-if (empty($nombre) || empty($apellido) || empty($email) || empty($contraseña)) {
+if (empty($nombre) || empty($apellido) || empty($correo) || empty($contrasena)) {
     echo json_encode(['success' => false, 'message' => 'Faltan datos requeridos']);
     exit;
 }
 
 // Insertar el nuevo paciente en la base de datos
 try{
-    $stmt = $pdo->prepare("INSERT INTO paciente (nombre, apellido, email, contraseña, telefono, direccion, ciudad) VALUES (?, ?, ?, ?, ?, ?,?)");
-    $stmt->execute([$nombre, $apellido, $email, password_hash($contraseña, PASSWORD_DEFAULT), $telefono, $direccion, $ciudad]);
+    $stmt = $pdo->prepare("INSERT INTO paciente (nombre, apellido, correo, contrasena, telefono, direccion, ciudad) VALUES (?, ?, ?, ?, ?, ?,?)");
+    $stmt->execute([$nombre, $apellido, $correo, password_hash($contrasena, PASSWORD_DEFAULT), $telefono, $direccion, $ciudad]);
     echo json_encode(['success' => true, 'message' => 'Paciente registrado correctamente']);
 } catch(Exception $e) {
     // Manejo de errores

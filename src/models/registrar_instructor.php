@@ -64,4 +64,3 @@ VALUES
     echo json_encode(['error' => 'Error en la base de datos', 'ok' => false]);
 }
 ?>
-
