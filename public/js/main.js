@@ -59,7 +59,6 @@ document.getElementById('form-login').addEventListener('submit', e => {
 });
 
 
-
 });
 
 
@@ -71,7 +70,7 @@ function mostrarMenu(rol) {
     loginContainer.style.display = 'none';
     // Mostrar menú y contenido
     if (rol === 'instructor') {
-      document.getElementById('menu-admin').style.display = 'block';
+      document.getElementById('menu-admin').style.display = 'flex';
       activarEventosMenu('menu-admin');
     } else if (rol === 'paciente') {
       document.getElementById('menu-usuario').style.display = 'block';
