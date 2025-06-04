@@ -83,6 +83,7 @@ function mostrarMenu(rol) {
   document.getElementById('containerLogin').style.display = 'none';
 
   if (rol === 'instructor') {
+    console.log('Rol instructor - Mostrando menú de instructor');
     document.getElementById('menu-admin').style.display = 'block';
     activarEventosMenu('menu-admin');
   } else if (rol === 'paciente') {
