@@ -14,5 +14,9 @@ RUN a2enmod rewrite
 # Copiar el código dentro del contenedor (opcional, si usas volúmenes)
 # COPY . /var/www/html/
 
+# Aquí se crea composer.json y se instalan las dependencias de PHPUnit
+RUN composer require --dev phpunit/phpunit
+
+
 EXPOSE 80
 CMD ["apache2-foreground"]
