@@ -65,40 +65,27 @@ document.getElementById('form-login').addEventListener('submit', e => {
 
 // Mostrar menú según rol
 function mostrarMenu(rol) {
-  console.log('Rol del usuario:', rol + ' - Mostrando menú correspondiente');
-  // Opciones:
-  // 1. Mostrar menús ya en HTML ocultos y sólo mostrar el correcto
-  // 2. Generar menú dinámicamente con JS o traer menú con fetch del backend
-
-  // Ejemplo simple: mostrar menú preexistente
-  //document.getElementById('form-login').style.display = 'none';
-  //document.getElementById('containerInicial').style.display = 'none';
-  //document.getElementById('login').style.display = 'block';
-
-  
-  //document.getElementById('form-login').style.display = 'none';
-  //document.getElementById('registrarInstructor').style.display = 'none';
-  //document.getElementById('textoLogin').style.display = 'block';
-
-  document.getElementById('containerLogin').style.display = 'none';
-
-  if (rol === 'instructor') {
-    console.log('Rol instructor - Mostrando menú de instructor');
-    document.getElementById('menu-admin').style.display = 'block';
-    activarEventosMenu('menu-admin');
-  } else if (rol === 'paciente') {
-
-    document.getElementById('menu-usuario').style.display = 'block';
-    activarEventosMenu('menu-usuario');
-  }
+  const loginContainer = document.getElementById('containerLogin');
+  loginContainer.classList.add('fade-out');
+  setTimeout(() => {
+    loginContainer.style.display = 'none';
+    // Mostrar menú y contenido
+    if (rol === 'instructor') {
+      document.getElementById('menu-admin').style.display = 'block';
+      activarEventosMenu('menu-admin');
+    } else if (rol === 'paciente') {
+      document.getElementById('menu-usuario').style.display = 'block';
+      activarEventosMenu('menu-usuario');
+    }
+  }, 500); // Espera a que termine la transición
 }
-
 // Activar evento click en los botones del menú para cargar contenido
 function activarEventosMenu(menuId) {
   const menu = document.getElementById(menuId);
   menu.querySelectorAll('button').forEach(btn => {
     btn.onclick = () => {
       const tab = btn.getAttribute('data-tab');
+      console.log('Cargando tab:', tab , 'para rol:', rolActual);
       cargarContenido(rolActual, tab);
     };
   });
@@ -133,7 +120,7 @@ async function cargarContenido(rol, tab) {
   instructor: {
     dashboard: '/NovaSoft/public/js/dashboard.js',
     usuarios: '/NovaSoft/public/js/usuarios.js',
-    registroPaciente: '/NovaSoft/public/js/registrar_paciente.js',
+    registroPaciente: '/NovaSoft/public/js/registrar_nuevo_paciente.js',
     nuevaSerieTerapeutica: '/NovaSoft/public/js/nueva_serie.js',
   },
   paciente: {
