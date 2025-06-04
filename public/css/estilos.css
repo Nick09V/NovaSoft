@@ -1,0 +1,184 @@
+* {
+    margin: 0;
+    padding: 0;
+    font-family: Arial, Helvetica, sans-serif;
+    box-sizing: border-box;
+    text-decoration: none;
+}
+
+.registro-paciente {
+    width: 100%;
+    height: 100vh;
+    background-color: #1c232e;
+    display: flex;
+    justify-content: center;
+    align-items: center;
+    padding: 80px 0;
+}
+
+.form-content{
+    width: 100%;
+    max-width: 550px;
+    background-color: #03484c;
+    padding: 20px 60px 20px; 
+    text-align: center;
+    border-radius: 25px;
+    margin: 0 auto;
+}
+
+input {
+    background-color: #515966 !important; /* Forzar fondo oscuro */
+    color: #FFFFFF !important; /* Forzar texto blanco */
+    border: none !important;
+    outline: none !important;
+    box-shadow: none !important;
+    padding: 14px 15px;
+    width: 100%;
+}
+
+input::placeholder{
+    color: #FFFFFF !important;
+}
+
+input:focus::placeholder{
+    color: transparent !important;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    box-shadow: 0 0 0px 1000px #515966 inset !important;
+    -webkit-text-fill-color: #FFFFFF !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+.form-content h1 {
+    color: #FFFFFF;
+    font-size: 30px;
+    margin-bottom: 60px;
+    position: relative;
+}
+
+.form-content h1::after {
+    content: '';
+    width: 30px;
+    height: 4px;
+    border-radius: 3px;
+    background: #3b8952;
+    position: absolute;
+    bottom: -12px;
+    left: 50%;
+    transform: translateX(-50%);
+}
+
+.input-field {
+   background-color: #515966;
+   margin: 2px 0;
+   border-radius: 3px;
+   display: flex;
+   align-items: center;
+   transition: max-height 0.5s;
+   overflow: hidden;
+   width: 100%;
+}
+
+input::placeholder{
+    color: #FFFFFF;
+}
+
+input:focus::placeholder{
+    color: transparent;
+}
+
+.input-field i {
+    margin-left: 15px;
+    color: #53ac59;
+    font-size: 20px;
+}
+
+.btn-field{
+    width: 100%;
+    display: flex;
+    justify-content: center;
+    margin-top: 20px;
+}
+
+.btn-field button {
+    flex-basis: 48%;
+    font-size: 16px;
+    background-color: #53ac59;
+    color: #FFFFFF;
+    height: 40px;
+    border: 0;
+    border-radius: 10px;
+    outline: 0;
+    cursor: pointer;
+    transition: background-color 0.1s;
+}
+
+.input-group {
+    display: flex;
+    flex-wrap: wrap;
+    gap: 15px;
+}
+
+/* Contenedor para nombre y apellido */
+.nombre-apellido {
+    display: flex;
+    width: 100%;
+    gap: 15px;
+}
+
+.nombre-apellido .input-field {
+    width: 48%;
+    margin: 0;
+}
+
+/* Resto de campos */
+.input-field {
+    width: 100%;
+}
+
+#nameInput {
+    width: 48%;
+}
+
+#apellidoInput {
+    width: 48%;
+}
+
+.btn-field button.disable {
+    background-color: #EAEAEA;
+    color: #2c2f35;
+}
+
+/* Agrega esto a estilos.css */
+#nameInput input {
+    width: 48% !important;
+    display: inline-block;
+}
+
+#nameInput input.separado {
+    margin-left: 4%;
+}
+
+#direccionInput input {
+    width: 48%;
+    display: inline-block;
+}
+
+#direccionInput input.separado {
+    margin-left: 4%;
+}
+
+input:-webkit-autofill,
+input:-webkit-autofill:hover,
+input:-webkit-autofill:focus,
+input:-webkit-autofill:active {
+    box-shadow: 0 0 0px 1000px #515966 inset !important;
+    -webkit-text-fill-color: #FFFFFF !important;
+    transition: background-color 5000s ease-in-out 0s;
+}
+
+    

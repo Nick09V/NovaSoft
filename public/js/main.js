@@ -3,26 +3,47 @@ let rolActual = null;
 document.addEventListener('DOMContentLoaded', () => {
 
 // Login
+// Ricardo Villarreal
 async function login(username, password) {
   console.log('Intentando login con:', username, password);
-  const res = await fetch('../src/models/login.php', {
-    method: 'POST',
-    headers: {'Content-Type': 'application/json'},
-    body: JSON.stringify({username, password})
-  });
 
-  if (!res.ok) throw new Error('Credenciales incorrectas');
-  if(res.ok){
-    // Si el login es exitoso, ocultar el formulario de login
+  try {
+    const res = await fetch('../src/models/login.php', {
+      method: 'POST',
+      headers: { 'Content-Type': 'application/json' },
+      body: JSON.stringify({ username, password })
+    });
+
+    const data = await res.json(); // Siempre intenta leer la respuesta
+
+     // ✅ Imprimir en consola el mensaje y estatus
+    console.log('Respuesta del servidor:', data);
+    console.log('Status:', data.status);
+    console.log('Mensaje:', data.message || 'Sin mensaje');
+
+    if (!res.ok || data.status !== 'ok') {
+      // Mostrar mensaje en pantalla si hay error
+      mostrarMensajeError(data.message || 'Credenciales incorrectas');
+      return; // No continuar con login
+    }
+
+    // Si el login fue exitoso
     console.log('Login exitoso');
+    rolActual = data.rol;
+    console.log('Rol del usuario:', rolActual);
+
+    mostrarMenu(rolActual);
+    cargarContenidoInicial(rolActual);
+
+  } catch (error) {
+    // Error de red o JSON
+    console.error('Error en login:', error);
+    mostrarMensajeError('Ocurrió un error inesperado. Intenta de nuevo.');
   }
+}
 
-  const data = await res.json();  // Ej: { rol: 'admin' }
-  rolActual = data.rol;
-  console.log('Rol del usuario:', rolActual);
-
-  mostrarMenu(rolActual);
-  cargarContenidoInicial(rolActual);
+function mostrarMensajeError(mensaje) {
+  document.getElementById('mensajeError').style.display = 'block';
 }
 
 
@@ -44,30 +65,27 @@ document.getElementById('form-login').addEventListener('submit', e => {
 
 // Mostrar menú según rol
 function mostrarMenu(rol) {
-  console.log('Rol del usuario:', rol + ' - Mostrando menú correspondiente');
-  // Opciones:
-  // 1. Mostrar menús ya en HTML ocultos y sólo mostrar el correcto
-  // 2. Generar menú dinámicamente con JS o traer menú con fetch del backend
-
-  // Ejemplo simple: mostrar menú preexistente
-  document.getElementById('form-login').style.display = 'none';
-  document.getElementById('containerIncial').style.display = 'none';
-
-  if (rol === 'instructor') {
-    document.getElementById('menu-admin').style.display = 'block';
-    activarEventosMenu('menu-admin');
-  } else if (rol === 'usuario') {
-    document.getElementById('menu-usuario').style.display = 'block';
-    activarEventosMenu('menu-usuario');
-  }
+  const loginContainer = document.getElementById('containerLogin');
+  loginContainer.classList.add('fade-out');
+  setTimeout(() => {
+    loginContainer.style.display = 'none';
+    // Mostrar menú y contenido
+    if (rol === 'instructor') {
+      document.getElementById('menu-admin').style.display = 'block';
+      activarEventosMenu('menu-admin');
+    } else if (rol === 'paciente') {
+      document.getElementById('menu-usuario').style.display = 'block';
+      activarEventosMenu('menu-usuario');
+    }
+  }, 500); // Espera a que termine la transición
 }
-
 // Activar evento click en los botones del menú para cargar contenido
 function activarEventosMenu(menuId) {
   const menu = document.getElementById(menuId);
   menu.querySelectorAll('button').forEach(btn => {
     btn.onclick = () => {
       const tab = btn.getAttribute('data-tab');
+      console.log('Cargando tab:', tab , 'para rol:', rolActual);
       cargarContenido(rolActual, tab);
     };
   });
@@ -77,8 +95,9 @@ function activarEventosMenu(menuId) {
 function cargarContenidoInicial(rol) {
   if (rol === 'instructor') {
     cargarContenido(rol, 'dashboard');
-  } else if (rol === 'usuario') {
-    cargarContenido(rol, 'perfil');
+  } else if (rol === 'paciente') {
+    console.log('ingresooooooooooooo al paciente');
+    cargarContenido(rol, 'usuarios');
   }
 }
 
@@ -90,12 +109,24 @@ async function cargarContenido(rol, tab) {
       usuarios: '../pages/usuario/usuarios.html',
       postura: '/NovaSoft/public/pages/posturas/posturas.html',
     },
-    usuario: {
-      perfil: '/usuario/perfil.html',
-      pedidos: '/usuario/pedidos.html'
+    paciente: {
+      usuarios: '/NovaSoft/public/pages/usuario/usuarios.html',
     }
   };
 
+
+  const jsRutas = {
+  instructor: {
+    dashboard: '/NovaSoft/public/js/dashboard.js',
+    usuarios: '/NovaSoft/public/js/usuarios.js',
+    registroPaciente: '/NovaSoft/public/js/registrar_nuevo_paciente.js',
+    nuevaSerieTerapeutica: '/NovaSoft/public/js/nueva_serie.js',
+  },
+  paciente: {
+    /*usuarios: '/NovaSoft/public/js/usuarios.js',*/
+  }
+};
+  const jsUrl = jsRutas[rol][tab];
   const url = rutas[rol][tab];
   console.log('Cargando contenido de:', url);
   if (!url) {
@@ -108,10 +139,22 @@ async function cargarContenido(rol, tab) {
     if (!res.ok) throw new Error('No se pudo cargar la página');
     const html = await res.text();
     document.getElementById('contenido').innerHTML = html;
+
+    // Cargar JS específico de la página
+    console.log('Intentando Cargar script:', jsUrl);
+    if (jsUrl) {
+      
+      const script = document.createElement('script');
+      script.src = jsUrl;
+      script.async = true;
+      document.body.appendChild(script);
+      console.log('Se ha cargado el script en:', jsUrl);
+    }else {
+      console.log('No hay script asociado para esta página:', tab);
+    }
+
+    
   } catch (e) {
     document.getElementById('contenido').innerHTML = `<p>Error: ${e.message}</p>`;
   }
 }
-
-
-

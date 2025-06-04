@@ -1,27 +1,24 @@
 <!DOCTYPE html>
 <html lang="es">
+
 <head>
-    <meta charset="UTF-8">
-    <title>App de Rutinas</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1">
-    <!-- Bootstrap CSS CDN -->
-    <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">-->
+  <meta charset="UTF-8">
+  <title>NovaSoft</title>
+  <meta name="viewport" content="width=device-width, initial-scale=1">
+  <!-- Bootstrap CSS CDN -->
+  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">-->
+  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <link rel="stylesheet" href="css/estilosLogin.css">
+
 </head>
 
 <body>
-  
-<div id="containerIncial">
-  <!-- Richi -->
-<h2>holaaa</h2>
-  
-</div>
+  <!-- Formulario login -->
+  <div class="container" id="containerLogin" style="display: block;">
 
-    <!-- Formulario login -->
-<form id="form-login">
-  <input name="username" placeholder="Usuario" required />
-  <input name="password" type="password" placeholder="Contraseña" required />
-  <button type="submit">Ingresar</button>
-</form>
+    <div class="form-box login" id="form-login">
+      <form action="#">
+        <h1>Iniciar Sesión</h1>
 
 <!-- Menú admin -->
 <nav id="menu-admin" style="display:none;">
@@ -30,21 +27,80 @@
   <button data-tab="postura">Posturas</button>
 </nav>
 
-<!-- Menú usuario -->
-<nav id="menu-usuario" style="display:none;">
-  <button data-tab="perfil">Perfil</button>
-  <button data-tab="pedidos">Pedidos</button>
-</nav>
+        <div class="input-box">
+          <input type="password" name="password" placeholder="Password" required>
+          <i class='bx bxs-lock-alt'></i>
+        </div>
 
-<a href="../public/pages/instructor/registrarInstructor.html">Ingresa como Instrcutor</a>
+        <div class="forgot-link">
+          <a href="#">Olvidaste tu contraseña?</a>
+        </div>
 
-<!-- Contenedor de contenido dinámico -->
-<div id="contenido"></div>
+        <button type="submit" class="btn">Ingresar</button>
+
+        <a id="registrarInstructor" href="pages/instructor/registrarInstructor.html">Registrar Instructor</a>
+
+        <div id="mensajeError" class="msgError" style="display: none;">
+          <h1>Credenciales Incorrectas!!</h1>
+        </div>
+
+      </form>
+    </div>
+
+    <div class="toggle-box">
+      <div class="toggle-panel toggle-left">
+        <h1>¡Hola, bienvenido!</h1>
+        <br>
+        <h1>A NOVASOFT</h1>
+        <br>
+      </div>
+    </div>
 
 
-<script src="js/main.js"></script>
 
+
+
+    <div id="textoLogin" style="display: none;">
+      <h1></h1>
+
+    </div>
+
+
+    </div>
+    <!-- Menú admin -->
+    <nav class="BarraMenu" id="menu-admin" style="display:none;">
+      <div>
+        <h1>Instructor</h1>
+
+      </div>
+      <button data-tab="dashboard">Dashboard</button>
+      <button data-tab="usuarios">Usuarios</button>
+      <button data-tab="registroPaciente">Registrar Paciente</button>
+      <button data-tab="nuevaSerieTerapeutica">Nueva Serie Terapéutica</button>
+    </nav>
+
+    <!-- Menú usuario -->
+    <nav class="BarraMenu" id="menu-usuario" style="display: none;">
+      <div>
+        <h1>Paciente</h1>
+      </div>
+      <button data-tab="perfil">Perfil</button>
+      <button data-tab="pedidos">Pedidos</button>
+    </nav>
+
+
+
+
+
+
+  <!--<a href="../public/pages/instructor/registrarInstructor.html">Ingresa como Instrcutor</a> -->
+
+  <!-- Contenedor de contenido dinámico -->
+  <div id="contenido"></div>
+
+  <script src="js/main.js"></script>
 
 
 </body>
+
 </html>
