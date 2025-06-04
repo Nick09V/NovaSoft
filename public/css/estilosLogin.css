@@ -521,3 +521,10 @@ button:disabled {
   margin-bottom: 0.5rem;
   text-align: center;
 }
+
+.pacienteBd{
+  padding-top: 25px;
+  width: 100%;
+  background-color: blanchedalmond;
+  height: 500px;
+}
