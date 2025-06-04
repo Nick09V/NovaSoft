@@ -1,15 +1,24 @@
+:root {
+  --verde-oscuro: #0f684b;
+  --azul-oscuro: #1c232e;
+  --verde-pino: #114c3c;
+  --gris-claro: #cccccc;
+  --azul-claro: #162d8c;
+  --blanco: #ffffff;
+}
+
 /* detallePostura.css */
 
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f5f7ff;
+  background: linear-gradient(90deg, var(--verde-oscuro), var(--azul-oscuro));
 }
 
 header {
-  background-color: #1f3dbf;
-  color: white;
+  background-color: var(--verde-pino);
+  color: var(--blanco);
   padding: 1em;
   text-align: center;
   margin-bottom: 1em;
@@ -19,7 +28,7 @@ header {
   max-width: 800px;
   margin: 2em auto;
   padding: 2em;
-  background: white;
+  background: var(--blanco);
   border-radius: 10px;
   box-shadow: 0 0 15px rgba(0, 0, 0, 0.1);
 }
@@ -32,7 +41,7 @@ header {
 }
 
 .detalle-container h3 {
-  color: #1f3dbf;
+  color: var(--verde-pino);
   margin-bottom: 0.5em;
 }
 
@@ -47,20 +56,20 @@ header {
   display: inline-block;
   margin-top: 1.5em;
   padding: 0.6em 1.2em;
-  background-color: #1f3dbf;
-  color: white;
+  background-color: var(--verde-pino);
+  color: var(--blanco);
   text-decoration: none;
   border-radius: 8px;
   transition: background-color 0.2s ease;
 }
 
 .btn-volver:hover {
-  background-color: #162d8c;
+  background-color: var(--azul-claro);
 }
 
 .titulovideo {
   margin-top: 1.5em;
-  color: #1f3dbf;
+  color: var(--verde-pino);
   font-size: 1.2em;
   font-weight: bold;
 }

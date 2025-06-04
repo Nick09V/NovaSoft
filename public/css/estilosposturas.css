@@ -1,15 +1,24 @@
+:root {
+  --verde-oscuro: #0f684b;
+  --azul-oscuro: #1c232e;
+  --verde-pino: #114c3c;
+  --gris-claro: #cccccc;
+  --azul-claro: #162d8c;
+  --blanco: #ffffff;
+}
+
 /* ===== Reset General ===== */
 body {
   font-family: Arial, sans-serif;
   margin: 0;
   padding: 0;
-  background-color: #f5f7ff;
+  background: linear-gradient(90deg, var(--verde-oscuro), var(--azul-oscuro));
 }
 
 /* ===== Encabezado ===== */
 header {
-  background-color: #1f3dbf;
-  color: white;
+  background-color: var(--verde-pino);
+  color: var(--blanco);
   padding: 1em;
   margin-bottom: 0.5em;
 }
@@ -41,7 +50,7 @@ header {
 }
 
 .menu > li > a {
-  color: white;
+  color: var(--blanco);
   text-decoration: none;
   font-weight: bold;
   padding: 0.5em;
@@ -51,7 +60,7 @@ header {
   display: none;
   position: absolute;
   top: 100%;
-  background-color: #2f49cc;
+  background-color: var(--verde-pino);
   border-radius: 6px;
   padding: 0.5em 0;
   box-shadow: 0 4px 8px rgba(0, 0, 0, 0.2);
@@ -64,14 +73,14 @@ header {
 }
 
 .submenu a {
-  color: white;
+  color: var(--blanco);
   text-decoration: none;
   display: block;
   padding: 0.5em 1em;
 }
 
 .submenu a:hover {
-  background-color: #415de0;
+  background-color: var(--azul-claro);
 }
 
 .menu > li:hover .submenu {
@@ -86,7 +95,7 @@ header {
   flex-wrap: wrap;
   gap: 1em;
   padding: 0.7em 1em;
-  background-color: #e6ebff;
+  background-color: #e6f1ec; /* más suave que #e6ebff, adaptado */
   border-radius: 10px;
   width: max-content;
   margin: 1em auto 0 auto;
@@ -101,7 +110,7 @@ header {
 .filtros input {
   padding: 0.5em;
   border-radius: 5px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--gris-claro);
   min-width: 200px;
 }
 
@@ -116,7 +125,7 @@ header {
 
 /* ===== Tarjeta de Postura ===== */
 .postura {
-  background: white;
+  background: var(--blanco);
   border-radius: 10px;
   padding: 1em;
   width: 220px;
@@ -138,7 +147,7 @@ header {
 
 .postura h3 {
   margin-top: 0.8em;
-  color: #1f3dbf;
+  color: var(--verde-pino);
 }
 
 .postura p {
@@ -153,13 +162,13 @@ header {
   align-items: center;
   gap: 1em;
   padding: 1em;
-  margin-top: 1.5em; /* opcional si quieres que se acerque al título */
+  margin-top: 1.5em;
 }
 
 .filtro-select, .filtro-busqueda {
   padding: 0.6em;
   border-radius: 6px;
-  border: 1px solid #ccc;
+  border: 1px solid var(--gris-claro);
   font-size: 1em;
 }
 
@@ -171,6 +180,7 @@ header {
   min-width: 280px;
 }
 
+/* Menú */
 .menu {
   list-style: none;
   display: flex;
@@ -185,7 +195,7 @@ header {
 }
 
 .menu a {
-  color: white;
+  color: var(--blanco);
   font-weight: bold;
   text-decoration: none;
   padding: 1em;
@@ -197,7 +207,7 @@ header {
   position: absolute;
   top: 100%;
   left: 0;
-  background-color: #1f3dbf;
+  background-color: var(--verde-pino);
   border-radius: 0 0 8px 8px;
   box-shadow: 0 8px 16px rgba(0,0,0,0.2);
   list-style: none;
@@ -208,7 +218,7 @@ header {
 
 .submenu li a {
   padding: 0.8em 1em;
-  color: white;
+  color: var(--blanco);
   font-weight: normal;
 }
 
@@ -217,5 +227,5 @@ header {
 }
 
 .submenu li a:hover {
-  background-color: #162d8c;
+  background-color: var(--azul-claro);
 }
