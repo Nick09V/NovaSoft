@@ -4,11 +4,37 @@
     const botonRegistrar = document.getElementById('botonNuevaSerie');
     const inputBotonSerie = document.getElementById('nombreSerieTerapeutica');
 
+    
+    if (terapiaSelect) {
+        fetch('/NovaSoft/src/models/terapias.php')
+            .then(response => {
+                if (!response.ok) throw new Error('Error al obtener terapias');
+                return response.json();
+            })
+            .then(data => {
+                if (Array.isArray(data)) {
+                    terapiaSelect.innerHTML = '<option value="">Seleccione una terapia</option>';
+                    data.forEach(terapia => {
+                        const option = document.createElement('option');
+                        option.value = terapia.id || terapia.nombre;
+                        option.textContent = terapia.nombre;
+                        terapiaSelect.appendChild(option);
+                    });
+                } else {
+                    console.error('Formato de datos inesperado:', data);
+                }
+            })
+            .catch(error => {
+                console.error('Error al cargar terapias:', error);
+            });
+    }
+
+
     if (inputBotonSerie) {
         inputBotonSerie.addEventListener('keyup', () => {
             console.log('Ingreso:', inputBotonSerie.value);
         });
-    }
+    }   
 
     if (formulario) {
     formulario.addEventListener('submit', async (e) => {

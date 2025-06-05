@@ -1,21 +1,16 @@
 <!DOCTYPE html>
 <html lang="es">
-
 <head>
   <meta charset="UTF-8">
   <title>NovaSoft</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
-  <!-- Bootstrap CSS CDN -->
-  <!-- <link href="https://cdn.jsdelivr.net/npm/bootstrap@5.3.2/dist/css/bootstrap.min.css" rel="stylesheet">-->
-  <link href='https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css' rel='stylesheet'>
+  <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
   <link rel="stylesheet" href="css/estilosLogin.css">
-
 </head>
-
 <body>
+
   <!-- Formulario login -->
   <div class="container" id="containerLogin" style="display: block;">
-
     <div class="form-box login" id="form-login">
       <form action="#">
         <h1>Iniciar Sesión</h1>
@@ -31,7 +26,7 @@
         </div>
 
         <div class="forgot-link">
-          <a href="#">Olvidaste tu contraseña?</a>
+          <a href="#">¿Olvidaste tu contraseña?</a>
         </div>
 
         <button type="submit" class="btn">Ingresar</button>
@@ -39,9 +34,8 @@
         <a id="registrarInstructor" href="pages/instructor/registrarInstructor.html">Registrar Instructor</a>
 
         <div id="mensajeError" class="msgError" style="display: none;">
-          <h1>Credenciales Incorrectas!!</h1>
+          <h1>¡Credenciales Incorrectas!</h1>
         </div>
-
       </form>
     </div>
 
@@ -54,51 +48,64 @@
       </div>
     </div>
 
-
-
-
-
     <div id="textoLogin" style="display: none;">
       <h1></h1>
-
     </div>
+  </div>
+
+<nav class="BarraMenu" id="menu-admin" style="display: none;">
+  <div class="nav__data">
+    <i class='bx bx-home'></i>
+    <span class="nav__logo">Instructor
+    </span>
+  </div>
+
+  <div class="nav__menu">
+    <ul class="nav__list">
+      <li class="nav__item">
+        <button class="nav__link" data-tab="dashboard">
+          <i class='bx bx-home'></i> Dashboard
+        </button>
+      </li>
+
+      <li class="nav__item nav__dropdown">
+        <button class="nav__link">
+          <i class='bx bx-user'></i> Usuarios <i class='bx bx-chevron-down'></i>
+        </button>
+        <ul class="dropdown__menu">
+          <li><button class="dropdown__link" data-tab="usuarios">Ver Usuarios</button></li>
+          <li><button class="dropdown__link" data-tab="registroPaciente">Registrar Paciente</button></li>
+        </ul>
+      </li>
+
+      <li class="nav__item">
+        <button class="nav__link" data-tab="nuevaSerieTerapeutica">
+          <i class='bx bx-plus-medical'></i> Nueva Serie Terapéutica
+        </button>
+      </li>
+    </ul>
+  </div>
+</nav>
 
 
+  <!-- MENÚ USUARIO -->
+  <nav class="BarraMenu" id="menu-usuario" style="display: none;">
+    <div class="nav__data">
+      <h1 class="nav__logo">Paciente</h1>
     </div>
-    <!-- Menú admin -->
-    <nav class="BarraMenu" id="menu-admin" style="display:none;">
-      <div>
-        <h1>Instructor</h1>
+    <div class="nav__menu">
+      <ul class="nav__list">
+        <li><button class="nav__link" data-tab="perfil">Iniciar Serie</button></li>
+        <li><button class="nav__link" data-tab="usuarios">dashboard</button></li>
+      </ul>
+    </div>
+  </nav>
 
-      </div>
-      <button data-tab="dashboard">Dashboard</button>
-      <button data-tab="usuarios">Usuarios</button>
-      <button data-tab="registroPaciente">Registrar Paciente</button>
-      <button data-tab="nuevaSerieTerapeutica">Nueva Serie Terapéutica</button>
-    </nav>
-
-    <!-- Menú usuario -->
-    <nav class="BarraMenu" id="menu-usuario" style="display: none;">
-      <div>
-        <h1>Paciente</h1>
-      </div>
-      <button data-tab="perfil">Perfil</button>
-      <button data-tab="pedidos">Pedidos</button>
-    </nav>
-
-
-
-
-
-
-  <!--<a href="../public/pages/instructor/registrarInstructor.html">Ingresa como Instrcutor</a> -->
-
-  <!-- Contenedor de contenido dinámico -->
+  <!-- Contenido dinámico -->
   <div id="contenido"></div>
 
+  <!-- Script principal -->
   <script src="js/main.js"></script>
 
-
 </body>
-
 </html>
