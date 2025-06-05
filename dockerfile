@@ -17,6 +17,8 @@ RUN a2enmod rewrite
 # Aquí se crea composer.json y se instalan las dependencias de PHPUnit
 RUN composer require --dev phpunit/phpunit
 
+# Instalar la librería de Azure Storage Blob
+RUN composer require microsoft/azure-storage-blob
 
 EXPOSE 80
 CMD ["apache2-foreground"]
