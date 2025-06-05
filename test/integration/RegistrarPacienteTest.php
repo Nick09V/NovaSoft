@@ -34,7 +34,7 @@ class RegistrarPacienteTest extends TestCase
                 'content' => json_encode([
                     'nombre' => 'Juan',
                     'apellido' => 'Pérez',
-                    'correo' => 'juan.peres@gmail.com',
+                    'correo' => 'juan.peres02@gmail.com',
                     'contrasena' => 'juan1234',
                     'telefono' => '0234567890',
                     'direccion' => 'Calle 123',
