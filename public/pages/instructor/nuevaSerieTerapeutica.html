@@ -1,38 +1,143 @@
 <html lang="en">
-<head>
-    <meta charset="UTF-8">
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <head>
+    <meta charset="UTF-8" />
+    <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Nueva serie terapéutica</title>
+    <link rel="stylesheet" href="../../css/estilosLogin.css" />
+    <style type="text/css">
+      /* Para mover el contenedor principal (login-container) */
+      .login-container {
+        display: flex;
+        justify-content: flex-start; /* Esto asegura que los elementos estén alineados al principio */
+        align-items: flex-start;
+        transition: transform 0.5s ease;
+        position: relative;
+        width: 100%;
+      }
 
-    
+      /* Cuando se elige "Sí", moveremos el contenedor hacia la izquierda */
+      .login-container.moverIzquierda {
+        transform: translateX(-50%);
+      }
 
-</head>
-<body>
+      /* El nuevo formulario para crear la nueva serie se coloca a la derecha */
+      #crearNuevaSerie {
+        display: none;
+        margin-left: 10rem;
+        padding: 1rem;
+        background-color: var(--color1);
+        border-radius: 8px;
+        box-shadow: 0 4px 6px rgba(0, 0, 0, 0.1);
+        width: 400px; /* Aumenta el tamaño del div */
+        min-width: 300px; /* Esto asegura que nunca se haga demasiado pequeño */
+        height: auto; /* Ajusta la altura de acuerdo al contenido */
+        max-width: 80%; /* Para asegurarse de que no ocupe todo el ancho en pantallas grandes */
+      }
+
+      /* Mostrar el formulario para crear una nueva serie cuando "Sí" está seleccionado */
+      #crearNuevaSerie.mostrar {
+        display: block;
+      }
+    </style>
+  </head>
+  <body>
     <div class="login-container">
-        <div class="formulariosGeneral">
-            <h1 id="title">Nueva serie terapéutica</h1>
+      <div class="formulariosGeneral">
+        <h1 id="title">Nueva serie terapéutica</h1>
         <form id="formularioNuevaSerieTerapeutica">
-        <div class="input-group">
-            <label for="nombreSerieTerapeutica">Ingrese la serie terapéutica</label>
-            <input type="text" id="nombreSerieTerapeutica" name="nombreSerieTerapeutica" placeholder="Nombre de la serie terapéutica" required>       
-        </div>
+          <div class="input-group">
+            <label for="nombreSerieTerapeutica"
+              >Ingrese la serie terapéutica</label
+            >
+            <input
+              type="text"
+              id="nombreSerieTerapeutica"
+              name="nombreSerieTerapeutica"
+              placeholder="Nombre de la serie terapéutica"
+              required
+            />
+          </div>
 
-        <div class="input-group">
-            <label for="terapia">Ciudad:</label>
-                <select id="terapia" name="terapia" required>
-                    <option value="cargando">Cargando..</option>  
-                    <option value="1">Terapia 1</option>  
-                </select>
-        </div>
+          <div class="input-group">
+            <label for="terapia">terapia:</label>
+            <select id="terapia" name="terapia" required></select>
+          </div>
 
+          <div id="serieExistente">
+            <label for="posturasSeries">Elija su serie o cree una nueva</label>
+            <select name="posturasSeries" id="posturasSeries" disabled>
+              <option value="">Seleccione una serie</option>
+            </select>
 
-        <button type="submit" id="botonNuevaSerie" >Crear nueva serie terapéutica</button>
+            <label>¿Crear nueva serie?</label>
+            <div style="display: flex; align-items: center; gap: 4px">
+              <input
+                type="radio"
+                id="crearSerieSi"
+                name="crearSerie"
+                value="si"
+              />
+              <label for="crearSerieSi">Sí</label>
+              <input
+                type="radio"
+                id="crearSerieNo"
+                name="crearSerie"
+                value="no"
+              />
+              <label for="crearSerieNo">No</label>
+            </div>
+          </div>
 
-    </form>
+          <button type="submit" id="botonNuevaSerie">
+            Crear nueva serie terapéutica
+          </button>
+        </form>
+      </div>
+
+      <!-- Nuevo formulario que se mostrará al seleccionar "Sí" -->
+      <div id="crearNuevaSerie">
+        <form>
+          <div style="display: flex; flex-direction: column; gap: 8px">
+            <label for="nuevaSerie">Ingrese el nombre de la nueva serie</label>
+            <input
+              type="text"
+              id="nuevaSerie"
+              name="nuevaSerie"
+              placeholder="Nombre de la nueva serie"
+              required
+            />
+
+            <label for="tipoTerapia">Tipo de terapia</label>
+            <input type="text" name="tipoTerapia" id="tipoTerapia"  
+            value="Terapia de serie"
+            readonly />
+
+            <label for="numeroSesiones">Numero de sesiones</label>
+            <input
+              type="number"
+              name="numeroSesiones"
+              id="numeroSesiones"
+              placeholder="Número de sesiones"
+              required
+            />
+
+            <label for="creadorSerie">Creador</label>
+            <input
+              type="text"
+              name="creadorSerie"
+              id="creadorSerie"
+              placeholder="Creador de la serie"
+              readonly
+            />
+
+            <button type="submit" id="botonCrearNuevaSerie">
+              Crear nueva serie
+            </button>
+          </div>
+        </form>
+      </div>
     </div>
-    </div>
 
-    <!--<script src="../../js/nueva_serie.js" ></script>-->
-    
-</body>
+    <script src="../../js/nueva_serie.js"></script>
+  </body>
 </html>
