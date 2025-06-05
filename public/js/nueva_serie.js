@@ -1,33 +1,44 @@
 (function () {
+    let Terapia = null;
     const terapiaSelect = document.getElementById('terapia');
     const formulario = document.getElementById('formularioNuevaSerieTerapeutica');
     const botonRegistrar = document.getElementById('botonNuevaSerie');
     const inputBotonSerie = document.getElementById('nombreSerieTerapeutica');
+    let posturasSeries = document.getElementById('serieExistente');
 
     
     if (terapiaSelect) {
-        fetch('/NovaSoft/src/models/terapias.php')
+        fetch('/NovaSoft/src/models/terapia.php')
             .then(response => {
                 if (!response.ok) throw new Error('Error al obtener terapias');
                 return response.json();
             })
             .then(data => {
                 if (Array.isArray(data)) {
+                    console.log('Cargando terapias:', data);
+                    // Limpiar opciones previas y agregar opción por defecto
                     terapiaSelect.innerHTML = '<option value="">Seleccione una terapia</option>';
                     data.forEach(terapia => {
                         const option = document.createElement('option');
-                        option.value = terapia.id || terapia.nombre;
+                        option.value = terapia.id;
                         option.textContent = terapia.nombre;
                         terapiaSelect.appendChild(option);
                     });
                 } else {
-                    console.error('Formato de datos inesperado:', data);
+                    console.error('Formato de datos inesperado no es un array:', data);
                 }
             })
             .catch(error => {
                 console.error('Error al cargar terapias:', error);
             });
     }
+
+
+    terapiaSelect.addEventListener('change', (e) => {
+        console.log('Terapia seleccionada:', e.target.value);
+        funcionCargarSeries(e.target.value);
+
+    });
 
 
     if (inputBotonSerie) {
@@ -73,7 +84,66 @@
 
 
 
+function funcionCargarSeries(valor) {
+    console.log('Cargando series para terapia:', valor);
+    fetch('/NovaSoft/src/models/serie/cargarSeries.php?id=' + valor)
+        .then(response => {
+            if (!response.ok) throw new Error('Error al obtener series');
+            return response.json();
+        })
+        .then(data => {
+            console.log('Series obtenidas:', data);
+            //posturasSeries.innerHTML = ''; // Limpiar posturas previas
+            //posturasSeries.style.display = 'block'; // Mostrar el contenedor de posturas
+            //cargarPosturasSeries(data.id);
+
+
+        })
+        .catch(error => {
+            console.error('Error al cargar series:', error);
+        });
+}
+
+
+
+
+
+function cargarPosturasSeries(serieID) {
+    console.log('Cargando posturas para series');
+    fetch('/NovaSoft/src/models/postura/cargarPosturas.php')
+        .then(response => {
+            if (!response.ok) throw new Error('Error al obtener posturas');
+            return response.json();
+        })
+        .then(data => {
+            console.log('Posturas obtenidas:', data);
+            // Aquí puedes procesar las posturas obtenidas
+        })
+        .catch(error => {
+            console.error('Error al cargar posturas:', error);
+        });
+};
+
+
+  const crearSerieSi = document.getElementById("crearSerieSi");
+  const crearSerieNo = document.getElementById("crearSerieNo");
+  const loginContainer = document.querySelector(".login-container");
+  const crearNuevaSerie = document.getElementById("crearNuevaSerie");
+
+  // Agregar evento cuando se selecciona "Sí" para mover el contenedor y mostrar el formulario
+  crearSerieSi.addEventListener("change", () => {
+    loginContainer.classList.add("moverIzquierda"); // Mover el contenedor hacia la izquierda
+    crearNuevaSerie.classList.add("mostrar"); // Mostrar el formulario para crear nueva serie
+  });
+
+  // Agregar evento cuando se selecciona "No" para regresar el contenedor y ocultar el formulario
+  crearSerieNo.addEventListener("change", () => {
+    loginContainer.classList.remove("moverIzquierda"); // Regresar el contenedor a su posición original
+    crearNuevaSerie.classList.remove("mostrar"); // Ocultar el formulario para crear nueva serie
+  });
+
 })();
+
 
 
 
