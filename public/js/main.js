@@ -108,6 +108,7 @@ async function cargarContenido(rol, tab) {
       usuarios: '../pages/usuario/usuarios.html',
       registroPaciente: '/NovaSoft/public/pages/usuario/registrarPaciente.html',
       nuevaSerieTerapeutica: '/NovaSoft/public/pages/instructor/nuevaSerieTerapeutica.html',
+      posturas: '/NovaSoft/public/pages/posturas/posturas.html'
     },
     paciente: {
       usuarios: '/NovaSoft/public/pages/usuario/usuarios.html',
@@ -121,6 +122,7 @@ async function cargarContenido(rol, tab) {
     usuarios: '/NovaSoft/public/js/usuarios.js',
     registroPaciente: '/NovaSoft/public/js/registrar_nuevo_paciente.js',
     nuevaSerieTerapeutica: '/NovaSoft/public/js/nueva_serie.js',
+    posturas: '/NovaSoft/public/js/cargar_posturas.js'
   },
   paciente: {
     /*usuarios: '/NovaSoft/public/js/usuarios.js',*/
