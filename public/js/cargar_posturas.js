@@ -8,8 +8,8 @@ document.addEventListener('DOMContentLoaded', () => {
   const cargarPosturas = async (terapiaId = '') => {
     try {
       const url = terapiaId
-        ? `../../../src/models/posturasapi.php?terapia=${terapiaId}`
-        : '../../../src/models/posturasapi.php';
+        ? `../../../src/models/posturas.php?terapia=${terapiaId}`
+        : '../../../src/models/posturas.php';
 
       const res = await fetch(url);
       if (!res.ok) throw new Error('No se pudieron cargar las posturas');

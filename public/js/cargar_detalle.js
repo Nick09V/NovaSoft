@@ -3,7 +3,7 @@ document.addEventListener('DOMContentLoaded', async () => {
   const contenedor = document.getElementById('detalle-postura');
 
   try {
-    const res = await fetch(`../../../src/models/posturasapi.php?id=${id}`);
+    const res = await fetch(`../../../src/models/posturas.php?id=${id}`);
     if (!res.ok) throw new Error('No se pudo cargar el detalle');
 
     const postura = await res.json();
