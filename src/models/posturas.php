@@ -1,4 +1,4 @@
-posturas.php
+
 <?php
 require_once __DIR__ . '/../config/connect.php';
 header('Content-Type: application/json');
