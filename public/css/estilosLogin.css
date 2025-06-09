@@ -528,3 +528,27 @@ button:disabled {
   background-color: blanchedalmond;
   height: 500px;
 }
+
+/*Posturas*/
+.filtros-header {
+  display: flex;
+  flex-direction: column;
+  align-items: center;
+  margin-top: 100px;
+  text-align: center;
+}
+
+.filtros-header h1 {
+  font-size: 2.5rem;
+  font-weight: 700;
+  color: var(--color-text);
+  margin:0 0 1rem 0;
+}
+
+.filtros-superiores {
+  display: flex;
+  gap: 1em;
+  flex-wrap: wrap;
+  justify-content: center;
+  align-items: center;
+}
