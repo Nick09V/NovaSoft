@@ -3,7 +3,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Nueva serie terapéutica</title>
-    <link rel="stylesheet" href="../../css/estilosLogin.css" />
+    <link rel="stylesheet" href="/NovaSoft/public/css/estilosLogin.css" />
     <style type="text/css">
       /* Para mover el contenedor principal (login-container) */
       .login-container {
@@ -88,6 +88,8 @@
             </div>
           </div>
 
+          
+
           <button type="submit" id="botonNuevaSerie">
             Crear nueva serie terapéutica
           </button>
@@ -95,10 +97,12 @@
       </div>
 
       <!-- Nuevo formulario que se mostrará al seleccionar "Sí" -->
+
+
       <div id="crearNuevaSerie">
-        <form>
+        <form id="formularioCrearNuevaSerie">
           <div style="display: flex; flex-direction: column; gap: 8px">
-            <label for="nuevaSerie">Ingrese el nombre de la nueva serie</label>
+            <label for="nuevaSerie">Nombre de la nueva serie:</label>
             <input
               type="text"
               id="nuevaSerie"
@@ -108,9 +112,19 @@
             />
 
             <label for="tipoTerapia">Tipo de terapia</label>
-            <input type="text" name="tipoTerapia" id="tipoTerapia"  
-            value="Terapia de serie"
-            readonly />
+            <input
+              type="text"
+              name="tipoTerapia"
+              id="tipoTerapia"
+              value="Terapia de serie"
+              disabled
+            />
+
+
+            <label for="posturasCheckboxGroup">Posturas elige</label>
+            <div id="posturasCheckboxGroup" style="display: flex; flex-direction: column; gap: 4px;">
+              <!-- Aquí se cargarán dinámicamente los checkboxes de posturas -->
+            </div>
 
             <label for="numeroSesiones">Numero de sesiones</label>
             <input
@@ -137,6 +151,11 @@
         </form>
       </div>
     </div>
+
+
+    </div> <!-- Contenedor para los detalles de la serie -->
+    <div id="detallesSerie" style="display: none;"></div>
+          
 
     <script src="../../js/nueva_serie.js"></script>
   </body>
