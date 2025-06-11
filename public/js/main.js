@@ -1,9 +1,48 @@
 // Variable global que guarda el rol actual
 let rolActual = null;
-document.addEventListener('DOMContentLoaded', () => {
 
+//Función para guardar la información del usuario en localStorage
+function actualizarSidebarConUsuario() {
+  const nombre = localStorage.getItem('nombre') || 'Usuario';
+  const correo = localStorage.getItem('correo') || 'correo@example.com';
+  const nombreElem = document.querySelector('.sidebar-user h3');
+  const correoElem = document.querySelector('.sidebar-user span');
+
+  if (nombreElem) nombreElem.textContent = nombre;
+  if (correoElem) correoElem.textContent = correo;
+}
+//Función para cerrar sesión
+function cerrarSesion() {
+  console.log('Cerrando sesión...');
+  localStorage.clear(); // Elimina nombre, correo, rol, etc.
+
+  // Oculta paneles
+  document.getElementById('dashboard-content-instructor').style.display = 'none';
+  document.getElementById('dashboard-content').style.display = 'none';
+  const loginContainer = document.getElementById('containerLogin');
+  loginContainer.style.display = 'block';
+
+  // Limpia contenido dinámico
+  document.getElementById('contenido').innerHTML = '';
+
+  //Redirige al login
+  window.location.href = window.location.origin + "/NovaSoft/public/";
+}
+
+
+
+
+document.addEventListener('DOMContentLoaded', () => {
+  actualizarSidebarConUsuario();
+  document.addEventListener('click', function(e) {
+    if (e.target.closest('#btn-cerrar-sesion')) {
+      e.preventDefault();
+      cerrarSesion();
+    }
+  });
+
+  
 // Login
-// Ricardo Villarreal
 async function login(username, password) {
   console.log('Intentando login con:', username, password);
 
@@ -31,7 +70,10 @@ async function login(username, password) {
     console.log('Login exitoso');
     rolActual = data.rol;
     console.log('Rol del usuario:', rolActual);
-
+    localStorage.setItem('nombre' , data.usuario.nombre);
+    localStorage.setItem('correo', username);
+    localStorage.setItem('rol', rolActual);
+    actualizarSidebarConUsuario();
     mostrarMenu(rolActual);
     cargarContenidoInicial(rolActual);
 
@@ -59,8 +101,20 @@ document.getElementById('form-login').addEventListener('submit', e => {
 });
 
 
+// Evento para el botón Inicio
+const btnInicio = document.getElementById('btn-inicio');
+if (btnInicio) {
+  btnInicio.addEventListener('click', function() {
+    if (rolActual) {
+      cargarContenido(rolActual, 'dashboard');
+    }
+  });
+}
+
 });
 
+
+//=================================================================================//
 
 // Mostrar menú según rol
 function mostrarMenu(rol) {
@@ -70,25 +124,40 @@ function mostrarMenu(rol) {
     loginContainer.style.display = 'none';
     // Mostrar menú y contenido
     if (rol === 'instructor') {
-      document.getElementById('menu-admin').style.display = 'flex';
-      activarEventosMenu('menu-admin');
+      document.getElementById('dashboard-content-instructor').style.display = 'block';
+      document.getElementById('dashboard-content').style.display = 'block';
+      actualizarSidebarConUsuario();
+      activarEventosMenu('dashboard-content-instructor');
     } else if (rol === 'paciente') {
       document.getElementById('menu-usuario').style.display = 'block';
+      actualizarSidebarConUsuario();
       activarEventosMenu('menu-usuario');
     }
   }, 500); // Espera a que termine la transición
 }
 // Activar evento click en los botones del menú para cargar contenido
-function activarEventosMenu(menuId) {
+  function activarEventosMenu(menuId) {
   const menu = document.getElementById(menuId);
-  menu.querySelectorAll('button').forEach(btn => {
+  if (!menu) {
+    console.warn('No se encontró el menú con id:', menuId);
+    return;
+  }
+
+  const botones = menu.querySelectorAll('[data-tab]');
+  if (!botones.length) {
+    console.warn('No se encontraron botones con data-tab en', menuId);
+    return;
+  }
+
+  botones.forEach(btn => {
     btn.onclick = () => {
       const tab = btn.getAttribute('data-tab');
-      console.log('Cargando tab:', tab , 'para rol:', rolActual);
+      console.log('Cargando tab:', tab, 'para rol:', rolActual);
       cargarContenido(rolActual, tab);
     };
   });
 }
+
 
 // Cargar contenido inicial (ej: dashboard) según rol
 function cargarContenidoInicial(rol) {
@@ -158,3 +227,13 @@ async function cargarContenido(rol, tab) {
     document.getElementById('contenido').innerHTML = `<p>Error: ${e.message}</p>`;
   }
 }
+
+// Si se hace click en el enlace de registrar paciente
+document.addEventListener('click', function(e) {
+  // Para botón o enlace con data-tab="registroPaciente"
+  const target = e.target.closest('[data-tab="registroPaciente"]');
+  if (target) {
+    e.preventDefault();
+    cargarContenido(rolActual || 'instructor', 'registroPaciente');
+  }
+});

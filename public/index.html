@@ -5,9 +5,11 @@
   <title>NovaSoft</title>
   <meta name="viewport" content="width=device-width, initial-scale=1">
   <link href="https://unpkg.com/boxicons@2.1.4/css/boxicons.min.css" rel="stylesheet">
+  <link rel="stylesheet" href="https://cdnjs.cloudflare.com/ajax/libs/line-awesome/1.3.0/line-awesome/css/line-awesome.min.css">
   <link rel="stylesheet" href="css/estilosLogin.css">
 </head>
 <body>
+<input type="checkbox" name="" id="sidebar-toggle">
 
   <!-- Formulario login -->
   <div class="container" id="containerLogin" style="display: block;">
@@ -53,56 +55,76 @@
     </div>
   </div>
 
-<nav class="BarraMenu" id="menu-admin" style="display: none;">
-  <div class="nav__data">
-    <i class='bx bx-home'></i>
-    <span class="nav__logo">Instructor
-    </span>
-  </div>
-
-  <div class="nav__menu">
-    <ul class="nav__list">
-      <li class="nav__item">
-        <button class="nav__link" data-tab="dashboard">
-          <i class='bx bx-home'></i> Dashboard
-        </button>
-      </li>
-
-      <li class="nav__item nav__dropdown">
-        <button class="nav__link">
-          <i class='bx bx-user'></i> Usuarios <i class='bx bx-chevron-down'></i>
-        </button>
-        <ul class="dropdown__menu">
-          <li><button class="dropdown__link" data-tab="usuarios">Ver Usuarios</button></li>
-          <li><button class="dropdown__link" data-tab="registroPaciente">Registrar Paciente</button></li>
+  <!---Menu Admin-->
+  <div class="sidebar" id="dashboard-content-instructor" style="display: none;">
+    <div class="sidebar-brand">
+      <h2 class="sidebar-title">NovaSoft</h2>
+      <div class="brand-flex"></div>
+    </div>
+    <div class="sidebar-main">
+      <div class="sidebar-user">
+        <h2>Bienvenido/a !</h2>
+        <img src="images/user.png" alt="">
+        <div>
+          <h3 id="nombre-usuario">Usuario</h3>
+          <span id="correo-usuario">usuario@gmail.com</span>
+        </div>
+      </div>
+      <div class="sidebar-menu">
+        <div class="menu-head">
+          <span>Dashboard</span>
+        </div>
+        <ul>
+          <li>
+            <a href="#">
+              <span class="las la-balance-scale"></span>
+              Ver Historial de Sesiones
+            </a>
+          </li>
+          <li>
+            <a href="#" id="sidebar-registrar-paciente" data-tab="registroPaciente">
+              <span class="las la-chart-pie"></span>
+              Registrar Pacientes
+            </a>
+          </li>
+          <li>
+            <a href="#">
+              <span class="las la-chart-pie"></span>
+              Ver Pacientes
+            </a>
+          </li>
         </ul>
-      </li>
-
-      <li class="nav__item">
-        <button class="nav__link" data-tab="nuevaSerieTerapeutica">
-          <i class='bx bx-plus-medical'></i> Nueva Serie Terapéutica
-        </button>
-      </li>
-    </ul>
+        <div class="menu-head">
+          <span>Applications</span>
+        </div>
+        <ul>
+          <li>
+            <a href="#" id="btn-cerrar-sesion">
+              <span class="las la-sign-out-alt"></span>
+              Cerrar Sesión
+            </a>
+          </li>
+        </ul>
+      </div>
+    </div>
   </div>
-</nav>
 
-
-  <!-- MENÚ USUARIO -->
-  <nav class="BarraMenu" id="menu-usuario" style="display: none;">
-    <div class="nav__data">
-      <h1 class="nav__logo">Paciente</h1>
-    </div>
-    <div class="nav__menu">
-      <ul class="nav__list">
-        <li><button class="nav__link" data-tab="perfil">Iniciar Serie</button></li>
-        <li><button class="nav__link" data-tab="usuarios">dashboard</button></li>
-      </ul>
-    </div>
-  </nav>
-
-  <!-- Contenido dinámico -->
-  <div id="contenido"></div>
+  <div class="main-content" id="dashboard-content" style="display: none;">
+    <header>
+      <div class="menu-toggle">
+        <label for="sidebar-toggle">
+        <span class="las la-bars"></span>
+        </label>
+      </div>
+      <div class="header-icons">
+        <span class="las la-search"></span>
+        <span class="las la-bookmark"></span>
+        <span class="las la-sms"></span>
+        <button id="btn-inicio" class="btn-inicio">Inicio</button>
+      </div>
+    </header>
+    <div id="contenido"></div>
+  </div>
 
   <!-- Script principal -->
   <script src="js/main.js"></script>
