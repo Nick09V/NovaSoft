@@ -1,41 +1,66 @@
 <?php
-
 header('Content-Type: application/json');
+session_start();
 require_once __DIR__ . '/../config/connect.php'; 
 
+// Verificar sesión
+if (!isset($_SESSION['id'])) {
+    echo json_encode(['success' => false, 'message' => 'No se ha iniciado sesión como instructor']);
+    exit;
+}
 
-//Se recibe los datos del paciente en formato JSON
+$instructorId = $_SESSION['id'];
+
+// Recibir datos del paciente
 $input = json_decode(file_get_contents('php://input'), true);
-
-if (!$input){
+if (!$input) {
     echo json_encode(['success' => false, 'message' => 'No se recibieron datos']);
     exit;
 }
 
-$nombre = $input['nombre'] ?? '';
-$apellido = $input['apellido'] ?? '';
-$correo = $input['correo'] ?? '';
-$contrasena = $input['contrasena'] ?? '';
-$telefono = $input['telefono'] ?? '';
-$direccion = $input['direccion'] ?? '';
-$ciudad = $input['ciudad'] ?? '';
+// Limpiar y normalizar
+$nombre     = trim($input['nombre'] ?? '');
+$apellido   = trim($input['apellido'] ?? '');
+$correo     = strtolower(trim($input['correo'] ?? ''));
+$contrasena = trim($input['contrasena'] ?? '');
+$telefono   = trim($input['telefono'] ?? '');
+$direccion  = trim($input['direccion'] ?? '');
+$ciudad     = trim($input['ciudad'] ?? '');
 
-// Validar que los campos requeridos no estén vacíos
+// Validar campos obligatorios
 if (empty($nombre) || empty($apellido) || empty($correo) || empty($contrasena)) {
     echo json_encode(['success' => false, 'message' => 'Faltan datos requeridos']);
     exit;
 }
 
-// Insertar el nuevo paciente en la base de datos
-try{
-    $stmt = $pdo->prepare("INSERT INTO paciente (nombre, apellido, correo, contrasena, telefono, direccion, ciudad) VALUES (?, ?, ?, ?, ?, ?,?)");
-    $stmt->execute([$nombre, $apellido, $correo, password_hash($contrasena, PASSWORD_DEFAULT), $telefono, $direccion, $ciudad]);
+try {
+    // Validar si el correo ya existe
+    $stmt = $pdo->prepare("SELECT id FROM paciente WHERE correo = ?");
+    $stmt->execute([$correo]);
+
+    if ($stmt->fetch()) {
+        echo json_encode(['success' => false, 'message' => 'El correo ya está registrado.']);
+        exit;
+    }
+
+    // Insertar paciente si pasó la validación
+    $stmt = $pdo->prepare("
+        INSERT INTO paciente 
+        (nombre, apellido, correo, contrasena, telefono, direccion, ciudad, id_instructor) 
+        VALUES (?, ?, ?, ?, ?, ?, ?, ?)
+    ");
+    $stmt->execute([
+        $nombre, $apellido, $correo, password_hash($contrasena, PASSWORD_DEFAULT),
+        $telefono, $direccion, $ciudad, $instructorId
+    ]);
+
     echo json_encode(['success' => true, 'message' => 'Paciente registrado correctamente']);
-} catch(Exception $e) {
-    // Manejo de errores
-    echo json_encode(['success' => false, 'message' => 'Error al registrar el paciente: ' . $e->getMessage()]);
+    exit;
+
+} catch (Exception $e) {
+    echo json_encode([
+        'success' => false,
+        'message' => 'Error al registrar el paciente: ' . $e->getMessage()
+    ]);
+    exit;
 }
-
-
-
-?>

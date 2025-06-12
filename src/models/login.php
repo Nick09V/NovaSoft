@@ -1,5 +1,6 @@
 <?php
 header('Content-Type: application/json');
+session_start();
 
 // Datos de conexión a Clever Cloud
 $host = 'b0lflvqb9csc4alyandu-mysql.services.clever-cloud.com';
@@ -34,40 +35,33 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Buscar en tabla instructor
-    $stmt = $pdo->prepare("SELECT nombre, contrasena FROM instructor WHERE correo = ?");
+    $stmt = $pdo->prepare("SELECT id, nombre, correo, contrasena FROM instructor WHERE correo = ?");
     $stmt->execute([$username]);
     $instructor = $stmt->fetch();
 
     if ($instructor && password_verify($password, $instructor['contrasena'])) {
+        // Asignar valores a $_SESSION
+        $_SESSION['id'] = $instructor['id'];
+        $_SESSION['correo'] = $instructor['correo'];
+        $_SESSION['nombre'] = $instructor['nombre'];
+        $_SESSION['rol'] = 'instructor';
+
         echo json_encode([
             'status' => 'ok',
             'rol' => 'instructor',
             'usuario' => [
                 'nombre' => $instructor['nombre'],
-                'rol' => 'instructor'
+                'correo' => $instructor['correo'],
+                'rol' => 'instructor',
+                'session' => session_id()
             ]
         ]);
         exit;
-    }
-
-    // Buscar en tabla paciente si no se encontró en instructor
-    $stmt = $pdo->prepare("SELECT nombre, contrasena FROM paciente WHERE correo = ?");
-    $stmt->execute([$username]);
-    $paciente = $stmt->fetch();
-
-    if ($paciente && password_verify($password, $paciente['contrasena'])) {
-        echo json_encode([
-            'status' => 'ok',
-            'rol' => 'paciente',
-            'usuario' => [
-                'nombre' => $paciente['nombre'],
-                'rol' => 'paciente'
-            ]
-        ]);
     } else {
         echo json_encode(['status' => 'error', 'message' => 'Credenciales incorrectas']);
+        exit;
     }
 } else {
     echo json_encode(['status' => 'error', 'message' => 'Método no permitido']);
+    exit;
 }
-?>

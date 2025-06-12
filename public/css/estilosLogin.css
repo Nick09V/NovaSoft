@@ -822,23 +822,28 @@ main {
 }
 
 .card-chart.success span {
-  color: seagreen;
+  color: #2c3e50;
 }
 
 .card-chart.danger span {
   color: red;
 }
 
-.card-chart.yellow span {
-  color: red;
+.card-chart.bell span {
+  color: #ffd700;
 }
 
-.jobs-grid {
+.job-grid {
   margin-top: 4rem;
   display: grid;
-  grid-template-columns: auto 66%;
+  grid-template-columns: 1fr; 
   grid-gap: 3rem;
 }
+.analytics-card,
+.jobs {
+  width: 100%;
+}
+
 
 .analytics-card {
   background: #fff;
@@ -899,11 +904,20 @@ main {
   border-radius: 3px;
 }
 
+.analytics-card table {
+  width: 100%;
+}
 
 .jobs table {
+  width: 100%;
   border-collapse: collapse;
   margin-top: 1rem;
   overflow-x: auto;
+}
+
+.jobs table td {
+  padding: 0.75rem 1rem;
+  vertical-align: middle;
 }
 
 .jobs table td div {
@@ -964,6 +978,9 @@ table button {
   .cards {
     grid-template-columns: repeat(2, 1fr);
   }
+  .job-grid {
+    grid-template-columns: 1fr;
+  }
 }
 
 @media only screen and (max-width: 768px) {
@@ -986,7 +1003,48 @@ table button {
     margin-left: 0rem;
 
   }
+  .tabla-sesiones th, .tabla-sesiones td {
+    font-size: 0.85rem;
+    padding: 0.4rem;
+  }
+
+  .card-single {
+    text-align: center;
+  }
+
+  .card-flex {
+    display: block;
+  }
+
+  .card-chart {
+    margin-top: 1rem;
+  }
+
+  .menu-toggle {
+    display: block !important;
+    z-index: 50;
+  }
+
+  .menu-toggle label {
+    background: var(--color3); /* mismo color del header o sidebar */
+    padding: 0.5rem;
+    border-radius: 5px;
+    position: relative;
+    z-index: 50;
+  }
+
+  header {
+    position: fixed;
+    top: 0;
+    left: 0;
+    width: 100% !important;
+    z-index: 40;
+    display: flex;
+    justify-content: space-between;
+    align-items: center;
+  }
 }
+
 
 .menu-toggle label span {
   color: #fff;
@@ -994,6 +1052,81 @@ table button {
 
 .sidebar-menu li.cerrar-sesion {
   margin-top: 2rem;
-  margin-bottom: 15rem; /* Ajusta según lo que necesites */
+  margin-bottom: 15rem; 
 }
+
+.tabla-sesiones {
+  width: 100%;
+  border-collapse: collapse;
+  margin-top: 1rem;
+}
+
+.tabla-sesiones th, .tabla-sesiones td {
+  padding: 0.6rem;
+  text-align: left;
+  border-bottom: 1px solid #ccc;
+}
+
+.tabla-sesiones th {
+  color: #333;
+  font-size: 0.9rem;
+}
+
+.tabla-sesiones td {
+  padding: 0.75rem 1rem;
+}
+
+.tabla-sesiones td small {
+  color: #666;
+}
+
+.analytics-card h3 {
+  margin-bottom: 1rem;
+}
+
+.card-indicadores-expandida {
+  grid-column: span 2;
+}
+
+.detalle-dolor-niveles {
+  margin-top: 1rem;
+  font-size: 0.85rem;
+  line-height: 1.5;
+  color: #333;
+}
+
+.detalle-dolor-niveles span {
+  display: flex;
+  align-items: center;
+  gap: 0.4rem;
+  font-size: 0.9rem;
+}
+
+.nivel-verde {
+  color: seagreen !important;
+}
+
+.nivel-lima {
+  color: #9acd32 !important;/* verde lima */
+}
+
+.nivel-amarillo {
+  color: goldenrod !important;
+}
+
+.nivel-naranja {
+  color: darkorange !important;
+}
+
+.nivel-rojo {
+  color: crimson !important;
+}
+
+
+
+
+
+
+
+
 
