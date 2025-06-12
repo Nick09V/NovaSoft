@@ -8,7 +8,7 @@ if (!isset($_SESSION['correo'])) {
     exit;
 }
 
-echo json_encode(['status' => 'ok','correo' => $_SESSION['correo']]);
+#echo json_encode(['status' => 'ok','correo' => $_SESSION['correo']]);
 
 $correo = $_SESSION['correo'];
 
@@ -16,7 +16,7 @@ $correo = $_SESSION['correo'];
 include_once __DIR__ . '/../config/connect.php';
 
 try {
-    $stmt = $pdo->prepare("SELECT nombre, correo, edad, genero FROM paciente WHERE correo = ?");
+    $stmt = $pdo->prepare("SELECT nombre, correo, telefono, direccion FROM paciente WHERE correo = ?");
     $stmt->execute([$correo]);
     $paciente = $stmt->fetch();
 
