@@ -16,7 +16,7 @@ $correo = $_SESSION['correo'];
 include_once __DIR__ . '/../config/connect.php';
 
 try {
-    $stmt = $pdo->prepare("SELECT nombre, correo, telefono, direccion FROM paciente WHERE correo = ?");
+    $stmt = $pdo->prepare("SELECT nombre, apellido, correo, direccion, telefono, ciudad FROM paciente WHERE correo = ?");
     $stmt->execute([$correo]);
     $paciente = $stmt->fetch();
 
