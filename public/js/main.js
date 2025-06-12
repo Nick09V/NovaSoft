@@ -91,8 +91,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   document.getElementById('form-login').addEventListener('submit', e => {
     e.preventDefault();
+    console.log('Formulario de login enviado');
     const username = e.target.username.value;
     const password = e.target.password.value;
+    console.log('Datos de login:', { username, password });
     login(username, password).catch(err => alert(err.message));
   });
 
@@ -185,7 +187,7 @@ async function cargarContenido(rol, tab) {
 
   try {
     // Limpiar scripts anteriores
-    limpiarScriptsPrevios();
+    //limpiarScriptsPrevios();
     
     // Cargar HTML
     const res = await fetch(url);
