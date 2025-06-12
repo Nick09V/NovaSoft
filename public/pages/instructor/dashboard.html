@@ -1,15 +1,77 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-    <meta charset="UTF-8">
-    <title>Dashboard Instructor</title>
-    <meta name="viewport" content="width=device-width, initial-scale=1.0">
-    
-</head>
-<body>
-    <div id="dashboard-content-instructor">
-        <div class="loading">Cargando contenido...</div>
+<!-- Tarjetas principales -->
+<div class="cards">
+  <!-- Tarjeta Pacientes -->
+  <div class="card-single">
+    <div class="card-info">
+      <h3>Pacientes</h3>
+      <ul class="pacientes-lista">
+        <li><strong id="pacientes-activos">0</strong> Pacientes activos</li>
+        <li><strong id="pacientes-sin-serie">0</strong> Sin serie asignada</li>
+        <li><strong id="sesiones-hoy">0</strong> Sesiones completadas hoy</li>
+      </ul>
     </div>
+  </div>
 
-</body>
-</html>
+  <!-- Tarjeta Indicadores -->
+  <div class="card-single">
+    <div class="card-flex">
+      <div class="card-info">
+        <div class="card-head">
+          <span class="Purchases"></span>
+          <small>INDICADORES</small>
+        </div>
+        <h5>Mejora Promedio del Dolor</h5>
+        <div id="detalle-dolor-niveles" class="detalle-dolor-niveles"></div>
+      </div>
+      <div class="card-chart success">
+        <span class="las la-stethoscope"></span>
+      </div>
+    </div>
+  </div>
+
+  <!-- Tarjeta Alertas -->
+  <div class="card-single">
+    <div class="card-flex">
+      <div class="card-info">
+        <div class="card-head">
+          <span class="Purchases"></span>
+          <small>Alertas</small>
+        </div>
+        <h2 id="sesiones-hoy">0</h2>
+        <small>Alertas sobre los pacientes</small>
+      </div>
+      <div class="card-chart bell">
+        <span class="lar la-bell"></span>
+      </div>
+    </div>
+  </div>
+</div>
+
+<!-- Sesiones y Jobs -->
+<div class="job-grid">
+  <div class="analytics-card">
+    <h3>Sesiones recientes o próximas</h3>
+    <table class="tabla-sesiones">
+      <thead>
+        <tr>
+          <th>Paciente</th>
+          <th>Últ. sesión</th>
+          <th>Comentario</th>
+          <th>Iniciadas</th>
+          <th>Terminadas</th>
+        </tr>
+      </thead>
+      <tbody id="tabla-sesiones-body">
+        <!-- Se llenará dinámicamente -->
+      </tbody>
+    </table>
+  </div>
+
+  <div class="jobs">
+  <h3>Pacientes sin serie asignada</h3>
+  <table width="100%">
+    <tbody id="tabla-pacientes-sin-serie">
+      <tr><td colspan="5">Cargando pacientes...</td></tr>
+    </tbody>
+  </table>
+</div>

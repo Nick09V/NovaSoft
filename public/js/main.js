@@ -1,12 +1,55 @@
-// Variable global que guarda el rol actual
 let rolActual = null;
-document.addEventListener('DOMContentLoaded', () => {
 
-// Login
-// Ricardo Villarreal
+// ========================== Cargar Usuario desde Sesión ==========================
+async function cargarUsuarioDesdeSesion() {
+  try {
+    const res = await fetch('/NovaSoft/src/models/getUsuario.php');
+    const data = await res.json();
+
+    if (data.status === 'ok') {
+      const nombreElem = document.getElementById('nombre-usuario');
+      const correoElem = document.getElementById('correo-usuario');
+
+      if (nombreElem) nombreElem.textContent = data.usuario.nombre;
+      if (correoElem) correoElem.textContent = data.usuario.correo;
+
+      rolActual = data.usuario.rol;
+    } else {
+      console.warn('No hay sesión activa');
+    }
+  } catch (err) {
+    console.error('Error al obtener usuario de sesión:', err);
+  }
+}
+
+// ========================== Cerrar sesión ==========================
+async function cerrarSesion() {
+  try {
+    const res = await fetch('/NovaSoft/src/models/logout.php');
+    const data = await res.json();
+
+    console.log('Respuesta del servidor al cerrar sesión:', data);
+
+    // Limpiar localStorage por compatibilidad
+    localStorage.clear();
+
+    // Ocultar paneles
+    document.getElementById('dashboard-content-instructor').style.display = 'none';
+    document.getElementById('dashboard-content').style.display = 'none';
+    document.getElementById('contenido').innerHTML = '';
+
+    // Mostrar login
+    document.getElementById('containerLogin').style.display = 'block';
+
+    // Redirigir si lo deseas
+    window.location.href = '/NovaSoft/public/';
+  } catch (err) {
+    console.error('Error al cerrar sesión:', err);
+  }
+}
+
+// ========================== Login ==========================
 async function login(username, password) {
-  console.log('Intentando login con:', username, password);
-
   try {
     const res = await fetch('../src/models/login.php', {
       method: 'POST',
@@ -14,29 +57,18 @@ async function login(username, password) {
       body: JSON.stringify({ username, password })
     });
 
-    const data = await res.json(); // Siempre intenta leer la respuesta
-
-     // ✅ Imprimir en consola el mensaje y estatus
-    console.log('Respuesta del servidor:', data);
-    console.log('Status:', data.status);
-    console.log('Mensaje:', data.message || 'Sin mensaje');
-
+    const data = await res.json();
     if (!res.ok || data.status !== 'ok') {
-      // Mostrar mensaje en pantalla si hay error
       mostrarMensajeError(data.message || 'Credenciales incorrectas');
-      return; // No continuar con login
+      return;
     }
 
-    // Si el login fue exitoso
-    console.log('Login exitoso');
     rolActual = data.rol;
-    console.log('Rol del usuario:', rolActual);
-
+    cargarUsuarioDesdeSesion(); // Obtiene los datos reales desde sesión
     mostrarMenu(rolActual);
     cargarContenidoInicial(rolActual);
 
   } catch (error) {
-    // Error de red o JSON
     console.error('Error en login:', error);
     mostrarMensajeError('Ocurrió un error inesperado. Intenta de nuevo.');
   }
@@ -46,75 +78,74 @@ function mostrarMensajeError(mensaje) {
   document.getElementById('mensajeError').style.display = 'block';
 }
 
-// Escuchar submit login
-document.getElementById('form-login').addEventListener('submit', e => {
-  e.preventDefault();
-  console.log('Intentando login');
-  const username = e.target.username.value;
-  const password = e.target.password.value;
-  login(username, password).catch(err => alert(err.message));
+// ========================== Eventos al cargar ==========================
+document.addEventListener('DOMContentLoaded', () => {
+  cargarUsuarioDesdeSesion();
+
+  document.addEventListener('click', function (e) {
+    if (e.target.closest('#btn-cerrar-sesion')) {
+      e.preventDefault();
+      cerrarSesion();
+    }
+  });
+
+  document.getElementById('form-login').addEventListener('submit', e => {
+    e.preventDefault();
+    const username = e.target.username.value;
+    const password = e.target.password.value;
+    login(username, password).catch(err => alert(err.message));
+  });
+
+  const btnInicio = document.getElementById('btn-inicio');
+  if (btnInicio) {
+    btnInicio.addEventListener('click', function () {
+      if (rolActual) {
+        cargarContenido(rolActual, 'dashboard');
+      }
+    });
+  }
 });
 
-});
-
-// Mostrar menú según rol
+// ========================== Menú según rol ==========================
 function mostrarMenu(rol) {
   const loginContainer = document.getElementById('containerLogin');
   loginContainer.classList.add('fade-out');
   setTimeout(() => {
     loginContainer.style.display = 'none';
-    // Mostrar menú y contenido
+
     if (rol === 'instructor') {
-      document.getElementById('menu-admin').style.display = 'flex';
-      activarEventosMenu('menu-admin');
+      document.getElementById('dashboard-content-instructor').style.display = 'block';
+      document.getElementById('dashboard-content').style.display = 'block';
+      activarEventosMenu('dashboard-content-instructor');
     } else if (rol === 'paciente') {
       document.getElementById('menu-usuario').style.display = 'block';
       activarEventosMenu('menu-usuario');
     }
-  }, 500); // Espera a que termine la transición
+  }, 500);
 }
 
-// Activar evento click en los botones del menú para cargar contenido
 function activarEventosMenu(menuId) {
   const menu = document.getElementById(menuId);
-  menu.querySelectorAll('button').forEach(btn => {
+  if (!menu) return;
+
+  const botones = menu.querySelectorAll('[data-tab]');
+  botones.forEach(btn => {
     btn.onclick = () => {
       const tab = btn.getAttribute('data-tab');
-      console.log('Cargando tab:', tab , 'para rol:', rolActual);
       cargarContenido(rolActual, tab);
     };
   });
 }
 
-// Cargar contenido inicial (ej: dashboard) según rol
 function cargarContenidoInicial(rol) {
   if (rol === 'instructor') {
     cargarContenido(rol, 'dashboard');
   } else if (rol === 'paciente') {
-    console.log('ingresooooooooooooo al paciente');
     cargarContenido(rol, 'usuarios');
   }
 }
 
-// Función para limpiar scripts anteriores
-function limpiarScriptsPrevios() {
-  const scriptsAnteriores = document.querySelectorAll('script[data-dynamic="true"]');
-  scriptsAnteriores.forEach(script => script.remove());
-}
-
-// Función para cargar JS dinámicamente
-function cargarJS(jsUrl) {
-  return new Promise((resolve, reject) => {
-    const script = document.createElement('script');
-    script.src = jsUrl;
-    script.setAttribute('data-dynamic', 'true');
-    script.onload = () => resolve();
-    script.onerror = () => reject();
-    document.body.appendChild(script);
-  });
-}
-
-// Cargar contenido con fetch y mostrarlo en el div principal
+// ========================== Cargar contenido según el rol ==========================
 async function cargarContenido(rol, tab) {
   const rutas = {
     instructor: {
@@ -122,7 +153,8 @@ async function cargarContenido(rol, tab) {
       usuarios: '/NovaSoft/public/pages/usuario/usuarios.html',
       registroPaciente: '/NovaSoft/public/pages/usuario/registrarPaciente.html',
       nuevaSerieTerapeutica: '/NovaSoft/public/pages/instructor/nuevaSerieTerapeutica.html',
-      posturas: '/NovaSoft/public/pages/posturas/posturas.html'
+      historialSesiones: '/NovaSoft/public/pages/instructor/historialSesiones.html',
+      verPacientes: '/NovaSoft/public/pages/instructor/verPacientes.html',
     },
     paciente: {
       usuarios: '/NovaSoft/public/pages/usuario/usuarios.html',
@@ -135,18 +167,17 @@ async function cargarContenido(rol, tab) {
       usuarios: '/NovaSoft/public/js/usuarios.js',
       registroPaciente: '/NovaSoft/public/js/registrar_nuevo_paciente.js',
       nuevaSerieTerapeutica: '/NovaSoft/public/js/nueva_serie.js',
-      posturas: '/NovaSoft/public/js/cargar_posturas.js'
+      historialSesiones: '/NovaSoft/public/js/historial_sesiones.js',
+      verPacientes: '/NovaSoft/public/js/ver_pacientes.js',
     },
     paciente: {
-      /*usuarios: '/NovaSoft/public/js/usuarios.js',*/
+      // usuarios: '/NovaSoft/public/js/usuarios.js',
     }
   };
 
-  const url = rutas[rol][tab];
   const jsUrl = jsRutas[rol][tab];
-  
-  console.log('Cargando contenido de:', url);
-  
+  const url = rutas[rol][tab];
+
   if (!url) {
     document.getElementById('contenido').innerHTML = '<p>Página no encontrada</p>';
     return;
@@ -162,20 +193,30 @@ async function cargarContenido(rol, tab) {
     const html = await res.text();
     document.getElementById('contenido').innerHTML = html;
 
-    // Cargar JS específico de la página
     if (jsUrl) {
-      try {
-        console.log('Intentando cargar script:', jsUrl);
-        await cargarJS(jsUrl);
-        console.log('Script cargado exitosamente:', jsUrl);
-      } catch (error) {
-        console.error('Error al cargar el script:', jsUrl, error);
-      }
-    } else {
-      console.log('No hay script asociado para esta página:', tab);
-    }
+      const scriptId = 'script-' + tab;
+      const existingScript = document.getElementById(scriptId);
 
+      if (existingScript) {
+        existingScript.remove(); // elimina el anterior para que se recargue
+      }
+
+      const script = document.createElement('script');
+      script.src = jsUrl;
+      script.id = scriptId;
+      script.async = false; // importante: que espere a que se cargue el HTML
+      document.body.appendChild(script);
+    }
   } catch (e) {
     document.getElementById('contenido').innerHTML = `<p>Error: ${e.message}</p>`;
   }
 }
+
+// Evento para el botón "Registrar Paciente"
+document.addEventListener('click', function (e) {
+  const target = e.target.closest('[data-tab="registroPaciente"]');
+  if (target) {
+    e.preventDefault();
+    cargarContenido(rolActual || 'instructor', 'registroPaciente');
+  }
+});
