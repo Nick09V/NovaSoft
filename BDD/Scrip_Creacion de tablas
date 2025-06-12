@@ -1,0 +1,120 @@
+CREATE TABLE instructor (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    correo VARCHAR(100) UNIQUE NOT NULL,
+    contrasena VARCHAR(255) NOT NULL,
+    estado BOOLEAN DEFAULT TRUE,
+    especialidad VARCHAR(100)
+);
+
+ALTER TABLE instructor
+ADD apellido VARCHAR(100) NOT NULL AFTER nombre;
+
+ALTER TABLE instructor
+ADD url TEXT;
+
+
+select*from instructor;
+
+CREATE TABLE paciente (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    correo VARCHAR(100) UNIQUE NOT NULL,
+    contrasena VARCHAR(255) NOT NULL,
+    estado BOOLEAN DEFAULT TRUE,
+    telefono VARCHAR(20),
+    direccion TEXT,
+    id_instructor INT,
+    FOREIGN KEY (id_instructor) REFERENCES instructor(id)
+);
+
+select * from paciente;
+
+ALTER TABLE paciente
+ADD apellido VARCHAR(100) NOT NULL AFTER nombre;
+
+
+CREATE TABLE terapia (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL UNIQUE
+);
+
+CREATE TABLE postura (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre_es VARCHAR(100) NOT NULL,
+    nombre_sanskrito VARCHAR(100),
+    foto_url TEXT,
+    video_url TEXT,
+    instrucciones TEXT,
+    beneficios TEXT, 
+    modificaciones TEXT
+);
+
+CREATE TABLE postura_terapia (
+    postura_id INT,
+    terapia_id INT,
+    PRIMARY KEY (postura_id, terapia_id),
+    FOREIGN KEY (postura_id) REFERENCES postura(id),
+    FOREIGN KEY (terapia_id) REFERENCES terapia(id)
+);
+
+CREATE TABLE serie (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    nombre VARCHAR(100) NOT NULL,
+    tipo_terapia_id INT,
+    numero_sesiones INT,
+    creador_id INT,
+    asignada BOOLEAN DEFAULT FALSE,
+    FOREIGN KEY (tipo_terapia_id) REFERENCES terapia(id),
+    FOREIGN KEY (creador_id) REFERENCES instructor(id)
+);
+
+CREATE TABLE serie_postura (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    serie_id INT,
+    postura_id INT,
+    orden INT,
+    duracion_min INT,
+    FOREIGN KEY (serie_id) REFERENCES serie(id),
+    FOREIGN KEY (postura_id) REFERENCES postura(id)
+);
+
+CREATE TABLE asignacion_serie (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    paciente_id INT,
+    serie_id INT,
+    fecha_asignacion DATETIME DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (paciente_id) REFERENCES paciente(id),
+    FOREIGN KEY (serie_id) REFERENCES serie(id)
+);
+
+CREATE TABLE sesion (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    asignacion_id INT,
+    fecha DATETIME DEFAULT CURRENT_TIMESTAMP,
+    dolor_inicio ENUM('SIN DOLOR', 'LEVE', 'MODERADO', 'INTENSO', 'MÁXIMO'),
+    dolor_fin ENUM('SIN DOLOR', 'LEVE', 'MODERADO', 'INTENSO', 'MÁXIMO'),
+    comentario TEXT NOT NULL,
+    FOREIGN KEY (asignacion_id) REFERENCES asignacion_serie(id)
+);
+
+
+ALTER TABLE sesion ADD tiempo_real_minutos INT;
+
+
+CREATE TABLE historial_clinico (
+    id INT AUTO_INCREMENT PRIMARY KEY,
+    paciente_id INT,
+    instructor_id INT,
+    serie_id INT, #cambiar por sesion
+    fecha_inicio DATE,
+    fecha_ultima_sesion DATE, # poner una sola fecha de cuadno fue la sesion
+    total_sesiones INT, #quitar
+    dolor_inicio_promedio ENUM('SIN DOLOR','LEVE','MODERADO','INTENSO','MÁXIMO'),#q uitar
+    dolor_fin_promedio ENUM('SIN DOLOR','LEVE','MODERADO','INTENSO','MÁXIMO'),# quitar
+    comentario_general TEXT,
+    FOREIGN KEY (paciente_id) REFERENCES paciente(id),
+    FOREIGN KEY (instructor_id) REFERENCES instructor(id),
+    FOREIGN KEY (serie_id) REFERENCES serie(id)
+);
+
