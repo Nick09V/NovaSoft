@@ -2,6 +2,8 @@
 header('Content-Type: application/json');
 session_start();
 
+session_start();
+
 // Datos de conexión a Clever Cloud
 $host = 'b0lflvqb9csc4alyandu-mysql.services.clever-cloud.com';
 $db = 'b0lflvqb9csc4alyandu';
@@ -58,6 +60,31 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         ]);
         exit;
     } else {
+
+
+        // Buscar en tabla paciente si no se encontró en instructor
+    $stmt = $pdo->prepare("SELECT nombre, contrasena FROM paciente WHERE correo = ?");
+    $stmt->execute([$username]);
+    $paciente = $stmt->fetch();
+
+    if ($paciente && password_verify($password, $paciente['contrasena'])) {
+
+        // Registro de sesión para paciente
+        $_SESSION['correo'] = $username;
+        $_SESSION['rol'] = 'paciente';
+
+        echo json_encode([
+            'status' => 'ok',
+            'rol' => 'paciente',
+            'usuario' => [
+                'nombreeeee' => $paciente['nombre'],
+                'rol' => 'paciente',
+                'correo' => $_SESSION['correo'] 
+            ]
+        ]);
+
+       
+    }else{
         echo json_encode(['status' => 'error', 'message' => 'Credenciales incorrectas']);
         exit;
     }

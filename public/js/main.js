@@ -173,7 +173,7 @@ async function cargarContenido(rol, tab) {
       verPacientes: '/NovaSoft/public/js/ver_pacientes.js',
     },
     paciente: {
-      // usuarios: '/NovaSoft/public/js/usuarios.js',
+      usuarios: '/NovaSoft/public/js/cargaContenido.js',
     }
   };
 
