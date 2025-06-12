@@ -3,7 +3,8 @@ document.addEventListener('DOMContentLoaded', async () => {
   const contenedor = document.getElementById('detalle-postura');
 
   try {
-    const res = await fetch(`../../../src/models/posturas.php?id=${id}`);
+    // Cambiar ruta relativa por ruta absoluta
+    const res = await fetch(`/NovaSoft/src/models/posturas.php?id=${id}`);
     if (!res.ok) throw new Error('No se pudo cargar el detalle');
 
     const postura = await res.json();
@@ -31,7 +32,7 @@ document.addEventListener('DOMContentLoaded', async () => {
         allow="accelerometer; autoplay; clipboard-write; encrypted-media; gyroscope; picture-in-picture"
         allowfullscreen>
       </iframe>
-      <a href="posturas.html" class="btn-volver">Volver al listado</a>
+      <a href="/NovaSoft/public/pages/posturas/posturas.html" class="btn-volver">Volver al listado</a>
     `;
   } catch (e) {
     contenedor.innerHTML = `<p style="color:red">${e.message}</p>`;

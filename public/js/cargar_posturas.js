@@ -7,9 +7,10 @@ document.addEventListener('DOMContentLoaded', () => {
 
   const cargarPosturas = async (terapiaId = '') => {
     try {
+      // Cambiar rutas relativas por rutas absolutas
       const url = terapiaId
-        ? `../../../src/models/posturas.php?terapia=${terapiaId}`
-        : '../../../src/models/posturas.php';
+        ? `/NovaSoft/src/models/posturas.php?terapia=${terapiaId}`
+        : '/NovaSoft/src/models/posturas.php';
 
       const res = await fetch(url);
       if (!res.ok) throw new Error('No se pudieron cargar las posturas');
@@ -26,7 +27,7 @@ document.addEventListener('DOMContentLoaded', () => {
       const div = document.createElement('div');
       div.classList.add('postura');
       div.innerHTML = `
-        <a href="detalle.html?id=${postura.id}" style="text-decoration: none; color: inherit;">
+        <a href="/NovaSoft/public/pages/posturas/detalle.html?id=${postura.id}" style="text-decoration: none; color: inherit;">
           <img src="${postura.foto_url}" alt="${postura.nombre_es}">
           <h3>${postura.nombre_es}</h3>
           <p><em>${postura.nombre_sanskrito}</em></p>
