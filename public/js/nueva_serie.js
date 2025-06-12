@@ -16,6 +16,10 @@ console.log('Iniciando script para nueva serie terapéutica');
     let tipoTerapia = document.getElementById('tipoTerapia');
     terapiaTrabajada = "";
     let posturasCheckBox = document.getElementById('posturasCheckboxGroup');
+    let crearNuevaSerieBoton = document.getElementById('botonCrearNuevaSerie');
+    let usuariosInstructor = document.getElementById('usuariosSerie');
+    let nuevaSerieNombre = document.getElementById('nuevaSerie');
+    let usuariosAsociarSerie = document.getElementById('usuariosSeriePrimero');
     let posturasParaGuardar = [];
     let diccionarioPosturasGuardar = {};
 
@@ -46,8 +50,11 @@ console.log('Iniciando script para nueva serie terapéutica');
             });
     }
 
+let terapiaIDSeleccionada = null;
+
 
     terapiaSelect.addEventListener('change', (e) => {
+        terapiaIDSeleccionada = e.target.value;
         console.log('Terapia seleccionada:', e.target.value);
         funcionCargarSeries(e.target.value);
         const selectedText = e.target.options[e.target.selectedIndex].text;
@@ -144,27 +151,32 @@ function cargarPosturasTerapia(terapiaID) {
                     </div>
                     <div>
                         <span><strong>Minutos:</strong></span>
-                        <input type="number" name="duracionPostura_${postura.id}" min="0" style="width: 60px; margin-left: 8px;">
-                        </input>
+                        <input type="number" name="duracionPostura_${postura.id}" min="0" style="width: 60px; margin-left: 8px;" disabled>
                     </div>
                 </label>
             `).join('');
 
-            // Delegación de eventos para los checkboxes
+            // Delegación de eventos para los checkboxes y los inputs de minutos
             posturasCheckBox.addEventListener('change', (e) => {
                 if (e.target && e.target.name === "posturasSeleccionadas") {
+                    const id = e.target.value;
+                    const inputMinutos = document.querySelector(`input[name="duracionPostura_${id}"]`);
+                    if (inputMinutos) {
+                        inputMinutos.disabled = !e.target.checked;
+                        if (!e.target.checked) inputMinutos.value = '';
+                    }
                     console.log('Checkbox de posturas seleccionadas cambiado');
+                    extraerDatosParaGuardarPosturas();
+                }
+                // Si el cambio es en un input de minutos
+                if (e.target && e.target.name && e.target.name.startsWith('duracionPostura_')) {
                     extraerDatosParaGuardarPosturas();
                 }
             });
         })
-        
-            
-
         .catch(error => {
             console.error('Error al cargar posturas de terapia:', error);
         });
-    
 }
 
 
@@ -237,6 +249,8 @@ function cargarPosturasSeries(serieID) {
     detalleSerie.innerHTML = ""; // Limpiar el contenido del detalle de la serie
     detalleSerie.style.display = "none"; // Ocultar el detalle de la serie
 
+    cargarUsuarios(); // Cargar usuarios al seleccionar "Sí" para crear una nueva serie
+
   });
 
   // Agregar evento cuando se selecciona "No" para regresar el contenedor y ocultar el formulario
@@ -274,9 +288,6 @@ function cargarPosturasSeries(serieID) {
         //detalleSerie.style.display = "none"; // Ocultar el detalle de la serie si no hay selección
             
         
-
-        
-        
         if (selectedSerieID) {
             const selectedSerie = diccionarioSeries[selectedSerieID];
             console.log('Detalles de la serie seleccionada:', selectedSerie);
@@ -293,17 +304,144 @@ function cargarPosturasSeries(serieID) {
         }
 
 
-        
     }); 
+
+
+    let numeroSesiones = 0;
+    // Evento para el numero de sesiones
+    const numeroSesionesInput = document.getElementById('numeroSesiones');
+    if (numeroSesionesInput) {
+        numeroSesionesInput.addEventListener('keyup', (e) => {
+            console.log('Número de sesiones cambiado:', e.target.value);
+            numeroSesiones  = parseInt(e.target.value, 10) || 0; // Convertir a número o 0 si no es válido
+        });
+    }
+
+
+
+
+
+    function cargarUsuarios() {
+        console.log('Cargando usuarios para la serie terapéutica' + tipoTerapia.value);
+        fetch('/NovaSoft/src/models/serie/cargarUsuarios.php')
+            .then(response => {
+                if (!response.ok) throw new Error('Error al obtener usuarios');
+                return response.json();
+            })
+            .then(data => {
+                console.log('Usuarios obtenidos:', data);
+                
+                usuariosInstructor.innerHTML = '<option value="">Seleccione un usuario</option>'; // Limpiar opciones previas
+                data.forEach(usuario => {
+                    const option = document.createElement('option');
+                    option.value = usuario.id;
+                    option.textContent = `${usuario.nombre} ${usuario.apellido}`;
+                    usuariosInstructor.appendChild(option);
+                });
+
+            })
+            .catch(error => {
+                console.error('Error al cargar usuarios:', error);
+            });
+    }
+
+    let usuarioSeleccionado = null;
+
+    usuariosInstructor.addEventListener('change', (e) => {
+        console.log('Usuario seleccionado:', e.target.value);
+        usuarioSeleccionado = e.target.value; // Guardar el ID del usuario seleccionado
+        // Aquí puedes manejar la lógica adicional al seleccionar un usuario
+    });
+
+
+    let nombreSerieSubir = null;
+    nuevaSerieNombre.addEventListener('keyup', (e) => {
+        console.log('Nombre de la nueva serie:', e.target.value);
+        nombreSerieSubir = e.target.value; // Guardar el nombre de la nueva serie
+    }); 
+
+
+
+
+    function cargarUsuariosIndex() {
+        console.log('Cargando usuarios para el index');
+        fetch('/NovaSoft/src/models/serie/cargarUsuarios.php')
+            .then(response => {
+                if (!response.ok) throw new Error('Error al obtener usuarios');
+                return response.json();
+            })
+            .then(data => {
+                console.log('Usuarios obtenidos:', data);
+                usuariosAsociarSerie.innerHTML = '<option value="">Seleccione un usuario</option>'; // Limpiar opciones previas
+                data.forEach(usuario => {
+                    const option = document.createElement('option');
+                    option.value = usuario.id;
+                    option.textContent = `${usuario.nombre} ${usuario.apellido}`;
+                    usuariosAsociarSerie.appendChild(option);
+                });
+            })
+            .catch(error => {
+                console.error('Error al cargar usuarios:', error);
+            });
+    }
+
+    usuariosAsociarSerie.addEventListener('change', (e) => {
+        console.log('Usuario seleccionado para asociar serie:', e.target.value);
+        usuarioSeleccionadoIndex = e.target.value; // Guardar el ID del usuario seleccionado
+        // Aquí puedes manejar la lógica adicional al seleccionar un usuario
+    });
+
+
+    crearNuevaSerieBoton.addEventListener('click', (e) => {
+        console.log('Botón de registrar serie terapéutica presionado');
+        e.preventDefault();
+        console.log('Nombre de la nueva serie:', nombreSerieSubir);
+        console.log('Datos para guardar posturas:', posturasParaGuardar);
+        console.log('Número de sesiones:', numeroSesiones);
+        console.log('Tipo de terapia:', tipoTerapia.value);
+        console.log('terapia ID:', terapiaIDSeleccionada);
+       console.log('Usuario seleccionado:', usuarioSeleccionado);
+
+        fetch('/NovaSoft/src/models/serie/crearSerie.php', {
+            method: 'POST',
+            headers: {'Content-Type': 'application/json'},
+            body: JSON.stringify({
+                nombreSerie: nombreSerieSubir,
+                posturas: posturasParaGuardar,
+                numeroSesiones: numeroSesiones,
+                tipoTerapia: tipoTerapia.value,
+                terapiaID: terapiaIDSeleccionada,
+                usuarioID: usuarioSeleccionado
+            })
+        })
+        .then(response => {
+            if (!response.ok) throw new Error('Error al registrar la serie terapéutica');
+            return response.json();
+        })
+        .then(data => {
+            if (data.error) {
+                alert(data.error);
+            } else if (data.ok) {
+                alert(data.message || 'Serie terapéutica registrada exitosamente');
+                console.log('Serie terapéutica registrada exitosamente');
+                formulario.reset(); // Limpiar el formulario
+                posturasCheckBox.innerHTML = ''; // Limpiar las posturas
+                detalleSerie.innerHTML = ''; // Limpiar el detalle de la serie
+                posturasParaGuardar = []; // Reiniciar el arreglo de posturas para guardar
+                crearSerieNo.checked = true; // Marcar el botón de "No" como seleccionado
+                crearSerieSi.checked = false;
+            } else {
+                alert('Respuesta inesperada del servidor');
+            }
+        })
+
+    });
+
 
 
     
 
 
-
-
-
-  
 
 })();
 

@@ -88,10 +88,19 @@
             </div>
           </div>
 
+
+          
+            <div>
+              <label for="usuariosSeriePrimero">Usuarios:</label>
+              <select id="usuariosSeriePrimero" name="usuariosSeriePrimero" required>
+                <option value="">Seleccione un usuario</option>
+                <!-- Opciones de usuarios se cargarán dinámicamente con JS -->
+              </select>
+            </div>
           
 
           <button type="submit" id="botonNuevaSerie">
-            Crear nueva serie terapéutica
+            Asociar serie terapéutica
           </button>
         </form>
       </div>
@@ -135,14 +144,23 @@
               required
             />
 
-            <label for="creadorSerie">Creador</label>
+            <!--<label for="creadorSerie">Creador</label>
             <input
               type="text"
               name="creadorSerie"
               id="creadorSerie"
               placeholder="Creador de la serie"
               readonly
-            />
+            />-->
+
+            <div>
+              <label for="usuariosSerie">Usuarios:</label>
+              <select id="usuariosSerie" name="usuariosSerie" required>
+                <option value="">Seleccione un usuario</option>
+                <!-- Opciones de usuarios se cargarán dinámicamente con JS -->
+              </select>
+            </div>
+
 
             <button type="submit" id="botonCrearNuevaSerie">
               Crear nueva serie
