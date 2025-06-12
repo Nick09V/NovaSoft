@@ -111,19 +111,31 @@ document.addEventListener('DOMContentLoaded', () => {
 // ========================== Menú según rol ==========================
 function mostrarMenu(rol) {
   const loginContainer = document.getElementById('containerLogin');
-  loginContainer.classList.add('fade-out');
-  setTimeout(() => {
-    loginContainer.style.display = 'none';
-
+  if (loginContainer) {
+    loginContainer.classList.add('fade-out');
+    setTimeout(() => {
+      loginContainer.style.display = 'none';
+      if (rol === 'instructor') {
+        document.getElementById('dashboard-content-instructor').style.display = 'block';
+        document.getElementById('dashboard-content').style.display = 'block';
+        activarEventosMenu('dashboard-content-instructor');
+      } else if (rol === 'paciente') {
+        document.getElementById('dashboard-content').style.display = 'block'; // Mostrar el contenedor principal
+        document.getElementById('menu-usuario') && (document.getElementById('menu-usuario').style.display = 'block');
+        activarEventosMenu('menu-usuario');
+      }
+    }, 500);
+  } else {
+    // Si no existe el loginContainer, solo muestra los paneles según el rol
     if (rol === 'instructor') {
       document.getElementById('dashboard-content-instructor').style.display = 'block';
       document.getElementById('dashboard-content').style.display = 'block';
       activarEventosMenu('dashboard-content-instructor');
     } else if (rol === 'paciente') {
-      document.getElementById('menu-usuario').style.display = 'block';
+      document.getElementById('menu-usuario') && (document.getElementById('menu-usuario').style.display = 'block');
       activarEventosMenu('menu-usuario');
     }
-  }, 500);
+  }
 }
 
 function activarEventosMenu(menuId) {

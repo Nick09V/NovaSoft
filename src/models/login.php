@@ -1,6 +1,5 @@
 <?php
 header('Content-Type: application/json');
-session_start();
 
 session_start();
 
@@ -37,38 +36,39 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Buscar en tabla instructor
-    $stmt = $pdo->prepare("SELECT id, nombre, correo, contrasena FROM instructor WHERE correo = ?");
+    $stmt = $pdo->prepare("SELECT nombre, contrasena FROM instructor WHERE correo = ?");
+
     $stmt->execute([$username]);
     $instructor = $stmt->fetch();
 
     if ($instructor && password_verify($password, $instructor['contrasena'])) {
-        // Asignar valores a $_SESSION
-        $_SESSION['id'] = $instructor['id'];
-        $_SESSION['correo'] = $instructor['correo'];
-        $_SESSION['nombre'] = $instructor['nombre'];
+        $stmt = $pdo->prepare("SELECT id FROM instructor WHERE correo = ?");
+        $stmt->execute([$username]);
+        $_SESSION['id'] = $stmt->fetchColumn();
+        // Asigno como variable global el correo
+        $_SESSION['correo'] = $username;
         $_SESSION['rol'] = 'instructor';
+
 
         echo json_encode([
             'status' => 'ok',
             'rol' => 'instructor',
             'usuario' => [
                 'nombre' => $instructor['nombre'],
-                'correo' => $instructor['correo'],
                 'rol' => 'instructor',
-                'session' => session_id()
+                'correo' => $_SESSION['correo'],
+                'session' => $_SESSION['id']
             ]
         ]);
         exit;
-    } else {
+    }
 
-
-        // Buscar en tabla paciente si no se encontró en instructor
+    // Buscar en tabla paciente si no se encontró en instructor
     $stmt = $pdo->prepare("SELECT nombre, contrasena FROM paciente WHERE correo = ?");
     $stmt->execute([$username]);
     $paciente = $stmt->fetch();
 
     if ($paciente && password_verify($password, $paciente['contrasena'])) {
-
         // Registro de sesión para paciente
         $_SESSION['correo'] = $username;
         $_SESSION['rol'] = 'paciente';
@@ -77,18 +77,16 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'status' => 'ok',
             'rol' => 'paciente',
             'usuario' => [
-                'nombreeeee' => $paciente['nombre'],
+                'nombre' => $paciente['nombre'], // Corregido aquí
                 'rol' => 'paciente',
                 'correo' => $_SESSION['correo'] 
             ]
         ]);
-
-       
-    }else{
-        echo json_encode(['status' => 'error', 'message' => 'Credenciales incorrectas']);
         exit;
+    } else {
+        echo json_encode(['status' => 'error', 'message' => 'Credenciales incorrectas']);
     }
 } else {
     echo json_encode(['status' => 'error', 'message' => 'Método no permitido']);
-    exit;
 }
+?>
