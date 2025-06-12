@@ -465,9 +465,11 @@ width: 100%;
 
 .pacienteBd{
   padding-top: 25px;
+  padding-right: 100px;
   width: 100%;
-  background-color: blanchedalmond;
-  height: 500px;
+  height: 100%;
+  background-color: white;
+  
 }
 
 /* Estilo para los radios y selects */
