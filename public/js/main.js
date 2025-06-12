@@ -123,7 +123,7 @@ async function cargarContenido(rol, tab) {
     nuevaSerieTerapeutica: '/NovaSoft/public/js/nueva_serie.js',
   },
   paciente: {
-    /*usuarios: '/NovaSoft/public/js/usuarios.js',*/
+    usuarios: '/NovaSoft/public/js/cargaContenido.js',
   }
 };
   const jsUrl = jsRutas[rol][tab];

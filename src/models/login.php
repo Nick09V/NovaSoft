@@ -1,6 +1,8 @@
 <?php
 header('Content-Type: application/json');
 
+session_start();
+
 // Datos de conexión a Clever Cloud
 $host = 'b0lflvqb9csc4alyandu-mysql.services.clever-cloud.com';
 $db = 'b0lflvqb9csc4alyandu';
@@ -35,16 +37,27 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Buscar en tabla instructor
     $stmt = $pdo->prepare("SELECT nombre, contrasena FROM instructor WHERE correo = ?");
+
     $stmt->execute([$username]);
     $instructor = $stmt->fetch();
 
     if ($instructor && password_verify($password, $instructor['contrasena'])) {
+        $stmt = $pdo->prepare("SELECT id FROM instructor WHERE correo = ?");
+        $stmt->execute([$username]);
+        $_SESSION['id'] = $stmt->fetchColumn();
+        // Asigno como variable global el correo
+        $_SESSION['correo'] = $username;
+        $_SESSION['rol'] = 'instructor';
+
+
         echo json_encode([
             'status' => 'ok',
             'rol' => 'instructor',
             'usuario' => [
                 'nombre' => $instructor['nombre'],
-                'rol' => 'instructor'
+                'rol' => 'instructor',
+                'correo' => $_SESSION['correo'],
+                'session' => $_SESSION['id']
             ]
         ]);
         exit;
@@ -56,12 +69,18 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $paciente = $stmt->fetch();
 
     if ($paciente && password_verify($password, $paciente['contrasena'])) {
+
+        // Registro de sesión para paciente
+        $_SESSION['correo'] = $username;
+        $_SESSION['rol'] = 'paciente';
+
         echo json_encode([
             'status' => 'ok',
             'rol' => 'paciente',
             'usuario' => [
-                'nombre' => $paciente['nombre'],
-                'rol' => 'paciente'
+                'nombreeeee' => $paciente['nombre'],
+                'rol' => 'paciente',
+                'correo' => $_SESSION['correo'] 
             ]
         ]);
     } else {
