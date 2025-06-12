@@ -14,7 +14,6 @@ if ($id === null) {
     try{ 
     $stmt = $pdo->prepare('SELECT * FROM paciente WHERE id_instructor = :id');
     $stmt->execute(['id' => $id]);
-
     $result = $stmt->fetchAll();
 
     echo json_encode($result);

@@ -2,6 +2,9 @@ console.log('Iniciando script para nueva serie terapéutica');
 (function () {
     console.log('Iniciando script para nueva serie terapéutica');
     let Terapia = null;
+
+
+
     const terapiaSelect = document.getElementById('terapia');
     const formulario = document.getElementById('formularioNuevaSerieTerapeutica');
     const botonRegistrar = document.getElementById('botonNuevaSerie');
@@ -12,6 +15,7 @@ console.log('Iniciando script para nueva serie terapéutica');
   const loginContainer = document.querySelector(".login-container");
   const crearNuevaSerie = document.getElementById("crearNuevaSerie");
   let detalleSerie = document.getElementById('detallesSerie');
+  let cargarPaceintesBoton = document.getElementById('cargarPacientesBoton');
     // para elementos de crear nueva serie
     let tipoTerapia = document.getElementById('tipoTerapia');
     terapiaTrabajada = "";
@@ -62,6 +66,7 @@ let terapiaIDSeleccionada = null;
         tipoTerapia.value = "";
         tipoTerapia.value = selectedText; // Asignar el valor de la terapia seleccionada al campo tipoTerapia
         cargarPosturasTerapia(e.target.value); // Cargar posturas de la terapia al cargar las opciones
+
     });
 
 
@@ -362,6 +367,15 @@ function cargarPosturasSeries(serieID) {
 
 
 
+    if (cargarPaceintesBoton) {
+        cargarPaceintesBoton.addEventListener('click', (e) => {
+            e.preventDefault();
+            console.log('Cargando usuarios para el index');
+            cargarUsuariosIndex(); // Cargar usuarios al hacer clic en el botón
+        });
+    }
+
+
 
     function cargarUsuariosIndex() {
         console.log('Cargando usuarios para el index');
@@ -439,7 +453,14 @@ function cargarPosturasSeries(serieID) {
 
 
 
-    
+    botonRegistrar.addEventListener('click', (e) => {
+        e.preventDefault();
+        console.log('Botón de registrar serie terapéutica presionado');
+        console.log("selectedSerieID", selectedSerieID);
+        //usuarioSeleccionadoIndex
+        console.log('Usuario seleccionado para asociar serie:', usuarioSeleccionadoIndex);
+        
+    });
 
 
 
