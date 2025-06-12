@@ -3,7 +3,7 @@
     <meta charset="UTF-8" />
     <meta name="viewport" content="width=device-width, initial-scale=1.0" />
     <title>Nueva serie terapéutica</title>
-    <link rel="stylesheet" href="../../css/estilosLogin.css" />
+    <link rel="stylesheet" href="/NovaSoft/public/css/estilosLogin.css" />
     <style type="text/css">
       /* Para mover el contenedor principal (login-container) */
       .login-container {
@@ -45,16 +45,15 @@
       <div class="formulariosGeneral">
         <h1 id="title">Nueva serie terapéutica</h1>
         <form id="formularioNuevaSerieTerapeutica">
-          <div class="input-group">
+          <div class="input-group" >
             <label for="nombreSerieTerapeutica"
-              >Ingrese la serie terapéutica</label
-            >
+              >Ingrese la serie terapéutica</label>
             <input
               type="text"
               id="nombreSerieTerapeutica"
               name="nombreSerieTerapeutica"
               placeholder="Nombre de la serie terapéutica"
-              required
+              disabled
             />
           </div>
 
@@ -88,17 +87,32 @@
             </div>
           </div>
 
+
+          <button id="cargarPacientesBoton">Cargar pacientes</button>
+
+          
+            <div>
+              <label for="usuariosSeriePrimero">Usuarios:</label>
+              <select id="usuariosSeriePrimero" name="usuariosSeriePrimero" required>
+                <option value="">Seleccione un usuario</option>
+                <!-- Opciones de usuarios se cargarán dinámicamente con JS -->
+              </select>
+            </div>
+          
+
           <button type="submit" id="botonNuevaSerie">
-            Crear nueva serie terapéutica
+            Asociar serie terapéutica
           </button>
         </form>
       </div>
 
       <!-- Nuevo formulario que se mostrará al seleccionar "Sí" -->
+
+
       <div id="crearNuevaSerie">
-        <form>
+        <form id="formularioCrearNuevaSerie">
           <div style="display: flex; flex-direction: column; gap: 8px">
-            <label for="nuevaSerie">Ingrese el nombre de la nueva serie</label>
+            <label for="nuevaSerie">Nombre de la nueva serie:</label>
             <input
               type="text"
               id="nuevaSerie"
@@ -108,9 +122,19 @@
             />
 
             <label for="tipoTerapia">Tipo de terapia</label>
-            <input type="text" name="tipoTerapia" id="tipoTerapia"  
-            value="Terapia de serie"
-            readonly />
+            <input
+              type="text"
+              name="tipoTerapia"
+              id="tipoTerapia"
+              value="Terapia de serie"
+              disabled
+            />
+
+
+            <label for="posturasCheckboxGroup">Posturas elige</label>
+            <div id="posturasCheckboxGroup" style="display: flex; flex-direction: column; gap: 4px;">
+              <!-- Aquí se cargarán dinámicamente los checkboxes de posturas -->
+            </div>
 
             <label for="numeroSesiones">Numero de sesiones</label>
             <input
@@ -121,14 +145,23 @@
               required
             />
 
-            <label for="creadorSerie">Creador</label>
+            <!--<label for="creadorSerie">Creador</label>
             <input
               type="text"
               name="creadorSerie"
               id="creadorSerie"
               placeholder="Creador de la serie"
               readonly
-            />
+            />-->
+
+            <div>
+              <label for="usuariosSerie">Usuarios:</label>
+              <select id="usuariosSerie" name="usuariosSerie" required>
+                <option value="">Seleccione un usuario</option>
+                <!-- Opciones de usuarios se cargarán dinámicamente con JS -->
+              </select>
+            </div>
+
 
             <button type="submit" id="botonCrearNuevaSerie">
               Crear nueva serie
@@ -137,6 +170,11 @@
         </form>
       </div>
     </div>
+
+
+    </div> <!-- Contenedor para los detalles de la serie -->
+    <div id="detallesSerie" style="display: none;"></div>
+          
 
     <script src="../../js/nueva_serie.js"></script>
   </body>

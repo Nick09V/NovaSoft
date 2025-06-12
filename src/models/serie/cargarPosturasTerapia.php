@@ -2,7 +2,7 @@
 
 include_once __DIR__ . '/../../config/connect.php';
 
-
+session_start();
 // Recibe una variable por GET o POST (ejemplo: 'id')
 $id = isset($_REQUEST['id']) ? $_REQUEST['id'] : null;
 
@@ -12,10 +12,10 @@ if ($id === null) {
 }
 
     try{ 
-    $stmt = $pdo->prepare('SELECT * FROM serie_postura left join postura ON postura.id = serie_postura.postura_id where serie_id = :id');
+    $stmt = $pdo->prepare('SELECT * from postura_terapia left join postura ON postura.id = postura_terapia.postura_id where terapia_id = :id');
     $stmt->execute(['id' => $id]);
     $result = $stmt->fetchAll();
-
+        
     echo json_encode($result);
 
 } catch (PDOException $e) {

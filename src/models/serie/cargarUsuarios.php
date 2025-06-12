@@ -2,9 +2,9 @@
 
 include_once __DIR__ . '/../../config/connect.php';
 
-
+session_start();
 // Recibe una variable por GET o POST (ejemplo: 'id')
-$id = isset($_REQUEST['id']) ? $_REQUEST['id'] : null;
+$id = $_SESSION['id'] ?? null;
 
 if ($id === null) {
     echo json_encode(['error' => 'Falta el parámetro id']);
@@ -12,7 +12,7 @@ if ($id === null) {
 }
 
     try{ 
-    $stmt = $pdo->prepare('SELECT * FROM serie_postura left join postura ON postura.id = serie_postura.postura_id where serie_id = :id');
+    $stmt = $pdo->prepare('SELECT * FROM paciente WHERE id_instructor = :id');
     $stmt->execute(['id' => $id]);
     $result = $stmt->fetchAll();
 

@@ -1379,3 +1379,39 @@ table button {
 
 
 
+
+
+/* Agrega al final de tu archivo CSS */
+#detallesSerie {
+  background: #fff;
+  border: 2px solid var(--color2);
+  border-radius: 12px;
+  padding: 1.5rem 2rem;
+  margin: 2rem auto 0 auto;
+  max-width: 600px;
+  box-shadow: 0 4px 16px rgba(0,0,0,0.08);
+  color: #222;
+  font-size: 1rem;
+}
+
+#detallesSerie h3 {
+  color: var(--color2);
+  margin-bottom: 1rem;
+}
+
+#detallesSerie p {
+  margin-bottom: 0.7rem;
+}
+
+#detallesSerie ul, #detallesSerie table {
+  margin-top: 1rem;
+}
+
+#detallesSerie img {
+  width: 240px;
+  height: 240px;
+  object-fit: cover;
+  margin-right: 12px;
+  vertical-align: middle;
+  border-radius: 8px; 
+}
