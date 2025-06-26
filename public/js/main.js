@@ -101,8 +101,10 @@ document.addEventListener('DOMContentLoaded', () => {
   const btnInicio = document.getElementById('btn-inicio');
   if (btnInicio) {
     btnInicio.addEventListener('click', function () {
-      if (rolActual) {
+      if (rolActual=== 'instructor') {
         cargarContenido(rolActual, 'dashboard');
+      }else if (rolActual === 'paciente') {
+        cargarContenido(rolActual, 'usuarios');
       }
     });
   }
