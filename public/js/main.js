@@ -133,6 +133,7 @@ function mostrarMenu(rol) {
       activarEventosMenu('dashboard-content-instructor');
     } else if (rol === 'paciente') {
       document.getElementById('menu-usuario') && (document.getElementById('menu-usuario').style.display = 'block');
+      document.getElementById('dashboard-content').style.display = 'block';
       activarEventosMenu('menu-usuario');
     }
   }

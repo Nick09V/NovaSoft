@@ -472,6 +472,57 @@ width: 100%;
   
 }
 
+/*Estilos para los datos del paciente*/
+.paciente-info {
+  background-color: #ffffff;
+  padding: 5px 30px;
+  border-radius: 12px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.1);
+  max-width: 850px;
+  margin: 30px auto;
+  font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  color: #333;
+}
+
+.paciente-info h2 {
+  margin-bottom: 20px;
+  color: #004080;
+  font-size: 24px;
+  border-bottom: 2px solid #e0e0e0;
+  padding-bottom: 10px;
+}
+
+.paciente-info ul {
+  list-style: none;
+  padding: 0;
+  margin: 0;
+}
+
+.paciente-info li {
+  padding: 10px 0;
+  border-bottom: 1px solid #eee;
+  font-size: 16px;
+  display: flex;
+  gap: 10px;
+}
+
+.paciente-info li strong {
+  min-width: 100px;
+  color: #222;
+}
+
+.paciente-info li span,
+.paciente-info li a {
+  color: #555;
+  text-decoration: none;
+}
+
+.paciente-info li a:hover {
+  text-decoration: underline;
+  color: #007bff;
+}
+
+
 /* Estilo para los radios y selects */
 .formulariosGeneral select,
 .formulariosGeneral input[type="radio"] {
@@ -1048,7 +1099,6 @@ main {
   display: grid;
   grid-template-columns: 70% auto;
   align-items: center;
-
 }
 
 .card-head span { 
