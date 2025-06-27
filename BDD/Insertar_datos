@@ -1,0 +1,393 @@
+#Posturas para el dolor de espalda
+INSERT INTO terapia (nombre) VALUES
+('dolor de espalda');
+
+INSERT INTO postura (nombre_es, nombre_sanskrito, foto_url, video_url, instrucciones, beneficios, modificaciones)
+VALUES
+('Child On Bolster','Balasana','https://i.ytimg.com/vi/Sa-i0QekykY/maxresdefault.jpg',
+'https://www.youtube.com/watch?v=Sa-i0QekykY',
+'En primer lugar, arrodíllate, lleva los glúteos hacia los talones. 
+Ahora coloca el cojín frente a ti de tal manera que todo tu torso pueda descansar sobre él. 
+Mantenga su cara sobre el cojín y coloque cómodamente su pecho sobre el cojín. Gire la cara hacia cualquier lado, el que le resulte más cómodo.',
+'Reduce el estrés y calma la mente', null);
+
+UPDATE postura
+SET nombre_es = 'Refuerzo de postura del niño'
+WHERE id = 1;
+
+UPDATE postura
+SET modificaciones = 'Si la cabeza no llega cómodamente al suelo, usar un soporte ayuda a evitar tensión en el cuello y permite mayor relajación.'
+WHERE id = 1;
+
+INSERT INTO postura (nombre_es, nombre_sanskrito, foto_url, video_url, instrucciones, beneficios, modificaciones)
+VALUES
+('Postura Puente de las manos sobre las caderas','Dwi Pada Pitham','https://images.ctfassets.net/3s5io6mnxfqz/1OfLFfo5AbgpayuHYj2bKW/3908f87934a2b24ff0b73fc3253feb6f/AdobeStock_323407683.jpeg?w=1920',
+'https://www.youtube.com/watch?v=JAKzENPLwwU',
+'Acuéstese boca arriba y doble las rodillas. Apunta tus rodillas hacia el cielo con las plantas de tus pies en el suelo.
+Ajusta tus pies y brazos. Con las palmas hacia abajo, extienda los brazos a cada lado del cuerpo. Extienda los pies a la distancia del ancho de la cadera, de modo que las yemas de los dedos rocen la parte posterior de los talones.
+Levanta tus caderas. Presione hacia abajo los pies y las manos y levante las caderas del suelo sin apretar los glúteos.
+Mete la barbilla. Alarga la nuca metiendo la barbilla ligeramente hacia el pecho.
+Entrelaza tus manos detrás de tu espalda. Pise los omóplatos debajo de usted y luego entrelace las manos mientras las presiona hacia abajo para levantar el torso.
+Relaje los glúteos y enganche la parte interna de los muslos. Relaje todos los músculos del glúteo mayor. Utilice la fuerza de sus cuádriceps y isquiotibiales para mantener las caderas levantadas. Inhale y exhale.
+Levanta tus caderas más alto. Si es posible, levante las caderas aún más para respirar unas cuantas veces hacia el final. Siente la curvatura de la espalda baja y el estiramiento profundo de los flexores de la cadera y la parte frontal del cuerpo.',
+'Mejora el movimiento segmentario de la columna vertebral, liberando la tensión entre dos vértebras adyacentes, lo que da como resultado una mayor movilidad de la columna, salud y alivio de la tensión muscula',
+'Utilice un bloque de yoga. Coloque un bloque debajo de las caderas levantadas mientras hace una postura de puente para sostener la espalda baja. El bloque debe pasar directamente debajo del sacro. Coloque el bloque del nivel más bajo al más alto, lo que mejor se sienta en su cuerpo.
+Mantén tus manos en la colchoneta. En lugar de entrelazar las manos detrás de la espalda, deje las palmas boca abajo, con los brazos en el suelo, para crear más influencia y estabilidad a medida que eleva las caderas.');
+
+
+INSERT INTO postura (nombre_es, nombre_sanskrito, foto_url, video_url, instrucciones, beneficios, modificaciones)
+VALUES
+('Postura del camello', 'Ustrasana', 'https://liforme.com/cdn/shop/articles/blog-01-2.webp?v=1712604136',
+'https://www.youtube.com/watch?v=vlNLJ-mVWHM',
+'Arrodíllate con las rodillas debajo de las caderas y los dedos de los pies despegados, manteniendo los pies en punta.
+Jale el ombligo hacia adentro, metiendo ligeramente el coxis para que la pelvis quede en una posición neutra.
+Lleva las manos a la cintura y junta los codos. Mantén los omóplatos juntos. 
+Empieza a levantar el esternón hacia el techo para iniciar la flexión hacia atrás. Mantén la espalda baja separada. Siente cómo la parte superior trabaja para elevar el pecho. 
+Haz una pausa. Relaja el cuello hacia atrás, alineándolo con la columna, si te resulta cómodo.
+Detente aquí o lleva las manos a los talones y continúa la flexión hacia atrás.
+Presione las espinillas para levantarse y salir de la flexión hacia atrás, reestructurando la columna.',
+'Tiene beneficios físicos, como fortalecer cuádriceps, glúteos y pantorrillas, a la vez que estira los músculos de la parte inferior de las piernas, los flexores de la cadera y los cuádriceps, pero también puede mejorar tu salud mental',
+'Pon las manos en las caderas . "Coloca las manos a los lados de las caderas, presionando hacia abajo para estirarlas activamente desde la cintura. Desarrolla la columna vertebral y asegúrate de que el cuello y los hombros no se encojan hacia arriba para intentar ayudar", dice Weiss.
+Coloque las manos en la zona lumbar. En lugar de apoyarlas en los talones, colóquelas en la zona lumbar para mayor apoyo.
+Apoya las manos sobre los bloques de yoga en lugar de los talones. Puedes ajustar la altura de los bloques hasta encontrar un nivel cómodo. Esta opción es especialmente útil para embarazadas.');
+
+INSERT INTO postura (nombre_es, nombre_sanskrito, foto_url, video_url, instrucciones, beneficios, modificaciones)
+VALUES
+('Postura de la Cobra', 'Bhujangasana', 'https://img.freepik.com/foto-gratis/hombre-tiro-completo-practicando-pose-cobra-interior_23-2148717189.jpg?semt=ais_hybrid&w=740',
+'https://www.youtube.com/watch?v=9Wp4DGMjRm0',
+'Túmbate boca abajo, con las piernas y los pies juntos y estirados. Las manos se apoyan en el suelo, a la altura de las axilas. Los dedos apuntan hacia delante. Los antebrazos deben estar perpendiculares al suelo. La frente apoyada en el suelo.
+nspira y levanta ligeramente la cabeza, primero la nariz, después la barbilla y estírala tanto como puedas, hasta que sientas una ligera presión en la nuca. Como si tu coronilla quisiera tocar la espala. Continúa levantado en pecho. Hazlo con la fuerza de la espalda. Deja los brazos quietos. Cuando veas que no puedes avanzar más, empuja con los brazos y eleva todo el tronco. No fuerces. Al principio, la flexibilidad será menor, pero con el tiempo, lograrás incrementar la extensión. Permanece unos segundos.
+Al espirar desciende lentamente manteniendo la mirada dirigida hacia arriba. Relaja poco a poco los brazos y desciende poco a poco controlando el movimiento con la fuerza de la espalda. Apoya abdomen, pecho y, por último, barbilla, nariz y frente.',
+'Aporta mayor flexibilidad a la columna vertebral, contribuye a fortalecer el core, la faja abdominal y a nivel psicológico, ayuda a mantener una mayor serenidad, fuerza y confianza.',
+'La postura de media cobra, o Ardha Bhujangasana, es un excelente punto de partida para quienes se inician en el yoga o tienen poca flexibilidad en la espalda. Esta variante reduce la tensión en la zona lumbar y permite un trabajo más controlado de los músculos de la espalda.
+Practicar la Postura de la Cobra contra la pared ofrece una forma única de asegurar una alineación adecuada y profundizar el estiramiento. Esta variación ayuda a comprender cómo activar eficazmente los músculos de la espalda mientras se mantienen los codos correctamente alineados.
+En Cobra Manos Libres, la atención se centra por completo en los músculos de la espalda, eliminando el apoyo de las manos para intensificar el trabajo de los extensores espinales. Esta desafiante variante fomenta una mayor participación de los músculos de la espalda y una apertura pectoral más pronunciada.');
+
+INSERT INTO postura (nombre_es, nombre_sanskrito, foto_url, video_url, instrucciones, beneficios, modificaciones)
+VALUES
+('Postura del niño extendido', 'Utthita Balasana', 'https://img.freepik.com/fotos-premium/balasana-postura-nino-brazos-extendidos-sobre-fondo-blanco-mujer-atractiva-joven-practicando-yoga_134398-14958.jpg',
+'https://www.youtube.com/watch?v=cFcNQjKDI58',
+'Ponte de rodillas sobre la esterilla.
+Separa las rodillas tanto como la esterilla, manteniendo la parte superior de los pies en el suelo con los dedos gordos tocándose.
+Apoya el vientre entre los muslos y apoya la frente en el suelo. Relaja los hombros, la mandíbula y los ojos. Si le resulta incómodo apoyar la frente en el suelo, apóyela en un bloque o en dos puños apilados. Hay un punto de energía en el centro de la frente, en el entrecejo, que estimula el nervio vago y favorece la respuesta de «descanso y digestión». Encontrar un lugar cómodo para la frente es clave para obtener este beneficio calmante.
+Estira los brazos hacia delante con las palmas hacia el suelo o lleva los brazos hacia atrás junto a los muslos con las palmas hacia arriba. También puedes estirar los brazos hacia delante con las palmas hacia arriba para liberar los hombros o probar a doblar los codos de modo que las palmas se toquen y apoyar los pulgares en la nuca. En esta posición adelanta los codos.
+Estira los brazos hacia delante con las palmas hacia el suelo o lleva los brazos hacia atrás junto a los muslos con las palmas hacia arriba. También puedes estirar los brazos hacia delante con las palmas hacia arriba para liberar los hombros o probar a doblar los codos de modo que las palmas se toquen y apoyar los pulgares en la nuca. En esta posición adelanta los codos.',
+'La postura del niño es un estiramiento suave para los hombros, la espalda, las caderas, los muslos, el cuello y los tobillos. Puede ayudar a aliviar el dolor de espalda.',
+'Puedes mantener las rodillas juntas en lugar de separarlas si te resulta más cómodo. Del mismo modo, puedes doblar los dedos de los pies si te resulta doloroso tener los pies planos o colocar una toalla enrollada debajo de las espinillas para aliviar la tensión de los tobillos.');
+
+INSERT INTO postura (nombre_es, nombre_sanskrito, foto_url, video_url, instrucciones, beneficios, modificaciones)
+VALUES
+('Postura del Pez', 'Matsyasana', 'https://i.blogs.es/719ee3/istock-674673906/1366_2000.jpg',
+'https://www.youtube.com/watch?v=rdgoCgdrEoU',
+'Acuéstese boca arriba, con las piernas y los pies juntos.
+Coloque las manos debajo de las caderas, con las palmas hacia abajo y los codos ligeramente hacia afuera.
+Inhalando, mire hacia sus pies y lleve su peso sobre los codos.
+Acerque los codos tanto como sea posible.
+Inspirando, abre el pecho y deja caer la cabeza hacia atrás de forma que la coronilla descanse sobre el suelo.
+Tomando respiraciones profundas, expande tus pulmones y tu pecho.',
+'Fomenta la respiración profunda, abdominal y diafragmática, y estira los intercostales. Por lo tanto, fortalece los pulmones y aumenta su capacidad. Además, fortalece y tonifica los músculos de los brazos y la parte superior de la espalda.',
+'Matsyasana con los dedos de los pies, al acostarse boca arriba con las piernas en loto y sujetar los dedos gordos de los pies, se profundiza la conexión mente-cuerpo y se mejora la movilidad de la columna. La respiración profunda ayuda a expandir la caja torácica y a relajar los hombros.
+Matsyasana de brazos cruzados. Ideal para quienes buscan una apertura suave del pecho sin tensión en los brazos. Acostado boca arriba con las piernas en Sukhasana o Padmasana, se cruzan los brazos bajo la cabeza, creando un soporte relajado que permite concentrarse en la expansión torácica y la relajación del cuello.');
+
+#Posturas para ansiedad
+INSERT INTO terapia (nombre) VALUES
+('ansiedad');
+select*from terapia;
+
+INSERT INTO postura (nombre_es, nombre_sanskrito, foto_url, video_url, instrucciones, beneficios, modificaciones)
+VALUES
+('postura de la montaña', 'Tadasana', 'https://cdn.yogajournal.com/wp-content/uploads/2021/10/YJ_Mountain-Pose_Andrew-Clark_2400x1350.png',
+'https://www.youtube.com/watch?v=aEQVYMb9P6U',
+'Párese con los dedos gordos de los pies tocándose y los talones separados aproximadamente 2,5 cm.
+Presione hacia abajo con los talones, las puntas de los pies y los dedos gordos.
+Aprieta suavemente la parte interna de los muslos y las caderas uno hacia el otro.
+Levante el esternón y la coronilla hacia el techo.
+Mantenga los brazos a los costados, con las palmas hacia adelante.
+Inhala mientras expandes tu pecho (asegurándote de no levantar los hombros) y exhala mientras vacías tus pulmones y aprietas el ombligo hacia la columna.
+Evite inclinarse hacia adelante sobre las puntas de los pies y los dedos de los pies; mantenga el peso centrado. Cierre los ojos para trabajar la conciencia corporal y el equilibrio.',
+'La práctica de esta postura ofrece múltiples beneficios tanto físicos como mentales. Ayuda a corregir la alineación corporal, resaltando posibles desequilibrios musculares que requieren atención. Además, actúa como una excelente preparación para el entrenamiento físico, promoviendo una mejor activación muscular. A nivel emocional, mejora la confianza en uno mismo y contribuye a aliviar la ansiedad, favoreciendo un estado de bienestar general.',
+'El uso de la pared para conseguir un mejor agarre de la columna y la espalda ayudará inicialmente a comprender los requisitos de la postura.
+Si uno no puede pararse con los pies juntos o los dedos de los pies juntos, puede tener los pies separados a más de un pie de distancia para lograr un mejor equilibrio del cuerpo y durante un período de tiempo cuando los músculos se fortalezcan, entonces la distancia puede ser reducido.
+Si el pecho cae fácilmente, colocar un bloque entre la pared y la parte media de la espalda cambiará lentamente la postura de la parte superior del cuerpo y ayudará a desarrollar confianza.');
+
+INSERT INTO postura (nombre_es, nombre_sanskrito, foto_url, video_url, instrucciones, beneficios, modificaciones)
+VALUES
+('Postura de estocada baja', 'Anjaneyasana','https://s3assets.skimble.com/assets/41677/skimble-workout-trainer-exercise-yoga-left-low-lunge-clasped-hands-3_iphone.jpg',
+'https://www.youtube.com/watch?v=k5hQzMcBsC0',
+'Comience de rodillas sobre una pierna.
+Inhala, desplazando tu peso hacia tu pie izquierdo.
+Exhala, dando un paso con el pie derecho hacia adelante. Planta tu pie derecho dentro o ligeramente detrás de tu mano derecha.
+Mueva su asiento hacia adelante, apilando su rodilla derecha sobre su tobillo derecho. 
+Baje la rodilla izquierda al suelo.
+Inhala, lleva tus manos juntas hacia al glúteo. 
+Presione suavemente ambos pies contra el suelo para mayor estabilidad mientras alarga la columna y levanta la coronilla (parte superior) de la cabeza hacia el cielo.
+Extienda los brazos hacia arriba con las palmas una frente a la otra. Baje los hombros hacia abajo y aléjese de las orejas.',
+'La postura de estocada baja con mudra de yoga combina una apertura profunda de caderas con una flexión hacia atrás que fortalece hombros, espalda y pecho. Al entrelazar las manos detrás del cuerpo, mejora la movilidad de los hombros, la respiración profunda y la conciencia corporal. Esta activación consciente, junto con la apertura del pecho, favorece la liberación de tensión acumulada y ayuda a reducir la ansiedad.',
+'Si no puedes entrelazar las manos cómodamente detrás de la espalda, puedes usar una correa de yoga para mantener las manos unidas sin forzar los hombros.
+Si la flexión hacia atrás causa molestia en la zona lumbar, reduce la inclinación del torso y mantén la mirada al frente en lugar de llevar la cabeza hacia atrás.');
+
+INSERT INTO postura (nombre_es, nombre_sanskrito, foto_url, video_url, instrucciones, beneficios, modificaciones)
+VALUES
+('Postura de la Palmera II', 'Tadasana', 'https://www.greenappleactive.com/cdn/shop/articles/Untitled_design_-_2024-05-30T033917.638_2000x.jpg?v=1717022573',
+'https://www.youtube.com/watch?time_continue=27&v=v49WzOti7kY&embeds_referring_euri=https%3A%2F%2Fwww.google.com%2Fsearch%3Fclient%3Dopera%26sca_esv%3D95b5716a18877505%26sxsrf%3DAE3TifONIhMVp2CU-4UaLYO-XSQ67d8mUg%3A1748196913910%26q%3DPal&source_ve_path=MjM4NTE',
+'Comience de pie, con los pies separados a la anchura de las caderas.
+Activa la columna vertebral y eleva la pelvis. Apoya los pies en el suelo y contrae el ombligo.
+Mantenga el coxis en el centro, ni muy metido hacia adentro ni hacia afuera. [Consulte: Primer plano de la inclinación pélvica ]. Mantenga la pelvis neutra.
+Suavemente, redondee el hombro hacia atrás y hacia abajo. Levante la caja torácica, elevando ligeramente el torso.
+Tobillo, rodillas, pelvis, hombros y cabeza en una línea, y siente que no haces ningún esfuerzo al estar de pie (esto significa que estás en el centro de gravedad) y la postura es correcta.
+Inhale, levante los brazos hacia adelante frente al pecho y entrelace los dedos, gire la muñeca para que las palmas miren hacia adelante.
+Desde aquí, levanta lentamente ambos brazos por encima de la cabeza. Mantén los hombros alejados de las orejas y evita contraer el cuello.',
+'La postura de la palmera ofrece un estiramiento integral que fortalece músculos del torso, mejora la postura y aumenta la flexibilidad de hombros y columna. Favorece la respiración profunda al abrir el pecho y movilizar el diafragma, lo que ayuda a aliviar tensiones y reducir la ansiedad. También estimula la circulación, activa órganos digestivos y linfáticos, y contribuye a mejorar el equilibrio físico y emocional.',
+'Ideal para principiantes o personas con problemas de equilibrio. Se practica de pie con la espalda alineada contra la pared, lo que ayuda a sentir la correcta alineación del cuerpo desde los talones hasta la coronilla.
+Si hay tensión en hombros o cuello, los brazos pueden mantenerse al frente o relajados a los lados en lugar de elevados por encima de la cabeza.');
+
+INSERT INTO postura (nombre_es, nombre_sanskrito, foto_url, video_url, instrucciones, beneficios, modificaciones)
+VALUES
+('Postura de pie con flexión hacia adelante', 'Uttanasana', 'https://www.gaia.com/wp-content/uploads/standing-forward-fold-share.jpg',
+'https://www.youtube.com/watch?v=0KzyEgkq7zw',
+'Comienza de pie con los pies juntos y la columna alargada. Respira profundamente unas veces.
+Primero, intenta mantener la cabeza neutra, colocando las palmas de las manos sobre la espinilla con la espalda recta durante unas cuantas respiraciones.
+Ahora, inhala profundamente y, al exhalar, inclínate hacia adelante desde las caderas y baja la parte superior del cuerpo, acercándola a las piernas por las rodillas con la frente y colocando las palmas de las manos en el suelo cerca de los pies. Completa la exhalación en este punto. Sigue respirando y, al exhalar, expande la columna a la altura del cuello y profundiza hacia las rodillas o la espinilla, colocando las palmas de las manos junto a los pies en el suelo. El truco está en exhalar, tensar el core e intentar profundizar con cada exhalación.
+Permanezca en esta posición durante unas cuantas respiraciones y, al exhalar, incline la columna hacia adelante con mayor profundidad. Con las palmas de las manos apoyadas en el suelo, empuje la parte superior del pecho hacia adentro, sintiendo el estiramiento en los isquiotibiales. Aquí, las rodillas permanecen firmes y sin flexionar, sintiendo el estiramiento en la parte posterior de las rodillas.
+Aquí se tiende a cargar el peso del cuerpo sobre los talones, empujando conscientemente el peso hacia la parte delantera del pie inclinándose hacia adelante. Puede sentir que pierde el equilibrio, pero respire manteniendo las palmas de las manos activas.
+Para salir, inhala y eleva ligeramente el torso, luego exhala y vuelve lentamente.',
+'La postura de Uttanasana estira profundamente los isquiotibiales, la espalda y la columna vertebral, fortaleciendo piernas y abdomen. Mejora la circulación, estimula los órganos digestivos y linfáticos, y promueve una respiración más consciente al relajar el corazón. Al invertir la posición de la cabeza, favorece la oxigenación cerebral, alivia el estrés, mejora la postura y equilibra el sistema nervioso. También puede ser terapéutica para dolores de espalda, trastornos menstruales leves, ansiedad e insomnio, y es especialmente beneficiosa para atletas y personas con tensiones acumuladas por el estilo de vida moderno.',
+'Flexionar ligeramente las rodillas, es ideal para personas con isquiotibiales tensos o molestias en la zona lumbar. Al doblar un poco las rodillas, se reduce la tensión y se permite una flexión más cómoda desde las caderas.
+Separar los pies al ancho de las caderas, esto brinda mayor estabilidad y facilita la inclinación hacia adelante, especialmente para quienes sienten presión en la zona lumbar al mantener los pies juntos.');
+
+INSERT INTO postura (nombre_es, nombre_sanskrito, foto_url, video_url, instrucciones, beneficios, modificaciones)
+VALUES
+('Postura del perro boca abajo', 'Adho Mukha Svanasana', 'https://cdn.yogajournal.com/wp-content/uploads/2021/11/Downward-Facing-Dog-Pose_Andrew-Clark_2400x1350.jpeg',
+'https://www.youtube.com/watch?v=j97SSGsnCAQ',
+'Comienza de pie, apoyando firmemente los pies y estirando la columna, elevándola desde la base hasta la coronilla. Mantén esta postura durante dos o tres respiraciones, conectando con el movimiento del cuerpo con cada respiración.
+Inhalando, levanta los brazos, alargándolos desde las axilas y el abdomen superior, mientras miras suavemente hacia arriba.
+Exhala, contrae el torso y la pelvis, e inclínate hacia adelante, empujando las caderas hacia afuera y contrayendo el abdomen. Flexiona desde las caderas, estirando los músculos de la columna (mientras contraes la parte delantera del cuerpo) para flexionarte hacia adelante. Exhala completamente, acerca las palmas de las manos a los pies y baja la cabeza (si es posible, cerca de las rodillas). 
+Desde aquí, inhala y levanta la cabeza, y lleva las piernas hacia atrás, una a una, lo más lejos posible, estirando y contrayendo los músculos de los brazos. Empuja las caderas hacia arriba, apoyando firmemente las palmas de las manos en el suelo, flexionando las muñecas y exhalando.
+Junta los pies, contrae los cuádriceps, levanta las rótulas y empuja las pantorrillas hacia abajo para apoyar los talones. Con otra inhalación profunda, estira los brazos y las piernas. Al exhalar, contrae el abdomen para impulsar las caderas hacia arriba (los isquiones se mueven hacia arriba). Contrae la postura con la cabeza hacia abajo mientras miras al suelo (o al ombligo, si te resulta cómodo). Asegúrate de no agachar la cabeza.
+Inhala, mira hacia arriba y levanta la cabeza. Levanta el pie derecho hacia adelante entre las manos y exhala para acercar el pie izquierdo al derecho y levantate con cuidado.',
+'La postura del perro boca abajo estira y fortalece todo el cuerpo, especialmente piernas, brazos, espalda y hombros. Mejora la flexibilidad, alivia la tensión muscular y activa la circulación sanguínea y linfática. Al ser una postura invertida, favorece la oxigenación del cerebro, relaja el sistema nervioso y ayuda a reducir el estrés. También estimula los órganos digestivos, fortalece el core y puede tener efectos terapéuticos en dolencias como fascitis plantar, problemas posturales, congestión nasal y varices. ',
+'Si los isquiotibiales están tensos o hay molestias en la zona lumbar, mantener las rodillas ligeramente flexionadas permite alargar la columna sin forzar la postura.
+Separar los pies al ancho de las caderas o las manos un poco más del ancho de los hombros ofrece mayor estabilidad y espacio para quienes tienen poca movilidad.
+Para personas con dificultades para llevar el peso al suelo (adultos mayores, embarazadas o en rehabilitación), apoyar las manos sobre una pared o silla permite practicar la forma básica sin tensión.');
+
+INSERT INTO postura (nombre_es, nombre_sanskrito, foto_url, video_url, instrucciones, beneficios, modificaciones)
+VALUES
+('Postura del ángulo atado', 'Baddha Konasana', 'https://cdn.yogajournal.com/wp-content/uploads/2022/10/Bound-Angle-Pose_Mod-1_Andrew-Clark_2400x1350.jpeg',
+'https://www.youtube.com/watch?v=B6tb4TncKhY',
+'Comienza sentándote firmemente con los isquiones sobre la esterilla. Ahora, flexiona las rodillas y junta las plantas de los pies.
+Ahora, sujeta los pies o los tobillos con las palmas de las manos. Lleva los talones hacia la ingle lo más que puedas.
+Exhala y lleva las rodillas lentamente hacia el suelo. Debe ser sostenido y el movimiento debe ser gravitacional, no forzado.
+Los brazos deben estar relajados. Procura no contraer los hombros. En cambio, retíralos de las orejas. Estira conscientemente el torso, alargando así la columna vertebral. Mantén la coronilla firme llevando la barbilla hacia el cuello.
+Imagina que tus piernas son como las alas de una mariposa. Empieza a aletear subiendo y bajando las rodillas. Esto genera circulación sanguínea y calor para que los músculos de la ingle y la cara interna del muslo se estiren.
+Ahora detén el movimiento lentamente y mantén la postura. Siente cómo los muslos y las rodillas bajan hacia la colchoneta. Sigue respirando y, con cada exhalación, intenta bajar la rodilla un poco más. Mantén la postura según tu capacidad.
+Una vez lograda la postura, inhala lentamente y vuelve a apoyar los pies colocando las manos en los arcos internos. Coloca el pulgar en el arco interno y cuatro dedos alrededor del pie. Abre las plantas de los pies como un libro. Esto te ayudará a abrir más las caderas a medida que las rodillas se acercan al suelo. También ayuda a proteger las articulaciones de las rodillas de una tensión excesiva.
+Cuando estés listo para liberar la postura, suelta lentamente los pies. Estira las piernas una a una. Puedes realizar movimientos de tobillos y dedos de los pies, como rotaciones de tobillos sentado y flexiones de dedos, para aliviar el entumecimiento.',
+'La postura del ángulo atado estira la ingle, los muslos internos y las caderas, fortaleciendo el suelo pélvico, el psoas y los flexores de la cadera. Mejora la flexibilidad de la pelvis y favorece la circulación en la región pélvica, lo que estimula órganos como ovarios, vejiga y próstata. Además, ayuda a regular el sistema hormonal, aliviar el dolor lumbar y equilibrar las emociones al activar los chakras inferiores. Es una postura relajante y meditativa, ideal para mejorar la concentración, reducir el estrés y apoyar la salud reproductiva, especialmente en mujeres embarazadas o en recuperación posparto.',
+'Si las caderas o los aductores están tensos, puedes apoyar las rodillas sobre bloques, mantas o cojines. Esto reduce la tensión en las ingles y evita molestias.
+Para quienes tienen dificultad para mantener la espalda recta, sentarse con la espalda apoyada en una pared puede proporcionar estabilidad y soporte.
+Si es difícil alcanzar o sostener los pies sin encorvarse, sostener las espinillas permite mantener la alineación del torso sin tensión innecesaria.');
+
+#Posturas para insomnio
+INSERT INTO terapia (nombre) VALUES
+('insomnio');
+
+INSERT INTO postura (nombre_es, nombre_sanskrito, foto_url, video_url, instrucciones, beneficios, modificaciones)
+VALUES
+('Estiramiento de hombros entrecruzado', 'Makarasana', 'https://i.pinimg.com/474x/88/af/23/88af23bbaad65e9ba195eb5985a72223.jpg',
+'https://www.youtube.com/watch?v=FKgapKVb9t0',
+'Comienza la práctica recostándote boca abajo sobre la colchoneta. Separa las piernas y mantén los codos entrelazados mientras apoyas la frente sobre los brazos para descansar en Makarasana.
+Tomando algunas respiraciones aquí en Makarasana, relaje todo el cuerpo junto con la respiración.
+Inhala y eleva el pecho y la cabeza mientras apoyas el cuerpo con los brazos y los codos en el suelo frente a ti y acercas las piernas.
+Inhala y lleva el brazo izquierdo al suelo, llevando los dedos apuntando hacia el lado derecho del mat, y empujándolo desde los hombros.
+Inhala y ahora lleva el brazo derecho delante del brazo izquierdo acercando los codos entre sí y alineándolos con el mentón y el pecho en el suelo.
+Ambos codos están cerca uno del otro, mientras que los dedos de ambas manos apuntan hacia el lado opuesto, cerca de la parte exterior del pecho. Aquí, los omóplatos están bien separados, presionando la parte superior y frontal de los hombros a la altura del cuello, frente a usted.
+Inhala y, al exhalar, acerca la cara al suelo, frente al brazo entrelazado. Asegúrate de que el estiramiento del cuello y el pecho no te cause molestias.
+Coloque los brazos estirados en direcciones opuestas, asegurándose de que la alineación sea perfecta. No se incline hacia un lado del cuerpo. Use los músculos del pecho para mantener el equilibrio.
+Permanezca aquí tratando de alcanzar la frente en el suelo, y con cada exhalación, empuje lentamente los brazos hacia afuera y avance con el cuello y la cara.
+Inhala, levanta la cabeza, suelta lentamente los brazos y descansa en Makarasana, respirando varias veces. Relájate y repite la postura, profundizando esta vez y observa el estiramiento.
+El estiramiento cruzado se puede realizar después de realizar algunos estiramientos sencillos de brazos y hombros, de pie o sentado. Esto facilita la flexión de los brazos y proporciona una postura cómoda.',
+'El estiramiento de hombros entrecruzado alivia la tensión acumulada en la parte superior de la espalda, el cuello y los hombros, mejorando la movilidad y el rango de movimiento en las articulaciones del hombro. Es especialmente útil para personas con rigidez muscular por malas posturas o actividades repetitivas, como el trabajo prolongado frente a una pantalla. Además de reducir molestias causadas por nudos de tensión, también favorece la relajación general del cuerpo. Al liberar la tensión física y mental, este estiramiento puede ayudar a calmar el sistema nervioso y contribuir a reducir síntomas de ansiedad e insomnio, facilitando un descanso más profundo. ',
+'Si sientes demasiada presión al llevar el pecho o la frente al suelo, coloca una manta doblada o un bloque suave para reducir la tensión y mantener una alineación más cómoda.
+En lugar de juntar completamente los codos, puedes mantenerlos un poco más separados si hay rigidez en los hombros o el cuello. Esto reduce la intensidad del estiramiento.');
+
+INSERT INTO postura (nombre_es, nombre_sanskrito, foto_url, video_url, instrucciones, beneficios, modificaciones)
+VALUES
+('Postura del cocodrilo', 'Makarasana','https://www.yogabasics.com/yogabasics2017/wp-content/uploads/2013/11/IMG_1389.jpg',
+'https://www.youtube.com/watch?v=clsMDT0oyKQ',
+'Relaja el cuerpo después de la postura Viparita Karani y, girando lentamente hacia un lado, lleva el cuerpo a Makarasana mirando hacia abajo sobre el abdomen.
+Coloque el cuerpo boca abajo, coloque la frente sobre los brazos frente a usted y relaje todo el cuerpo con 6 rondas de respiración.',
+'La postura del cocodrilo relaja profundamente el cuerpo y la mente, ayudando a reducir la ansiedad, el insomnio y la presión arterial. Estimula el sacro y mejora la circulación del prana y de la sangre a lo largo de la columna, favoreciendo la salud espinal. Al presionar suavemente la zona abdominal, masajea los órganos internos, lo que mejora la digestión y el funcionamiento del hígado, páncreas, intestinos y vejiga. También alivia la rigidez lumbar y los síntomas del síndrome premenstrual.',
+'Cruza los antebrazos delante del cuerpo y apoya la frente suavemente sobre ellos. Alternativamente, puedes entrelazar los dedos y colocar la frente sobre las manos.
+Respira profundamente y con conciencia durante al menos 6 rondas de respiración, permitiendo que el abdomen se expanda y se contraiga suavemente contra el suelo.');
+
+UPDATE postura
+SET modificaciones = 'Colocar una manta doblada o un cojín firme bajo el pecho o el abdomen proporciona mayor comodidad, especialmente para personas con rigidez lumbar o tensión abdominal.
+Si hay molestia en el cuello al girar la cabeza, se puede apoyar la frente directamente sobre un bloque bajo o una almohada suave para mantener la alineación cervical.'
+WHERE id = 14;
+
+
+INSERT INTO postura (nombre_es, nombre_sanskrito, foto_url, video_url, instrucciones, beneficios, modificaciones)
+VALUES
+('Postura sentada de oreja a hombro', 'Greeva Sanchalana', 'https://images-prod.healthline.com/hlcmsresource/images/topic_centers/Fitness-Exercise/642x361_Stretches_to_Loosen_Your_Trapezius_Muscles-Ear_to_Shoulder.jpg',
+'https://www.youtube.com/watch?v=UbhOswck_yQ',
+'Sentado en postura fácil, exhale y lleve la cabeza y el cuello hacia el lado derecho, llevando la oreja derecha casi cerca del hombro derecho.
+Haga esto sin mover los hombros ni los brazos.
+Inhala, sube y regresa al centro. Exhala, dirígete hacia el lado izquierdo, llevando el cuello y la cabeza hacia el hombro izquierdo.
+Inhala, sube y regresa al centro.
+Inhala y exhala para realizar una flexión lenta y suave moviéndote de derecha a centro, izquierda, centro, derecha, centro, izquierda y centro, aproximadamente 6 veces.',
+'Ayuda a fortalecer los músculos del cuello y los hombros, previniendo el dolor y reduciendo el riesgo de lesiones. Sus movimientos suaves y controlados alivian la tensión acumulada por malas posturas o largas horas de trabajo frente a una pantalla. Además, mejora la flexibilidad y el rango de movimiento del cuello, facilita la circulación en la zona cervical y relaja el sistema nervioso, reduciendo el estrés y la ansiedad. Es una práctica sencilla pero poderosa para mantener la salud del cuello y la parte alta de la espalda.',
+'Apoyar la espalda contra una pared proporciona soporte adicional, ayuda a mantener la columna erguida y evita que el torso se incline al mover el cuello.
+Colocar una mano debajo del glúteo opuesto al que se inclina la cabeza (por ejemplo, mano izquierda bajo el glúteo izquierdo al inclinar a la derecha) ayuda a anclar el hombro y profundiza suavemente el estiramiento sin esfuerzo.');
+
+INSERT INTO postura (nombre_es, nombre_sanskrito, foto_url, video_url, instrucciones, beneficios, modificaciones)
+VALUES
+('Postura de la langosta', 'Salabhasana', 'https://cdn.yogajournal.com/wp-content/uploads/2022/03/locust-pose_andrew-clark.jpg',
+'https://www.youtube.com/watch?v=0kxczNm1xF4',
+'Primero, colóquese boca abajo sobre la esterilla, mantenga el cuerpo relajado prepara la mente para la fluidez.
+Aquí, alinea las manos detrás del cuerpo, cerca del cuerpo, con las palmas hacia el techo. Permanece así un par de respiraciones con la frente apoyada en la colchoneta.
+Desde aquí, inhala y levanta ambas piernas desde la cintura. Mantén las piernas ligeramente separadas y las rodillas rectas, a unos 40 grados del suelo o según te resulte cómodo. La parte inferior del cuerpo se eleva desde la zona pélvica y se apoya en el abdomen superior. Simultáneamente, levanta el torso y la barbilla del suelo, manteniendo la cabeza contraída. Extiende los brazos hacia atrás, cerca del cuerpo. Exhala. Los pies quedan por encima de la colchoneta. Exhala.
+Mantén la postura según tu capacidad. La respiración es corta debido a la constricción pectoral, pero la consciencia respiratoria ayuda al estudiante a mantenerse en la postura. En esta postura, se tiende a contener la respiración, lo cual se debe evitar.',
+'La postura de la langosta fortalece la espalda baja, glúteos, piernas y abdomen, al tiempo que mejora la flexibilidad de la columna y el control del core. Estimula órganos digestivos y glándulas como la tiroides, favoreciendo el metabolismo y la salud hormonal. Al abrir el pecho y activar el diafragma, mejora la respiración y la circulación. Es terapéutica para dolores lumbares, ciática leve y trastornos menstruales. Además, alivia el estrés, mejora la postura y activa varios chakras, promoviendo el equilibrio emocional y la confianza.',
+'En lugar de levantar todo el cuerpo, comienza levantando solo las piernas (manteniendo el torso en el suelo) o solo el torso (con las piernas apoyadas). Esto reduce la carga y permite trabajar la fuerza progresivamente.
+Colocar una manta doblada en la zona pélvica ayuda a reducir la presión en el abdomen y la parte baja de la espalda, haciendo la postura más cómoda.');
+
+INSERT INTO postura (nombre_es, nombre_sanskrito, foto_url, video_url, instrucciones, beneficios, modificaciones)
+VALUES
+('Postura de postración', 'Naman Pranamasana', 'https://www.theyogacollective.com/wp-content/uploads/2019/10/5413846629543949787_IMG_9977-1-1200x800.jpg',
+'https://www.youtube.com/watch?v=1BbnDe4dA4g',
+'Siéntate sobre tus talones, con la espalda erguida y las manos descansando sobre los muslos. Toma unas respiraciones profundas para centrarte y relajar el cuerpo.
+Lleva tus manos hacia atrás y coloca las palmas sobre los talones, manteniendo los dedos apuntando hacia atrás. Asegúrate de que los brazos estén activos pero sin tensión.
+Inhala profundamente y alarga la columna vertebral hacia arriba, como si quisieras crear espacio entre las vértebras.
+Exhala y baja la cabeza hacia el suelo, apoyando suavemente la parte superior del cráneo o la frente, según lo que te resulte más cómodo. El mentón se acerca al pecho y el cuello se alarga suavemente sin esfuerzo.
+Manteniendo el agarre de los talones, inhala y eleva las caderas lejos de los talones, formando una ligera curva hacia arriba con la espalda. No presiones con fuerza la cabeza contra el suelo; el peso debe distribuirse entre las piernas y los brazos.
+Siente cómo se estira el cuello, la parte alta de la espalda y los hombros, y mantén una respiración lenta, constante y consciente.
+Permanece en la postura durante 4 respiraciones si es cómodo, menos si sientes tensión. Escucha tu cuerpo.
+Para salir, exhala, baja lentamente las caderas, suelta los talones y vuelve a sentarte sobre los talones con la espalda recta.',
+'La postura de postración flexiona suavemente la columna vertebral, aliviando tensiones en el cuello y la espalda baja. Como es una flexión hacia adelante, calma el sistema nervioso, reduce el estrés y ayuda a combatir el insomnio, favoreciendo un sueño más profundo y reparador. Estimula la tiroides, mejora el equilibrio hormonal y activa el sistema digestivo. También revitaliza el cuero cabelludo mediante el aumento del flujo sanguíneo, rejuveneciendo los músculos faciales. Estira hombros y brazos, fortalece la parte superior del cuerpo y promueve una respiración más consciente, mejorando la conexión mente-cuerpo.',
+'Si hay sensibilidad en el cráneo, el cuello o presión incómoda, coloca una manta doblada o un cojín bajo la cabeza para amortiguar el apoyo.
+Para mayor comodidad en las piernas o si hay sensibilidad en las articulaciones, una manta bajo las rodillas o los tobillos reduce la presión.');
+
+INSERT INTO postura (nombre_es, nombre_sanskrito, foto_url, video_url, instrucciones, beneficios, modificaciones)
+VALUES
+('Postura de parada de cabeza con las manos atadas', 'Baddha Hasta Sirsasana', 'https://www.yogarenewteachertraining.com/wp-content/uploads/2022/12/Headstand-scaled.jpg',
+'https://www.youtube.com/watch?v=K92bkR5BnlU',
+'Extiende tu esterilla sobre una superficie firme. Arrodíllate y siéntate sobre los talones con la espalda recta. Toma de tres a cuatro respiraciones profundas para prepararte.
+Inclínate hacia adelante y apoya los antebrazos sobre el suelo, justo en el centro de la esterilla. Junta las manos entrelazando los dedos para formar una base triangular estable.
+Apoya suavemente la parte superior de la cabeza (coronilla) en el suelo, justo frente a tus manos entrelazadas. Asegúrate de que no haya presión excesiva en el cuello.
+Inhala y eleva las caderas, estirando las piernas hasta que el cuerpo forme una “V” invertida. Camina con los pies hacia el cuerpo, manteniendo el peso distribuido entre la cabeza y los antebrazos.
+Activa los músculos del abdomen y, usando el control del core, comienza a levantar lentamente los pies del suelo. Puedes doblar ligeramente las rodillas al principio o usar una pared como soporte.
+Cuando el equilibrio lo permita, estira ambas piernas hacia arriba, alineándolas verticalmente. Mantén el cuerpo recto desde los pies hasta la cabeza. La fuerza debe estar en los brazos y el abdomen, no en el cuello.
+Respira lenta y profundamente mientras mantienes la postura. Permanece atento a la alineación y evita inclinarte hacia los lados. Puedes mantenerte unos segundos o más, según tu capacidad y experiencia.
+Para salir, exhala y baja lentamente ambas piernas, controlando el descenso. Una vez que los pies toquen el suelo, descansa en una posición inclinada hacia adelante, con las rodillas abiertas y el torso apoyado, respirando profundamente durante varios ciclos.',
+'Esta postura fortalece intensamente el core, los hombros, brazos y espalda, al tiempo que alarga la columna vertebral y mejora la postura corporal. Al invertir el cuerpo, estimula la circulación sanguínea hacia el cerebro, lo que favorece la concentración, alivia el estrés, reduce la ansiedad y mejora la memoria. También beneficia al sistema digestivo y linfático, promueve la salud ocular y capilar, y revitaliza el rostro. Esta postura energizante activa la respiración profunda, desarrolla equilibrio físico y mental',
+'Usar una pared como soporte, practica cerca de una pared para evitar caídas hacia atrás. Apóyate ligeramente si es necesario al subir las piernas o simplemente utilízala como respaldo psicológico.
+Si hay sensibilidad en el cráneo o el cuello, coloca una manta doblada debajo de la coronilla para acolchar el contacto con el suelo y reducir la presión.
+Si la elevación con piernas estiradas es difícil, mantén las rodillas flexionadas al principio. Esto reduce la palanca del cuerpo y permite concentrarse en el equilibrio y la fuerza del core.');
+
+select*from postura;
+
+select*from terapia;
+#Primeras 6 posturas → dolor de espalda 
+INSERT INTO postura_terapia (postura_id, terapia_id) VALUES
+(1, 1),
+(2, 1),
+(3, 1),
+(4, 1),
+(5, 1),
+(6, 1);
+
+#Siguientes 6 posturas → ansiedad
+INSERT INTO postura_terapia (postura_id, terapia_id) VALUES
+(7, 2),
+(8, 2),
+(9, 2),
+(10, 2),
+(11, 2),
+(12, 2);
+
+#
+INSERT INTO postura_terapia (postura_id, terapia_id) VALUES
+(13, 3),
+(14, 3),
+(15, 3),
+(16, 3),
+(17, 3),
+(18, 3);
+
+select * from postura_terapia;
+
+select *from instructor;
+
+UPDATE instructor
+SET correo = 'kevin.villacis03@epn.edu.ec'
+WHERE id = 2;
+
+select*from instructor;
+select*from paciente;
+
+UPDATE paciente
+SET nombre = 'Nick'
+WHERE id = 1;
+
+UPDATE paciente
+SET apellido = 'Valverde'
+WHERE id = 1;
+
+UPDATE paciente
+SET ciudad = 'Quito'
+WHERE id = 1;
+
+select *from instructor;
+
+UPDATE instructor
+SET nombre = 'Ricardo',
+    apellido = 'Villareal'
+WHERE id = 1;
+
+
+UPDATE instructor
+SET nombre = 'Kevin',
+    apellido = 'Villacis'
+WHERE id = 2;
+
+UPDATE instructor
+SET nombre = 'Pedro',
+    apellido = 'Torres'
+WHERE id = 3;
+
+UPDATE instructor
+SET nombre = 'Ana',
+    apellido = 'Ruiz'
+WHERE id = 4;
+
+UPDATE instructor
+SET nombre = 'Nick',
+apellido = 'Valverde'
+WHERE id = 5;
+
+DELETE FROM instructor
+WHERE id IN (6, 7, 8, 9);
+
+DELETE FROM instructor
+where id = 5;
+
+DELETE FROM instructor
+WHERE id IN (20, 21, 22, 23, 24);
+
+DELETE FROM instructor
+where id = 19;
+
+DELETE FROM instructor
+where id = 25;
+
+select *from instructor;
+
+DELETE FROM instructor
+where id = 26;
+
+
+select * from postura;
+
+update postura
+set foto_url = 'https://media.istockphoto.com/id/846052156/es/foto/joven-atractivo-de-ustrasana-pose-antecedentes-de-estudio.jpg?s=612x612&w=0&k=20&c=9IpeR0LWeZu3VYDacd3DbWLkMCTnHbmFpT_l7Q8mqZk='
+where id = 3;
