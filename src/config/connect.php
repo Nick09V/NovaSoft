@@ -1,5 +1,3 @@
-
-
 <?php
 // src/config/connect.php
 
