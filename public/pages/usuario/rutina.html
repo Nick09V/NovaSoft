@@ -1,0 +1,39 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
+  <title>Mi Rutina Terapéutica</title>
+  <link rel="stylesheet" href="../../assets/css/estilos.css" />
+</head>
+<body>
+
+  <main class="container mt-5">
+    <h1>Mi Rutina Terapéutica</h1>
+
+    <!-- CARD de la rutina -->
+    <div class="card shadow-sm p-3 mb-5 bg-white rounded">
+      <div class="card-body">
+        <h3 class="card-title text-purple" id="terapia_nombre"></h3>
+
+        <p>
+          <strong>Serie:</strong>
+          <span id="serie_nombre"></span>
+        </p>
+
+        <p>
+          <strong>Sesiones completadas:</strong>
+          <span id="sesiones_realizadas"></span> /
+          <span id="numero_sesiones"></span>
+        </p>
+
+        <button id="btn-iniciar" class="btn btn-primary" disabled>
+          Iniciar sesión
+        </button>
+      </div>
+    </div>
+  </main>
+
+  <script src="../../assets/js/rutina.js"></script>
+</body>
+</html>
