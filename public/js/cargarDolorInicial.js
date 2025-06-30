@@ -1,9 +1,56 @@
-document.addEventListener('DOMContentLoaded', () => {
-  const select = document.getElementById('dolorSelect');
-  const btn = document.getElementById('btnConfirmarDolor');
+console.log("▶ Script cargarDolorInicial iniciado");
 
-  btn.addEventListener('click', async () => {
-    const valorDolor = select.value;
+// Verificar el estado del documento
+console.log("▶ Estado del documento:", document.readyState);
+
+function ejecutarCargaDolorInicial() {
+  console.log("▶ Ejecutando inicialización del dolor inicial...");
+  inicializarDolorInicial();
+}
+
+// Múltiples estrategias para asegurar que se ejecute
+if (document.readyState === 'loading') {
+  console.log("▶ Documento aún cargando, esperando DOMContentLoaded");
+  document.addEventListener('DOMContentLoaded', ejecutarCargaDolorInicial);
+} else {
+  console.log("▶ DOM ya está listo, ejecutando inmediatamente");
+  ejecutarCargaDolorInicial();
+}
+
+// Backup: ejecutar después de un pequeño delay
+setTimeout(() => {
+  console.log("▶ Ejecutando backup después de 100ms");
+  ejecutarCargaDolorInicial();
+}, 100);
+
+function inicializarDolorInicial() {
+  const select = document.getElementById('dolorSelect');
+  let btn = document.getElementById('btnConfirmarDolor');
+  
+  console.log("▶ DolorInicial listo");
+  console.log("▶ Asignacion ID disponible:", window.asignacionId);
+
+  // Verificar que tenemos el asignacion_id
+  if (!window.asignacionId) {
+    console.error("❌ No se encontró asignacion_id");
+    alert("Error: No se pudo obtener la información de la sesión. Vuelve a la página anterior.");
+    return;
+  }
+
+  // ✅ Reemplazar botón para limpiar listeners duplicados
+  if (btn) {
+    const nuevoBtn = btn.cloneNode(true);
+    btn.replaceWith(nuevoBtn);
+    btn = nuevoBtn;
+  }
+
+  btn?.addEventListener('click', async () => {
+    const valorDolor = select?.value;
+
+    if (!valorDolor) {
+      alert("Selecciona una intensidad de dolor.");
+      return;
+    }
 
     console.log("▶ Dolor inicial seleccionado:", valorDolor);
 
@@ -15,7 +62,7 @@ document.addEventListener('DOMContentLoaded', () => {
           'Content-Type': 'application/json'
         },
         body: JSON.stringify({
-          asignacion_id: window.asignacionId, // Ajusta esto si hace falta
+          asignacion_id: window.asignacionId,
           dolor_inicial: valorDolor
         })
       });
@@ -24,8 +71,11 @@ document.addEventListener('DOMContentLoaded', () => {
       console.log("▶ Respuesta crear_sesion.php:", data);
 
       if (data.status === "ok") {
-        document.getElementById('mensajeExito').style.display = 'block';
-        // opcional → redirigir al siguiente paso
+        const msg = document.getElementById('mensajeExito');
+        if (msg) {
+          msg.textContent = "✅ Sesión inicial creada correctamente.";
+          msg.style.display = 'block';
+        }
       } else {
         alert("Error: " + data.message);
       }
@@ -34,4 +84,4 @@ document.addEventListener('DOMContentLoaded', () => {
       alert("Error al crear la sesión.");
     }
   });
-});
+}

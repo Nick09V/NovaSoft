@@ -176,6 +176,7 @@ async function cargarContenido(rol, tab) {
     paciente: {
       usuarios: '/NovaSoft/public/pages/usuario/usuarios.html',
       Rutina: '/NovaSoft/public/pages/usuario/rutina.html',
+      DolorInicial: '/NovaSoft/public/pages/usuario/dolor_inicial.html',
     }
   };
 
@@ -191,6 +192,7 @@ async function cargarContenido(rol, tab) {
     paciente: {
       usuarios: '/NovaSoft/public/js/cargaContenido.js',
       Rutina: '/NovaSoft/public/js/cargarInfoRutina.js',
+      DolorInicial: '/NovaSoft/public/js/cargarDolorInicial.js',
     }
   };
 

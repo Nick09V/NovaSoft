@@ -21,15 +21,21 @@ if (!$asignacionId || $dolorInicialValor === null) {
     exit;
 }
 
-// Convertir número a texto
-$dolorTexto = convertirDolorANivel($dolorInicialValor);
+// El valor ya viene como texto desde el frontend (SIN DOLOR, LEVE, MODERADO, etc.)
+$dolorTexto = $dolorInicialValor;
 
 include_once __DIR__ . '/../config/connect.php';
 
 try {
+    // Verificar que el valor de dolor sea válido para el ENUM
+    $valoresPermitidos = ['SIN DOLOR', 'LEVE', 'MODERADO', 'INTENSO', 'MÁXIMO'];
+    if (!in_array($dolorTexto, $valoresPermitidos)) {
+        throw new Exception("Valor de dolor no válido: " . $dolorTexto);
+    }
+
     $stmt = $pdo->prepare("
-        INSERT INTO sesion (asignacion_id, fecha, dolor_inicio, dolor_fin, comentario, tiempo_real_minutos)
-        VALUES (?, NOW(), ?, NULL, NULL, NULL)
+        INSERT INTO sesion (asignacion_id, dolor_inicio, comentario)
+        VALUES (?, ?, 'Sesión iniciada')
     ");
     $stmt->execute([$asignacionId, $dolorTexto]);
 
@@ -46,15 +52,4 @@ try {
         'detalle' => $e->getMessage()
     ]);
 }
-
-function convertirDolorANivel($valor) {
-    if ($valor == 0) {
-        return 'SIN DOLOR';
-    } elseif ($valor >= 1 && $valor <= 3) {
-        return 'LEVE';
-    } elseif ($valor >= 4 && $valor <= 6) {
-        return 'MODERADO';
-    } else {
-        return 'SEVERO';
-    }
-}
+?>

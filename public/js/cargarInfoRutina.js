@@ -74,8 +74,12 @@ async function cargarInfoRutina() {
         btn.disabled = false;
         btn.addEventListener('click', () => {
           console.log("▶ Botón iniciar sesión clickeado");
-          window.location.href = '/NovaSoft/public/pages/usuario/dolor_inicial.html';
+          // Guardar asignacion_id para la siguiente vista
+          window.asignacionId = data.serie.asignacion_id;
+          console.log("▶ Asignacion ID guardado:", window.asignacionId);
+          cargarContenido('paciente', 'DolorInicial');
         });
+
       } else {
         console.error("▶ Botón btnIniciarSesion no encontrado");
       }
