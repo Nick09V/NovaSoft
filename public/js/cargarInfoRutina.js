@@ -1,33 +1,50 @@
-document.addEventListener("DOMContentLoaded", function () {
-  fetch("../../src/controllers/rutina.php")
-    .then((response) => response.json())
-    .then((data) => {
-      if (data.error) {
-        alert("Error: " + data.error);
-        return;
-      }
+console.log("▶ Cargar info de rutina - Script iniciado");
 
-      // Llenar los datos en la vista
-      document.getElementById("terapia_nombre").textContent =
-        "Terapia: " + data.terapia_nombre;
-      document.getElementById("serie_nombre").textContent = data.serie_nombre;
-      document.getElementById("sesiones_realizadas").textContent =
-        data.sesiones_realizadas;
-      document.getElementById("numero_sesiones").textContent =
-        data.numero_sesiones;
-
-      // Activar botón
-      const btn = document.getElementById("btn-iniciar");
-      btn.disabled = false;
-
-      // Guardar serie_id para el próximo paso
-      btn.addEventListener("click", function () {
-        window.location.href =
-          "dolor_inicial.html?serie_id=" + data.serie_id;
-      });
-    })
-    .catch((error) => {
-      console.error("Error al obtener datos:", error);
-      alert("Ocurrió un error al cargar la rutina.");
-    });
+document.addEventListener('DOMContentLoaded', () => {
+  cargarInfoRutina();
 });
+
+async function cargarInfoRutina() {
+  try {
+    const res = await fetch('/NovaSoft/src/models/obtener_rutina.php', {
+      credentials: 'include'
+    });
+
+    console.log("▶ Estado de respuesta HTTP:", res.status);
+
+    if (!res.ok) {
+      console.error("Error HTTP:", res.status);
+      return;
+    }
+
+    const data = await res.json();
+    console.log("▶ Datos recibidos de obtener_rutina.php:", data);
+
+    if (data.status === "ok") {
+      document.getElementById('nombreSerie').textContent = data.serie.serie_nombre;
+      document.getElementById('nombreTerapia').textContent = data.serie.terapia_nombre;
+      document.getElementById('sesionesRealizadas').textContent = data.serie.sesiones_realizadas;
+      document.getElementById('numeroSesiones').textContent = data.serie.numero_sesiones;
+
+      const btn = document.getElementById('btnIniciarSesion');
+      if (btn) {
+        btn.disabled = false;
+        btn.addEventListener('click', () => {
+          console.log("▶ Botón iniciar sesión clickeado");
+          window.location.href = '/NovaSoft/public/pages/usuario/dolor_inicial.html';
+        });
+      }
+    } else {
+      console.warn("No hay serie asignada al paciente", data);
+      document.getElementById('nombreSerie').textContent = "No asignada";
+      document.getElementById('nombreTerapia').textContent = "-";
+      document.getElementById('sesionesRealizadas').textContent = "0";
+      document.getElementById('numeroSesiones').textContent = "0";
+
+      document.getElementById('btnIniciarSesion').disabled = true;
+      document.getElementById('mensajeErrorRutina').style.display = 'block';
+    }
+  } catch (e) {
+    console.error("Error al obtener datos de la rutina:", e);
+  }
+}

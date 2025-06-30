@@ -12,34 +12,38 @@ include_once __DIR__ . '/../config/connect.php';
 // Obtener datos enviados desde el frontend
 $input = json_decode(file_get_contents('php://input'), true);
 
-$asignacionId = $input['asignacion_id'] ?? null;
-$dolorInicio = $input['dolor_inicio'] ?? null;
+$sesionId = $input['sesion_id'] ?? null;
+$dolorFin = $input['dolor_fin'] ?? null;
+$comentario = $input['comentario'] ?? null;
+$tiempoReal = $input['tiempo_real'] ?? null;
 
-if (!$asignacionId || !$dolorInicio) {
+if (!$sesionId || !$dolorFin) {
     echo json_encode(['status' => 'error', 'message' => 'Faltan datos']);
     exit;
 }
 
 try {
     $stmt = $pdo->prepare("
-        INSERT INTO sesion (asignacion_id, fecha, dolor_inicio)
-        VALUES (?, NOW(), ?)
+        UPDATE sesion
+        SET 
+            dolor_fin = ?,
+            comentario = ?,
+            tiempo_real_minutos = ?
+        WHERE id = ?
     ");
-    $stmt->execute([$asignacionId, $dolorInicio]);
-
-    $sesionId = $pdo->lastInsertId();
-
-    echo json_encode([
-        'status' => 'ok',
-        'sesion_id' => $sesionId
+    $stmt->execute([
+        $dolorFin,
+        $comentario,
+        $tiempoReal,
+        $sesionId
     ]);
+
+    echo json_encode(['status' => 'ok']);
 } catch (PDOException $e) {
     echo json_encode([
         'status' => 'error',
-        'message' => 'Error al crear sesión',
+        'message' => 'Error al actualizar sesión',
         'detalle' => $e->getMessage()
     ]);
 }
 ?>
-
-

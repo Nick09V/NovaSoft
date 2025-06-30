@@ -1,10 +1,10 @@
 console.log('Iniciando script para mostrar datos del pacienteeeeeeeeeeeeeee');
 
 // Declarar variables en el ámbito global del script
-let spanNombre, spanApellido, spanCorreo, spanDireccion, spanTelefono, spanCiudad, contenedor;
 
 (function () {
 
+    var spanNombre, spanApellido, spanCorreo, spanDireccion, spanTelefono, spanCiudad, contenedor;
 
     spanNombre = document.getElementById('pacienteNombre');
     spanCorreo = document.getElementById('pacienteCorreo');
@@ -23,9 +23,8 @@ let spanNombre, spanApellido, spanCorreo, spanDireccion, spanTelefono, spanCiuda
 
     cargarDatosPaciente();
     cargarDatosInstructor();
-})();
 
-function cargarDatosPaciente() {
+    function cargarDatosPaciente() {
     fetch('/NovaSoft/src/models/obtener_paciente.php')
         .then(response => {
             if (!response.ok) throw new Error('No se pudo obtener los datos del paciente');
@@ -84,3 +83,6 @@ function cargarDatosInstructor() {
             console.error('Error cargando datos:', error);
         });
 }
+
+})();
+

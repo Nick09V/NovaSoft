@@ -175,6 +175,7 @@ async function cargarContenido(rol, tab) {
     },
     paciente: {
       usuarios: '/NovaSoft/public/pages/usuario/usuarios.html',
+      Rutina: '/NovaSoft/public/pages/usuario/rutina.html',
     }
   };
 
@@ -189,6 +190,7 @@ async function cargarContenido(rol, tab) {
     },
     paciente: {
       usuarios: '/NovaSoft/public/js/cargaContenido.js',
+      Rutina: '/NovaSoft/public/js/cargarInfoRutina.js',
     }
   };
 
@@ -222,6 +224,15 @@ async function cargarContenido(rol, tab) {
       script.src = jsUrl;
       script.id = scriptId;
       script.async = false; // importante: que espere a que se cargue el HTML
+      
+      script.onload = () => {
+        if (rol === 'paciente' && tab === 'usuarios') {
+          window.cargarDatosPaciente?.();
+          window.cargarDatosInstructor?.();
+        }
+      };
+
+
       document.body.appendChild(script);
     }
   } catch (e) {

@@ -2,38 +2,33 @@
 <html lang="es">
 <head>
   <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Mi Rutina Terapéutica</title>
-  <link rel="stylesheet" href="../../assets/css/estilos.css" />
+  <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
+  <title>Rutina del Paciente</title>
+  <!-- <link rel="stylesheet" href="/NovaSoft/public/css/estilosRutina.css">-->
 </head>
 <body>
+  <div class="rutina-container">
+    <h1>Tu Rutina Terapéutica</h1>
 
-  <main class="container mt-5">
-    <h1>Mi Rutina Terapéutica</h1>
-
-    <!-- CARD de la rutina -->
-    <div class="card shadow-sm p-3 mb-5 bg-white rounded">
-      <div class="card-body">
-        <h3 class="card-title text-purple" id="terapia_nombre"></h3>
-
-        <p>
-          <strong>Serie:</strong>
-          <span id="serie_nombre"></span>
-        </p>
-
-        <p>
-          <strong>Sesiones completadas:</strong>
-          <span id="sesiones_realizadas"></span> /
-          <span id="numero_sesiones"></span>
-        </p>
-
-        <button id="btn-iniciar" class="btn btn-primary" disabled>
-          Iniciar sesión
-        </button>
-      </div>
+    <div class="rutina-info">
+      <p><strong>Serie Asignada:</strong> <span id="nombreSerie">Cargando...</span></p>
+      <p><strong>Terapia:</strong> <span id="nombreTerapia">Cargando...</span></p>
+      <p><strong>Sesiones Completadas:</strong> 
+        <span id="sesionesRealizadas">0</span> / 
+        <span id="numeroSesiones">0</span>
+      </p>
     </div>
-  </main>
 
-  <script src="../../assets/js/rutina.js"></script>
+    <div class="acciones">
+      <button id="btnIniciarSesion" class="btn-iniciar">Iniciar Sesión</button>
+    </div>
+
+    <div id="mensajeErrorRutina" class="msgError" style="display: none;">
+      <p>No tienes ninguna serie asignada en este momento.</p>
+    </div>
+  </div>
+
+  <!-- Script específico de esta vista -->
+  <script src="/NovaSoft/public/js/cargarInfoRutina.js"></script>
 </body>
 </html>

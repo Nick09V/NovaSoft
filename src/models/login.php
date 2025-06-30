@@ -69,6 +69,9 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     $paciente = $stmt->fetch();
 
     if ($paciente && password_verify($password, $paciente['contrasena'])) {
+        $stmt = $pdo->prepare("SELECT id FROM paciente WHERE correo = ?");
+        $stmt->execute([$username]);
+        $_SESSION['id'] = $stmt->fetchColumn();
         // Registro de sesión para paciente
         $_SESSION['correo'] = $username;
         $_SESSION['rol'] = 'paciente';
@@ -79,7 +82,8 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'usuario' => [
                 'nombre' => $paciente['nombre'], // Corregido aquí
                 'rol' => 'paciente',
-                'correo' => $_SESSION['correo'] 
+                'correo' => $_SESSION['correo'],
+                'session' => $_SESSION['id']
             ]
         ]);
         exit;
