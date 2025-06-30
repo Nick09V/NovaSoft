@@ -1,38 +1,23 @@
-<!DOCTYPE html>
-<html lang="es">
-<head>
-  <meta charset="UTF-8" />
-  <meta name="viewport" content="width=device-width, initial-scale=1.0" />
-  <title>Dolor Inicial</title>
-  <link rel="stylesheet" href="../../assets/css/estilos.css" />
-</head>
-<body>
+<div class="dolor-inicial-container">
+  <h2>Registra tu Dolor Inicial</h2>
 
-  <main class="container mt-5">
-    <h1>Configura tu sesión inicial</h1>
+  <div class="select-container">
+    <label for="dolorSelect">Selecciona tu nivel de dolor:</label>
+    <select id="dolorSelect">
+      <option value="SIN DOLOR">SIN DOLOR</option>
+      <option value="LEVE">LEVE</option>
+      <option value="MODERADO">MODERADO</option>
+      <option value="INTENSO">INTENSO</option>
+      <option value="MÁXIMO">MÁXIMO</option>
+    </select>
+  </div>
 
-    <div class="card shadow-sm p-4">
-      <p><strong>Serie seleccionada:</strong> <span id="serie_nombre"></span></p>
-      <p><strong>Terapia:</strong> <span id="terapia_nombre"></span></p>
+  <button id="btnConfirmarDolor" class="btn-confirmar">Confirmar</button>
 
-      <form id="form-dolor">
-        <label for="dolor_inicio"><strong>Intensidad de dolor/molestia al inicio:</strong></label>
-        <select id="dolor_inicio" name="dolor_inicio" required>
-          <option value="">-- Selecciona --</option>
-          <option value="SIN DOLOR">SIN DOLOR</option>
-          <option value="LEVE">LEVE</option>
-          <option value="MODERADO">MODERADO</option>
-          <option value="INTENSO">INTENSO</option>
-          <option value="MÁXIMO">MÁXIMO</option>
-        </select>
+  <div id="mensajeExito" style="display: none; color: green;">
+    ¡Sesión creada correctamente!
+  </div>
+</div>
 
-        <button type="submit" class="btn btn-primary mt-3">
-          Comenzar sesión
-        </button>
-      </form>
-    </div>
-  </main>
-
-  <script src="../../assets/js/dolor_inicial.js"></script>
-</body>
-</html>
+<!-- script específico -->
+<script src="/NovaSoft/public/js/dolorInicial.js"></script>
