@@ -1,0 +1,204 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Dolor Final - Evaluación</title>
+  <link rel="stylesheet" href="../../css/estilos.css">
+  <style>
+    .dolor-container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      text-align: center;
+      font-family: Arial, sans-serif;
+    }
+    
+    .dolor-header {
+      margin-bottom: 30px;
+    }
+    
+    .dolor-titulo {
+      font-size: 28px;
+      color: #27ae60;
+      margin-bottom: 10px;
+      font-weight: bold;
+    }
+    
+    .dolor-subtitulo {
+      font-size: 18px;
+      color: #666;
+      margin-bottom: 30px;
+    }
+    
+    .dolor-pregunta {
+      font-size: 20px;
+      margin-bottom: 20px;
+      color: #333;
+      font-weight: 500;
+    }
+    
+    .dolor-opciones {
+      display: flex;
+      flex-direction: column;
+      gap: 15px;
+      margin-bottom: 30px;
+      text-align: left;
+      max-width: 400px;
+      margin-left: auto;
+      margin-right: auto;
+    }
+    
+    .dolor-opcion {
+      display: flex;
+      align-items: center;
+      padding: 15px;
+      border: 2px solid #e0e0e0;
+      border-radius: 10px;
+      cursor: pointer;
+      transition: all 0.3s ease;
+      background: white;
+    }
+    
+    .dolor-opcion:hover {
+      border-color: #27ae60;
+      background-color: #f8fff8;
+    }
+    
+    .dolor-opcion.selected {
+      border-color: #27ae60;
+      background-color: #e8f5e8;
+    }
+    
+    .dolor-opcion input[type="radio"] {
+      margin-right: 15px;
+      transform: scale(1.2);
+      accent-color: #27ae60;
+    }
+    
+    .dolor-opcion label {
+      cursor: pointer;
+      font-size: 16px;
+      color: #333;
+      font-weight: 500;
+    }
+    
+    .dolor-acciones {
+      display: flex;
+      justify-content: center;
+      gap: 20px;
+      margin-top: 30px;
+    }
+    
+    .btn {
+      padding: 12px 30px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 16px;
+      font-weight: bold;
+      transition: background-color 0.3s;
+    }
+    
+    .btn-success {
+      background-color: #27ae60;
+      color: white;
+    }
+    
+    .btn-success:hover {
+      background-color: #219a52;
+    }
+    
+    .btn-success:disabled {
+      background-color: #95a5a6;
+      cursor: not-allowed;
+    }
+    
+    .btn-secondary {
+      background-color: #95a5a6;
+      color: white;
+    }
+    
+    .btn-secondary:hover {
+      background-color: #7f8c8d;
+    }
+    
+    .sesion-info {
+      background-color: #e8f4f8;
+      padding: 15px;
+      border-radius: 8px;
+      margin-bottom: 20px;
+      font-size: 14px;
+    }
+    
+    .hidden {
+      display: none;
+    }
+    
+    .loading {
+      text-align: center;
+      padding: 40px;
+      font-size: 18px;
+      color: #666;
+    }
+  </style>
+</head>
+<body>
+  <div class="dolor-container">
+    <div id="loadingView" class="loading">
+      <p>Finalizando sesión...</p>
+    </div>
+    
+    <div id="dolorView" class="hidden">
+      <div class="dolor-header">
+        <div class="dolor-titulo">
+          ¡Sesión Completada! 🎉
+        </div>
+        <div class="dolor-subtitulo">
+          Has terminado exitosamente tu rutina de yoga terapéutico
+        </div>
+      </div>
+      
+      <div class="sesion-info">
+        <p><strong>Sesión ID:</strong> <span id="infoSesionId">-</span></p>
+        <p><strong>Tiempo total:</strong> <span id="tiempoTotal">-</span> minutos</p>
+        <p><strong>Posturas completadas:</strong> <span id="posturasCompletadas">-</span></p>
+      </div>
+      
+      <div class="dolor-pregunta">
+        ¿Cómo te sientes ahora? Selecciona tu nivel de dolor:
+      </div>
+      
+      <form id="dolorForm" class="dolor-opciones">
+        <div class="dolor-opcion" onclick="seleccionarOpcion(1)">
+          <input type="radio" id="dolor1" name="nivelDolor" value="1">
+          <label for="dolor1">1. SIN DOLOR</label>
+        </div>
+        <div class="dolor-opcion" onclick="seleccionarOpcion(2)">
+          <input type="radio" id="dolor2" name="nivelDolor" value="2">
+          <label for="dolor2">2. LEVE</label>
+        </div>
+        <div class="dolor-opcion" onclick="seleccionarOpcion(3)">
+          <input type="radio" id="dolor3" name="nivelDolor" value="3">
+          <label for="dolor3">3. MODERADO</label>
+        </div>
+        <div class="dolor-opcion" onclick="seleccionarOpcion(4)">
+          <input type="radio" id="dolor4" name="nivelDolor" value="4">
+          <label for="dolor4">4. INTENSO</label>
+        </div>
+        <div class="dolor-opcion" onclick="seleccionarOpcion(5)">
+          <input type="radio" id="dolor5" name="nivelDolor" value="5">
+          <label for="dolor5">5. MÁXIMO</label>
+        </div>
+      </form>
+      
+      <div class="dolor-acciones">
+        <button id="btnVolver" class="btn btn-secondary">Volver a Rutina</button>
+        <button id="btnConfirmar" class="btn btn-success" disabled>Finalizar Sesión</button>
+      </div>
+    </div>
+  </div>
+
+  <script src="../../js/cargarDolorFinal.js"></script>
+</body>
+</html>

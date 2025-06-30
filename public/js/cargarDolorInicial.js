@@ -76,6 +76,17 @@ function inicializarDolorInicial() {
           msg.textContent = "✅ Sesión inicial creada correctamente.";
           msg.style.display = 'block';
         }
+        
+        console.log("▶ Sesión creada exitosamente, navegando a rutina...");
+        
+        // Guardar el ID de la sesión para la ejecución de rutina
+        window.sesionId = data.sesion_id;
+        console.log("▶ Sesion ID guardado:", window.sesionId);
+        
+        // Navegar a la pantalla de ejecución de rutina después de 1.5 segundos
+        setTimeout(() => {
+          cargarContenido('paciente', 'EjecutarRutina');
+        }, 1500);
       } else {
         alert("Error: " + data.message);
       }

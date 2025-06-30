@@ -1,0 +1,269 @@
+<!DOCTYPE html>
+<html lang="es">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>Ejecutar Rutina</title>
+  <style>
+    .rutina-container {
+      max-width: 800px;
+      margin: 0 auto;
+      padding: 20px;
+      text-align: center;
+      font-family: Arial, sans-serif;
+    }
+    
+    .postura-header {
+      margin-bottom: 20px;
+    }
+    
+    .postura-contador {
+      font-size: 24px;
+      color: #9b59b6;
+      margin-bottom: 10px;
+    }
+    
+    .postura-titulo {
+      font-size: 20px;
+      font-weight: bold;
+      margin-bottom: 5px;
+    }
+    
+    .postura-subtitulo {
+      font-size: 14px;
+      color: #666;
+      margin-bottom: 20px;
+    }
+    
+    .postura-imagenes {
+      display: flex;
+      justify-content: center;
+      margin-bottom: 30px;
+    }
+    
+    .postura-imagen {
+      width: 300px;
+      height: 200px;
+      background: #f0f0f0;
+      border-radius: 10px;
+      display: flex;
+      align-items: center;
+      justify-content: center;
+      border: 2px solid #ddd;
+    }
+    
+    .postura-imagen img {
+      max-width: 100%;
+      max-height: 100%;
+      object-fit: cover;
+      border-radius: 8px;
+    }
+    
+    .cronometro {
+      font-size: 48px;
+      font-weight: bold;
+      color: #3498db;
+      margin: 30px 0;
+    }
+    
+    .controles {
+      display: flex;
+      justify-content: center;
+      gap: 15px;
+      flex-wrap: wrap;
+      margin-bottom: 30px;
+    }
+    
+    .btn {
+      padding: 10px 20px;
+      border: none;
+      border-radius: 5px;
+      cursor: pointer;
+      font-size: 14px;
+      transition: background-color 0.3s;
+    }
+    
+    .btn-primary {
+      background-color: #3498db;
+      color: white;
+    }
+    
+    .btn-primary:hover {
+      background-color: #2980b9;
+    }
+    
+    .btn-secondary {
+      background-color: #95a5a6;
+      color: white;
+    }
+    
+    .btn-secondary:hover {
+      background-color: #7f8c8d;
+    }
+    
+    .btn-success {
+      background-color: #27ae60;
+      color: white;
+    }
+    
+    .btn-success:hover {
+      background-color: #219a52;
+    }
+    
+    .btn-danger {
+      background-color: #e74c3c;
+      color: white;
+    }
+    
+    .btn-danger:hover {
+      background-color: #c0392b;
+    }
+    
+    .estado-sesion {
+      background-color: #ecf0f1;
+      padding: 15px;
+      border-radius: 8px;
+      margin-top: 20px;
+      font-size: 14px;
+    }
+    
+    .hidden {
+      display: none;
+    }
+    
+    .loading {
+      text-align: center;
+      padding: 40px;
+      font-size: 18px;
+      color: #666;
+    }
+
+    /* Estilos para el modal */
+    .modal {
+      display: none;
+      position: fixed;
+      z-index: 1000;
+      left: 0;
+      top: 0;
+      width: 100%;
+      height: 100%;
+      background-color: rgba(0, 0, 0, 0.5);
+    }
+
+    .modal-content {
+      background-color: #fff;
+      margin: 5% auto;
+      padding: 20px;
+      border-radius: 10px;
+      width: 80%;
+      max-width: 600px;
+      position: relative;
+      max-height: 80vh;
+      overflow-y: auto;
+    }
+
+    .modal-header {
+      display: flex;
+      justify-content: space-between;
+      align-items: center;
+      margin-bottom: 15px;
+    }
+
+    .modal-title {
+      font-size: 20px;
+      font-weight: bold;
+      color: #3498db;
+    }
+
+    .close {
+      font-size: 28px;
+      font-weight: bold;
+      cursor: pointer;
+      color: #aaa;
+    }
+
+    .close:hover {
+      color: #333;
+    }
+
+    .modal-body {
+      line-height: 1.6;
+      font-size: 16px;
+    }
+
+    .modal-video {
+      width: 100%;
+      max-width: 100%;
+      height: auto;
+    }
+  </style>
+</head>
+<body>
+  <div class="rutina-container">
+    <div id="loadingView" class="loading">
+      <p>Cargando rutina...</p>
+    </div>
+    
+    <div id="rutinaView" class="hidden">
+      <div class="postura-header">
+        <div class="postura-contador">
+          Postura <span id="posturaActual">1</span> de <span id="totalPosturas">12</span>
+        </div>
+        <div class="postura-titulo" id="posturaNombre">
+          Cargando postura...
+        </div>
+        <div class="postura-subtitulo" id="posturaSubtitulo">
+          Respiración de fuelle (Bhastrika Pranayama)
+        </div>
+      </div>
+      
+      <div class="postura-imagenes">
+        <div class="postura-imagen">
+          <img id="posturaImagen" src="" alt="Postura" style="display: none;">
+          <span id="imagenPlaceholder">Imagen de la postura</span>
+        </div>
+      </div>
+      
+      <div class="cronometro" id="cronometro">
+        00:60
+      </div>
+      
+      <div class="controles">
+        <button id="btnPausar" class="btn btn-primary">Pausar</button>
+        <button id="btnVideo" class="btn btn-danger">▶ Ver Video</button>
+        <button id="btnInstrucciones" class="btn btn-secondary">Instrucciones</button>
+        <button id="btnBeneficios" class="btn btn-secondary">Beneficios</button>
+        <button id="btnModificaciones" class="btn btn-secondary">Modificaciones</button>
+        <button id="btnPrecauciones" class="btn btn-secondary">Precauciones</button>
+      </div>
+      
+      <div class="controles">
+        <button id="btnAnterior" class="btn btn-secondary">← Anterior</button>
+        <button id="btnSiguiente" class="btn btn-success">Siguiente →</button>
+        <button id="btnFinalizar" class="btn btn-danger hidden">Finalizar Sesión</button>
+      </div>
+      
+      <div class="estado-sesion">
+        <p><strong>Sesión ID:</strong> <span id="infoSesionId">-</span></p>
+        <p><strong>Tiempo total:</strong> <span id="tiempoTotal">00:00</span></p>
+        <p><strong>Estado:</strong> <span id="estadoSesion">En progreso</span></p>
+      </div>
+    </div>
+  </div>
+
+  <!-- Modal para mostrar información adicional -->
+  <div id="infoModal" class="modal">
+    <div class="modal-content">
+      <div class="modal-header">
+        <h2 id="modalTitle" class="modal-title">Información</h2>
+        <span class="close" id="closeModal">&times;</span>
+      </div>
+      <div id="modalBody" class="modal-body">
+        <!-- El contenido se cargará dinámicamente -->
+      </div>
+    </div>
+  </div>
+
+  <script src="../../js/ejecutarRutina.js"></script>
+</body>
+</html>

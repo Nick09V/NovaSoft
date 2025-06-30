@@ -177,6 +177,8 @@ async function cargarContenido(rol, tab) {
       usuarios: '/NovaSoft/public/pages/usuario/usuarios.html',
       Rutina: '/NovaSoft/public/pages/usuario/rutina.html',
       DolorInicial: '/NovaSoft/public/pages/usuario/dolor_inicial.html',
+      EjecutarRutina: '/NovaSoft/public/pages/usuario/ejecutar_rutina.html',
+      DolorFinal: '/NovaSoft/public/pages/usuario/dolor_final.html',
     }
   };
 
@@ -193,6 +195,8 @@ async function cargarContenido(rol, tab) {
       usuarios: '/NovaSoft/public/js/cargaContenido.js',
       Rutina: '/NovaSoft/public/js/cargarInfoRutina.js',
       DolorInicial: '/NovaSoft/public/js/cargarDolorInicial.js',
+      EjecutarRutina: '/NovaSoft/public/js/ejecutarRutina.js',
+      DolorFinal: '/NovaSoft/public/js/cargarDolorFinal.js',
     }
   };
 
