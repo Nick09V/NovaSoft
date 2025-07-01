@@ -29,40 +29,110 @@ function inicializarDolorFinal() {
   console.log("▶ Tiempo total:", window.tiempoTotalSesion);
   console.log("▶ Posturas completadas:", window.posturasCompletadas);
 
-  // Elementos del DOM
-  const loadingView = document.getElementById('loadingView');
-  const dolorView = document.getElementById('dolorView');
-  const infoSesionIdElement = document.getElementById('infoSesionId');
-  const tiempoTotalElement = document.getElementById('tiempoTotal');
-  const posturasCompletadasElement = document.getElementById('posturasCompletadas');
-  const btnConfirmar = document.getElementById('btnConfirmar');
-  const btnVolver = document.getElementById('btnVolver');
-
-  // Verificar que tenemos los datos necesarios
-  if (!window.sesionId) {
-    console.error("▶ No se encontró sesionId");
-    alert("Error: No se encontró información de la sesión");
-    cargarContenido('paciente', 'Rutina');
-    return;
-  }
-
-  // Mostrar información de la sesión
-  if (infoSesionIdElement) infoSesionIdElement.textContent = window.sesionId || '-';
-  if (tiempoTotalElement) tiempoTotalElement.textContent = Math.ceil((window.tiempoTotalSesion || 0) / 60);
-  if (posturasCompletadasElement) posturasCompletadasElement.textContent = window.posturasCompletadas || '-';
-
-  // Ocultar loading y mostrar la vista principal
-  if (loadingView) loadingView.classList.add('hidden');
-  if (dolorView) dolorView.classList.remove('hidden');
-
-  // Event listeners
-  if (btnConfirmar) {
-    btnConfirmar.addEventListener('click', confirmarDolorFinal);
-  }
-
-  if (btnVolver) {
-    btnVolver.addEventListener('click', () => {
-      cargarContenido('paciente', 'Rutina');
+  // Agregar event listener al botón confirmar (versión simplificada)
+  const btnConfirmarDolor = document.getElementById('btnConfirmarDolor');
+  if (btnConfirmarDolor) {
+    // Remover listeners previos para evitar duplicados
+    btnConfirmarDolor.replaceWith(btnConfirmarDolor.cloneNode(true));
+    const newBtn = document.getElementById('btnConfirmarDolor');
+    
+    newBtn.addEventListener('click', async function() {
+      console.log("▶ Botón confirmar presionado");
+      
+      const dolorFinal = document.getElementById('dolorSelect').value;
+      const sesionId = window.sesionId; // Usar la variable correcta
+      
+      console.log("▶ Dolor seleccionado:", dolorFinal);
+      console.log("▶ Sesión ID:", sesionId);
+      
+      if (!dolorFinal) {
+        alert('Por favor selecciona tu nivel de dolor final');
+        return;
+      }
+      
+      if (!sesionId) {
+        alert('Error: No se encontró la sesión activa');
+        return;
+      }
+      
+      try {
+        // Deshabilitar botón mientras procesa
+        this.disabled = true;
+        this.textContent = 'Guardando...';
+        
+        const response = await fetch('/NovaSoft/src/models/finalizar_sesion.php', {
+          method: 'POST',
+          credentials: 'include',
+          headers: {
+            'Content-Type': 'application/json',
+          },
+          body: JSON.stringify({
+            sesion_id: sesionId,
+            dolor_final: dolorFinal,
+            tiempo_total_minutos: Math.ceil((window.tiempoTotalSesion || 0) / 60)
+          })
+        });
+        
+        const data = await response.json();
+        console.log("▶ Respuesta del servidor:", data);
+        
+        // Estrategia simple: simular click en el enlace "Rutina" del menú lateral
+        if (data.status === 'ok') {
+          // Mostrar mensaje de éxito simple
+          const mensajeDiv = document.getElementById('mensajeExito');
+          if (mensajeDiv) {
+            mensajeDiv.style.display = 'block';
+            mensajeDiv.textContent = '¡Sesión finalizada correctamente! Regresando...';
+          }
+          
+          // Limpiar variables globales
+          window.sesionId = null;
+          window.asignacionId = null;
+          window.tiempoTotalSesion = null;
+          window.posturasCompletadas = null;
+          
+          // Redirigir después de 2 segundos
+          setTimeout(() => {
+            console.log("▶ Buscando enlace de rutina en el menú...");
+            
+            // Buscar el enlace "Rutina" en el menú lateral
+            const enlaces = document.querySelectorAll('a, button, [onclick]');
+            let enlaceRutina = null;
+            
+            for (let enlace of enlaces) {
+              const texto = enlace.textContent?.toLowerCase() || '';
+              const href = enlace.href || '';
+              const onclick = enlace.getAttribute('onclick') || '';
+              
+              if (texto.includes('rutina') || href.includes('rutina') || onclick.includes('Rutina')) {
+                enlaceRutina = enlace;
+                console.log("▶ Enlace de rutina encontrado:", enlace);
+                break;
+              }
+            }
+            
+            if (enlaceRutina) {
+              console.log("▶ Haciendo clic en enlace de rutina");
+              enlaceRutina.click();
+            } else {
+              console.log("▶ No se encontró enlace, recargando página");
+              window.location.reload();
+            }
+            
+          }, 2000);
+          
+        } else {
+          throw new Error(data.message || 'Error al finalizar la sesión');
+        }
+        
+      } catch (error) {
+        console.error('▶ Error:', error);
+        alert('Error al guardar el dolor final: ' + error.message);
+        
+        // Rehabilitar botón en caso de error
+        this.disabled = false;
+        this.textContent = 'CONFIRMAR';
+      }
     });
   }
 
@@ -164,6 +234,72 @@ async function confirmarDolorFinal() {
     }
   }
 }
+
+// Simplificar el event listener del botón confirmar
+document.getElementById('btnConfirmarDolor').addEventListener('click', async function() {
+    const dolorFinal = document.getElementById('dolorSelect').value;
+    const sesionId = window.sesionActualId;
+    
+    if (!dolorFinal) {
+        alert('Por favor selecciona tu nivel de dolor final');
+        return;
+    }
+    
+    if (!sesionId) {
+        alert('Error: No se encontró la sesión activa');
+        return;
+    }
+    
+    try {
+        // Deshabilitar botón mientras procesa
+        this.disabled = true;
+        this.textContent = 'Guardando...';
+        
+        const response = await fetch('/NovaSoft/src/models/finalizar_sesion.php', {
+            method: 'POST',
+            headers: {
+                'Content-Type': 'application/json',
+            },
+            body: JSON.stringify({
+                sesion_id: sesionId,
+                dolor_final: dolorFinal
+            })
+        });
+        
+        const data = await response.json();
+        
+        if (data.status === 'ok') {
+            // Mostrar mensaje de éxito simple
+            const mensajeDiv = document.getElementById('mensajeExito');
+            mensajeDiv.style.display = 'block';
+            mensajeDiv.textContent = '¡Sesión finalizada correctamente!';
+            
+            // Limpiar variables globales
+            window.sesionActualId = null;
+            window.asignacionActualId = null;
+            
+            // Redirigir después de 2 segundos
+            setTimeout(() => {
+                if (typeof window.cargarContenido === 'function') {
+                    window.cargarContenido('InfoRutina');
+                } else {
+                    window.location.href = '/NovaSoft/public/#';
+                }
+            }, 2000);
+            
+        } else {
+            throw new Error(data.message || 'Error al finalizar la sesión');
+        }
+        
+    } catch (error) {
+        console.error('Error:', error);
+        alert('Error al guardar el dolor final: ' + error.message);
+        
+        // Rehabilitar botón en caso de error
+        this.disabled = false;
+        this.textContent = 'CONFIRMAR';
+    }
+});
 
 function mostrarMensajeExito() {
   // Ocultar el formulario de dolor
@@ -297,3 +433,15 @@ function mostrarMensajeError(mensaje) {
     dolorView.prepend(mensajeErrorDiv);
   }
 }
+
+// Agregar debugging para ver qué funciones están disponibles
+setTimeout(() => {
+  console.log("▶ Funciones disponibles en window:");
+  console.log("▶ cargarContenido:", typeof window.cargarContenido);
+  console.log("▶ loadContent:", typeof window.loadContent);
+  console.log("▶ navegarA:", typeof window.navegarA);
+  console.log("▶ Todas las funciones que empiezan con 'cargar':", 
+    Object.keys(window).filter(key => key.toLowerCase().includes('cargar')));
+  console.log("▶ Todas las funciones que empiezan con 'load':", 
+    Object.keys(window).filter(key => key.toLowerCase().includes('load')));
+}, 1000);
