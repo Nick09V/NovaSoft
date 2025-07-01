@@ -95,18 +95,18 @@ let terapiaIDSeleccionada = null;
             const result = await res.json();
 
             if (result.error) {
-                alert(result.error);
+                mostrarAdvertencia(result.error);
             } else if (result.ok) {
-                alert(result.message || 'Serie registrada exitosamente');
+                mostrarAdvertencia(result.message || 'Serie registrada exitosamente');
                 console.log('Serie registrada exitosamente');
                 formulario.reset();
             } else {
-                alert('Respuesta inesperada del servidor');
+                mostrarAdvertencia('Respuesta inesperada del servidor');
             }
 
         } catch (error) {
             console.error('Error al enviar el formulario:', error);
-            alert('Ocurrió un error al registrar la serie terapéutica. Inténtalo de nuevo.');
+            mostrarAdvertencia('Ocurrió un error al registrar la serie terapéutica. Inténtalo de nuevo.');
         }
     });
 }
@@ -409,12 +409,45 @@ function cargarPosturasSeries(serieID) {
     crearNuevaSerieBoton.addEventListener('click', (e) => {
         console.log('Botón de registrar serie terapéutica presionado');
         e.preventDefault();
+        // Validaciones antes de enviar
+        if (!nombreSerieSubir || nombreSerieSubir.trim() === "") {
+            mostrarAdvertencia("Por favor, ingrese el nombre de la serie.");
+            return;
+        }
+        if (!posturasParaGuardar || posturasParaGuardar.length === 0) {
+            mostrarAdvertencia("Debe seleccionar al menos una postura para la serie.");
+            return;
+        }
+        // Validar que cada postura tenga minutos asignados
+        for (let postura of posturasParaGuardar) {
+            if (!postura.minutos || postura.minutos.trim() === "" || isNaN(postura.minutos) || Number(postura.minutos) <= 0) {
+                mostrarAdvertencia("Debe ingresar los minutos para cada postura seleccionada.");
+                return;
+            }
+        }
+        if (!numeroSesiones || isNaN(numeroSesiones) || numeroSesiones <= 0) {
+            mostrarAdvertencia("Por favor, ingrese el número de sesiones (mayor a 0).");
+            return;
+        }
+        if (!tipoTerapia.value || tipoTerapia.value.trim() === "") {
+            mostrarAdvertencia("Por favor, seleccione el tipo de terapia.");
+            return;
+        }
+        if (!terapiaIDSeleccionada || terapiaIDSeleccionada.trim() === "") {
+            mostrarAdvertencia("Por favor, seleccione la terapia.");
+            return;
+        }
+        if (!usuarioSeleccionado || usuarioSeleccionado.trim() === "") {
+            mostrarAdvertencia("Por favor, seleccione el usuario instructor.");
+            return;
+        }
+
         console.log('Nombre de la nueva serie:', nombreSerieSubir);
         console.log('Datos para guardar posturas:', posturasParaGuardar);
         console.log('Número de sesiones:', numeroSesiones);
         console.log('Tipo de terapia:', tipoTerapia.value);
         console.log('terapia ID:', terapiaIDSeleccionada);
-       console.log('Usuario seleccionado:', usuarioSeleccionado);
+        console.log('Usuario seleccionado:', usuarioSeleccionado);
 
         fetch('/NovaSoft/src/models/serie/crearSerie.php', {
             method: 'POST',
@@ -434,9 +467,9 @@ function cargarPosturasSeries(serieID) {
         })
         .then(data => {
             if (data.error) {
-                alert(data.error);
+                mostrarAdvertencia(data.error);
             } else if (data.ok) {
-                alert(data.message || 'Serie terapéutica registrada exitosamente');
+                mostrarAdvertencia(data.message || 'Serie terapéutica registrada exitosamente');
                 console.log('Serie terapéutica registrada exitosamente');
                 formulario.reset(); // Limpiar el formulario
                 posturasCheckBox.innerHTML = ''; // Limpiar las posturas
@@ -445,7 +478,7 @@ function cargarPosturasSeries(serieID) {
                 crearSerieNo.checked = true; // Marcar el botón de "No" como seleccionado
                 crearSerieSi.checked = false;
             } else {
-                alert('Respuesta inesperada del servidor');
+                mostrarAdvertencia('Respuesta inesperada del servidor');
             }
         })
 
@@ -464,9 +497,50 @@ function cargarPosturasSeries(serieID) {
 
 
 
+    // --- INICIO: Sistema de advertencias bonitas ---
+    function crearContenedorAdvertencias() {
+        if (!document.getElementById('contenedorAdvertencias')) {
+            const div = document.createElement('div');
+            div.id = 'contenedorAdvertencias';
+            div.style.position = 'fixed';
+            div.style.top = '30px';
+            div.style.left = '50%';
+            div.style.transform = 'translateX(-50%)';
+            div.style.zIndex = '9999';
+            div.style.display = 'none';
+            document.body.appendChild(div);
+        }
+    }
+
+    function mostrarAdvertencia(mensaje) {
+        crearContenedorAdvertencias();
+        const contenedor = document.getElementById('contenedorAdvertencias');
+        contenedor.innerHTML = `
+            <div style="
+                background: #fff3cd;
+                color: #856404;
+                border: 1px solid #ffeeba;
+                border-radius: 6px;
+                padding: 16px 32px;
+                font-size: 1.1em;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+                margin-bottom: 10px;
+                min-width: 280px;
+                text-align: center;
+                
+                
+                
+                ">
+                <strong>Advertencia:</strong> ${mensaje}
+            </div>
+        `;
+        contenedor.style.display = 'block';
+        setTimeout(() => {
+            contenedor.style.display = 'none';
+        }, 3500);
+    }
+    // --- FIN: Sistema de advertencias bonitas ---
+
+
+
 })();
-
-
-
-
-
