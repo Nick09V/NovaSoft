@@ -28,7 +28,7 @@ $direccion  = trim($input['direccion'] ?? '');
 $ciudad     = trim($input['ciudad'] ?? '');
 
 // Validar campos obligatorios
-if (!$pacienteId || empty($nombre) || empty($apellido) || empty($correo)) {
+if (!$pacienteId || empty($nombre) || empty($apellido) || empty($correo) || empty($telefono) || empty($direccion) || empty($ciudad)) {
     echo json_encode(['success' => false, 'message' => 'Faltan datos requeridos']);
     exit;
 }

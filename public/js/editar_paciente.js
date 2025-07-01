@@ -36,6 +36,11 @@
             return;
         }
 
+        // Mostrar estado de carga
+        const submitBtn = form.querySelector('button[type="submit"]');
+        submitBtn.disabled = true;
+        submitBtn.textContent = 'Cargando...';
+
         try {
             const response = await fetch(`/NovaSoft/src/models/obtener_paciente_por_id.php?id=${pacienteId}`);
             const result = await response.json();
@@ -61,6 +66,9 @@
             console.error('Error al cargar datos del paciente:', error);
             alert('Error al cargar los datos del paciente');
             cancelarEdicion();
+        } finally {
+            submitBtn.disabled = false;
+            submitBtn.textContent = 'Guardar Cambios';
         }
     }
 
