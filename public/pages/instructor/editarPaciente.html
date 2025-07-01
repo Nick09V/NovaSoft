@@ -1,0 +1,40 @@
+<div class="login-container">
+  <div class="formulariosGeneral">
+    <h1 id="title">Editar Datos del Paciente</h1>
+    <form id="editar-paciente" action="" method="POST">
+      <input type="hidden" id="paciente-id" name="id">
+      <div class="input-group">
+        <div class="nombre-apellido">
+          <div class="input-field" id="nameInput">
+            <i class="fa-solid fa-user"></i>
+            <input type="text" id="nombre" name="nombre" required placeholder="Nombre">
+          </div>
+          <div class="input-field" id="apellidoInput">
+            <i class="fa-solid fa-user"></i>
+            <input type="text" id="apellido" name="apellido" required placeholder="Apellido">
+          </div>
+        </div>
+        <div class="input-field">
+          <i class="fa-solid fa-envelope"></i>
+          <input type="email" id="email" name="correo" required autocomplete="off" placeholder="correo@example.com">
+        </div>
+        <div class="input-field">
+          <i class="fa-solid fa-phone"></i>
+          <input type="tel" id="telefono" name="telefono" placeholder="Teléfono" pattern="[0-9]*" onkeypress="return (event.charCode >= 48 && event.charCode <= 57)">
+        </div>
+        <div class="input-field">
+          <i class="fa-solid fa-location-dot"></i>
+          <input type="text" id="direccion" name="direccion" placeholder="Calle, número, colonia, etc.">
+        </div>
+        <div class="input-field">
+          <i class="fa-solid fa-city"></i>
+          <input type="text" id="ciudad" name="ciudad" placeholder="Ciudad">
+        </div>
+      </div>
+      <div class="btn-field">
+        <button id="guardar" type="submit">Guardar Cambios</button>
+        <button id="cancelar" type="button" onclick="cancelarEdicion()">Cancelar</button>
+      </div>
+    </form>
+  </div>
+</div>
