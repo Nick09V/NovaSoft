@@ -5,6 +5,104 @@
   <meta name="viewport" content="width=device-width, initial-scale=1.0"/>
   <title>Rutina del Paciente</title>
   <!-- <link rel="stylesheet" href="/NovaSoft/public/css/estilosRutina.css">-->
+  <style>
+    .rutina-container {
+      max-width: 600px;
+      margin: 0 auto;
+      padding: 20px;
+      font-family: Arial, sans-serif;
+    }
+
+    h1 {
+      color: #333;
+      text-align: center;
+      margin-bottom: 30px;
+    }
+
+    .rutina-info {
+      background: #f8f9fa;
+      padding: 20px;
+      border-radius: 8px;
+      margin-bottom: 30px;
+      border: 1px solid #e9ecef;
+    }
+
+    .rutina-info p {
+      margin: 10px 0;
+      font-size: 16px;
+    }
+
+    .rutina-info strong {
+      color: #495057;
+    }
+
+    .acciones {
+      text-align: center;
+      margin: 30px 0;
+    }
+
+    .btn-iniciar {
+      background-color: #007bff;
+      color: white;
+      border: none;
+      padding: 12px 30px;
+      font-size: 16px;
+      border-radius: 5px;
+      cursor: pointer;
+      transition: background-color 0.3s ease;
+    }
+
+    .btn-iniciar:hover:not(:disabled) {
+      background-color: #0056b3;
+    }
+
+    .btn-iniciar:disabled {
+      background-color: #95a5a6 !important;
+      cursor: not-allowed !important;
+      opacity: 0.6 !important;
+      pointer-events: none !important;
+    }
+
+    .btn-completed {
+      background-color: #95a5a6 !important;
+      color: #fff !important;
+      cursor: not-allowed !important;
+      opacity: 0.6 !important;
+      pointer-events: none !important;
+      border: 2px solid #7f8c8d !important;
+    }
+
+    .msgError {
+      background: #f8d7da;
+      color: #721c24;
+      padding: 15px;
+      border-radius: 5px;
+      border: 1px solid #f5c6cb;
+      text-align: center;
+      margin-top: 20px;
+    }
+
+    /* Estilos para mensajes dinámicos */
+    .mensaje-exito, .mensaje-error, .mensaje-intento-fallido {
+      border-radius: 10px;
+      padding: 20px;
+      margin: 20px 0;
+      text-align: center;
+      font-weight: bold;
+    }
+
+    .mensaje-exito {
+      background: linear-gradient(135deg, #d4edda, #c3e6cb);
+      border: 2px solid #27ae60;
+      color: #155724;
+    }
+
+    .mensaje-intento-fallido {
+      background: linear-gradient(135deg, #f8d7da, #f5c6cb);
+      border: 2px solid #e74c3c;
+      color: #721c24;
+    }
+  </style>
 </head>
 <body>
   <div class="rutina-container">

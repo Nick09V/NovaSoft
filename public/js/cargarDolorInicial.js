@@ -88,7 +88,18 @@ function inicializarDolorInicial() {
           cargarContenido('paciente', 'EjecutarRutina');
         }, 1500);
       } else {
-        alert("Error: " + data.message);
+        console.error("▶ Error en respuesta:", data);
+        
+        // Verificar si es porque ya completó todas las sesiones
+        if (data.sesiones_completadas) {
+          console.log("▶ Sesiones completadas, regresando a rutina");
+          // Guardar el mensaje para mostrarlo en la pantalla de rutina
+          window.mensajeSerieCompletada = data.message;
+          // Regresar a la vista de rutina
+          cargarContenido('paciente', 'Rutina');
+        } else {
+          alert("Error: " + data.message);
+        }
       }
     } catch (e) {
       console.error(e);

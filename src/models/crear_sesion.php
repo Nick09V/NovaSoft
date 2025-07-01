@@ -33,6 +33,31 @@ try {
         throw new Exception("Valor de dolor no válido: " . $dolorTexto);
     }
 
+    // NUEVA VALIDACIÓN: Verificar que no se exceda el número máximo de sesiones
+    $stmt = $pdo->prepare("
+        SELECT 
+            s.numero_sesiones,
+            (SELECT COUNT(*) FROM sesion WHERE asignacion_id = ?) as sesiones_realizadas
+        FROM asignacion_serie a
+        JOIN serie s ON a.serie_id = s.id
+        WHERE a.id = ?
+    ");
+    $stmt->execute([$asignacionId, $asignacionId]);
+    $validacion = $stmt->fetch(PDO::FETCH_ASSOC);
+
+    if (!$validacion) {
+        throw new Exception("Asignación no encontrada");
+    }
+
+    if ($validacion['sesiones_realizadas'] >= $validacion['numero_sesiones']) {
+        echo json_encode([
+            'status' => 'error',
+            'message' => 'Has completado todas las sesiones disponibles para esta serie (' . $validacion['numero_sesiones'] . ' sesiones)',
+            'sesiones_completadas' => true
+        ]);
+        exit;
+    }
+
     $stmt = $pdo->prepare("
         INSERT INTO sesion (asignacion_id, dolor_inicio, comentario)
         VALUES (?, ?, 'Sesión iniciada')
