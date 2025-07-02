@@ -334,9 +334,9 @@ function cargarPosturasSeries(serieID) {
                 return response.json();
             })
             .then(data => {
-                console.log('Usuarios obtenidos:', data);
+                console.log('Pacientes obtenidos:', data);
                 
-                usuariosInstructor.innerHTML = '<option value="">Seleccione un usuario</option>'; // Limpiar opciones previas
+                usuariosInstructor.innerHTML = '<option value="">Seleccione un paciente</option>'; // Limpiar opciones previas
                 data.forEach(usuario => {
                     const option = document.createElement('option');
                     option.value = usuario.id;
@@ -438,7 +438,7 @@ function cargarPosturasSeries(serieID) {
             return;
         }
         if (!usuarioSeleccionado || usuarioSeleccionado.trim() === "") {
-            mostrarAdvertencia("Por favor, seleccione el usuario instructor.");
+            mostrarAdvertencia("Por favor, seleccione un paciente valido.");
             return;
         }
 
@@ -489,10 +489,15 @@ function cargarPosturasSeries(serieID) {
     botonRegistrar.addEventListener('click', (e) => {
         e.preventDefault();
         console.log('Botón de registrar serie terapéutica presionado');
-        console.log("selectedSerieID", selectedSerieID);
+        try {
+            console.log("selectedSerieID", selectedSerieID);
+        }catch (error) {
+            console.error('Error al acceder a selectedSerieID:', error);
+            mostrarAdvertencia('Debe seleccionar una serie antes de registrar.');
+            return;
+        }
         //usuarioSeleccionadoIndex
         console.log('Usuario seleccionado para asociar serie:', usuarioSeleccionadoIndex);
-        
     });
 
 

@@ -77,12 +77,11 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
             'status' => 'ok',
             'rol' => 'paciente',
             'usuario' => [
-                'nombre' => $paciente['nombre'], // Corregido aquí
+                'nombreeeee' => $paciente['nombre'],
                 'rol' => 'paciente',
                 'correo' => $_SESSION['correo'] 
             ]
         ]);
-        exit;
     } else {
         echo json_encode(['status' => 'error', 'message' => 'Credenciales incorrectas']);
     }
