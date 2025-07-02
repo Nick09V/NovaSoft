@@ -49,14 +49,14 @@ try {
         throw new Exception("Asignación no encontrada");
     }
 
-    if ($validacion['sesiones_realizadas'] >= $validacion['numero_sesiones']) {
+    /*if ($validacion['sesiones_realizadas'] >= $validacion['numero_sesiones']) {
         echo json_encode([
             'status' => 'error',
             'message' => 'Has completado todas las sesiones disponibles para esta serie (' . $validacion['numero_sesiones'] . ' sesiones)',
             'sesiones_completadas' => true
         ]);
         exit;
-    }
+    }*/
 
     $stmt = $pdo->prepare("
         INSERT INTO sesion (asignacion_id, dolor_inicio, comentario)

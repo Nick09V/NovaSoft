@@ -26,15 +26,10 @@ setTimeout(() => {
 async function cargarInfoRutina() {
   console.log("▶ Iniciando función cargarInfoRutina()");
   
-  // Verificar si hay un mensaje de serie completada por intento fallido
+  // Limpiar mensaje de serie completada si existe
   if (window.mensajeSerieCompletada) {
-    console.log("▶ Mostrando mensaje de intento fallido:", window.mensajeSerieCompletada);
-    // Esperar un momento para que la UI se cargue
-    setTimeout(() => {
-      mostrarMensajeIntentoFallido(window.mensajeSerieCompletada);
-      // Limpiar el mensaje
-      window.mensajeSerieCompletada = null;
-    }, 500);
+    console.log("▶ Limpiando mensaje sin mostrar alerta:", window.mensajeSerieCompletada);
+    window.mensajeSerieCompletada = null;
   }
   
   // FORZAR verificación adicional después de cargar
@@ -115,59 +110,45 @@ async function cargarInfoRutina() {
         btn.parentNode.replaceChild(btnNuevo, btn);
         
         if (sesionesCompletadas) {
-          console.log("▶ Todas las sesiones completadas, BLOQUEANDO completamente el botón");
+          console.log("▶ Bloqueando botón completamente...");
           
-          // Cambiar completamente el botón
-          btnNuevo.innerHTML = '🏆 Serie Completada';
+          // ✅ BLOQUEAR COMPLETAMENTE el botón - NO solo visualmente
           btnNuevo.disabled = true;
-          btnNuevo.className = 'btn btn-completed'; // Nueva clase CSS
+          btnNuevo.setAttribute('disabled', true);
+          btnNuevo.setAttribute('aria-disabled', true);
+          btnNuevo.style.backgroundColor = '#95a5a6';
+          btnNuevo.style.cursor = 'not-allowed';
+          btnNuevo.style.opacity = '0.6';
+          btnNuevo.style.pointerEvents = 'none'; // ← ESTO ES CLAVE
+          btnNuevo.textContent = '🏆 Serie Completada';
           
-          // Estilos inline muy específicos
-          btnNuevo.style.cssText = `
-            background-color: #95a5a6 !important;
-            color: #fff !important;
-            cursor: not-allowed !important;
-            opacity: 0.6 !important;
-            pointer-events: none !important;
-            border: 2px solid #7f8c8d !important;
-            padding: 10px 20px !important;
-            border-radius: 5px !important;
-            font-size: 14px !important;
-          `;
+          // ✅ REMOVER COMPLETAMENTE cualquier event listener
+          const nuevoBtn = btnNuevo.cloneNode(true);
+          btnNuevo.replaceWith(nuevoBtn);
           
-          btnNuevo.setAttribute('disabled', 'true');
-          btnNuevo.setAttribute('aria-disabled', 'true');
-          btnNuevo.setAttribute('tabindex', '-1');
-          
-          // Como medida extra, agregar un overlay invisible que capte clicks
-          const overlay = document.createElement('div');
-          overlay.style.cssText = `
-            position: absolute;
-            top: 0;
-            left: 0;
-            right: 0;
-            bottom: 0;
-            z-index: 10;
-            cursor: not-allowed;
-          `;
-          
-          // Hacer el contenedor del botón relativo para el overlay
-          if (btnNuevo.parentNode) {
-            btnNuevo.parentNode.style.position = 'relative';
-            btnNuevo.parentNode.appendChild(overlay);
+          // ✅ CREAR UNA BARRERA FÍSICA sobre el botón
+          const contenedorBoton = nuevoBtn.parentNode;
+          if (contenedorBoton) {
+            contenedorBoton.style.position = 'relative';
+            
+            const overlay = document.createElement('div');
+            overlay.style.cssText = `
+              position: absolute;
+              top: 0;
+              left: 0;
+              right: 0;
+              bottom: 0;
+              z-index: 999;
+              cursor: not-allowed;
+              background: transparent;
+            `;
+            
+            // ✅ NO agregar event listener al overlay - que sea completamente inerte
+            contenedorBoton.appendChild(overlay);
           }
-          
-          // Evento en el overlay para mostrar mensaje
-          overlay.addEventListener('click', (e) => {
-            e.preventDefault();
-            e.stopPropagation();
-            console.log("▶ Intento de clic interceptado por overlay");
-            mostrarMensajeIntentoFallido(`Has completado todas las sesiones disponibles para esta serie (${numeroSesiones} sesiones)`);
-          });
           
           // Mostrar mensaje de serie completada automáticamente
           mostrarMensajeSerieTerminada(numeroSesiones);
-          
         } else {
           console.log("▶ Habilitando botón...");
           btnNuevo.disabled = false;
@@ -284,85 +265,7 @@ function mostrarMensajeSerieTerminada(numeroSesiones) {
 }
 
 function mostrarMensajeIntentoFallido(mensajeBackend) {
-  console.log("▶ Mostrando mensaje de intento fallido:", mensajeBackend);
-  
-  // Buscar si ya existe un mensaje
-  let mensajeExistente = document.getElementById('mensajeIntentoFallido');
-  if (mensajeExistente) {
-    mensajeExistente.remove();
-  }
-  
-  // Crear el mensaje de alerta
-  const mensaje = document.createElement('div');
-  mensaje.id = 'mensajeIntentoFallido';
-  mensaje.style.cssText = `
-    background: linear-gradient(135deg, #f8d7da, #f5c6cb);
-    border: 2px solid #e74c3c;
-    border-radius: 10px;
-    padding: 20px;
-    margin: 20px 0;
-    text-align: center;
-    color: #721c24;
-    font-weight: bold;
-    animation: slideIn 0.5s ease-out;
-    box-shadow: 0 4px 8px rgba(0,0,0,0.1);
-  `;
-  
-  mensaje.innerHTML = `
-    <div style="font-size: 48px; margin-bottom: 10px;">⚠️</div>
-    <h3 style="color: #e74c3c; margin-bottom: 10px;">¡Atención!</h3>
-    <p style="margin-bottom: 15px; font-size: 16px;">${mensajeBackend}</p>
-    <p style="font-size: 14px; color: #6c757d; margin-bottom: 15px;">No puedes crear más sesiones para esta serie.</p>
-    <button onclick="this.parentElement.remove()" style="
-      background: #e74c3c;
-      color: white;
-      border: none;
-      padding: 8px 16px;
-      border-radius: 5px;
-      cursor: pointer;
-      font-size: 14px;
-    ">Entendido</button>
-  `;
-  
-  // Agregar estilos de animación
-  const style = document.createElement('style');
-  style.textContent = `
-    @keyframes slideIn {
-      from { 
-        opacity: 0; 
-        transform: translateY(-20px) scale(0.95); 
-      }
-      to { 
-        opacity: 1; 
-        transform: translateY(0) scale(1); 
-      }
-    }
-  `;
-  document.head.appendChild(style);
-  
-  // Insertar el mensaje al principio del contenido
-  const rutinaContainer = document.querySelector('.rutina-info-container') || document.body;
-  if (rutinaContainer) {
-    rutinaContainer.insertBefore(mensaje, rutinaContainer.firstChild);
-  }
-  
-  // Auto-remover después de 8 segundos
-  setTimeout(() => {
-    if (mensaje && mensaje.parentNode) {
-      mensaje.style.animation = 'fadeOut 0.5s ease-out';
-      setTimeout(() => {
-        mensaje.remove();
-      }, 500);
-    }
-  }, 8000);
-  
-  // Agregar estilo de fadeOut
-  const fadeOutStyle = document.createElement('style');
-  fadeOutStyle.textContent = `
-    @keyframes fadeOut {
-      from { opacity: 1; transform: scale(1); }
-      to { opacity: 0; transform: scale(0.95); }
-    }
-  `;
-  document.head.appendChild(fadeOutStyle);
+  // ✅ Función desactivada - no mostrar alertas
+  console.log("▶ Función mostrarMensajeIntentoFallido desactivada:", mensajeBackend);
+  return; // Salir inmediatamente sin hacer nada
 }
