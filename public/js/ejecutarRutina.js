@@ -36,7 +36,7 @@ function inicializarEjecutarRutina() {
   let tiempoTotalSesion = 0;
   let tiempoTotalInterval = null;
   let sesionEnPausa = false;
-  let cronometroActivo = false; // Nueva variable para controlar el estado del cronómetro
+  let cronometroActivo = false;
 
   // Elementos del DOM
   const loadingView = document.getElementById('loadingView');
@@ -78,11 +78,23 @@ function inicializarEjecutarRutina() {
   // Mostrar información de la sesión
   infoSesionIdElement.textContent = window.sesionId;
 
-  // Cargar posturas de la rutina
-  cargarPosturasRutina();
+  // ✅ NO mostrar loading view, ir directo a cargar datos
+  console.log("▶ Cargando posturas directamente sin pantalla de carga...");
+  
+  // Ocultar loading inmediatamente si existe
+  if (loadingView) {
+    loadingView.style.display = 'none';
+    loadingView.classList.add('hidden');
+  }
+  
+  // Mostrar rutina view inmediatamente
+  if (rutinaView) {
+    rutinaView.style.display = 'block';
+    rutinaView.classList.remove('hidden');
+  }
 
-  // Iniciar cronómetro total
-  iniciarCronometroTotal();
+  // Cargar datos de rutina inmediatamente
+  cargarPosturasRutina();
 
   // Event Listeners
   btnIniciar.addEventListener('click', iniciarCronometro);
@@ -126,20 +138,35 @@ function inicializarEjecutarRutina() {
         posturas = data.posturas;
         console.log("▶ Posturas cargadas:", posturas.length);
         
-        // Ocultar loading y mostrar rutina
-        loadingView.classList.add('hidden');
-        rutinaView.classList.remove('hidden');
-        
-        // Mostrar primera postura sin iniciar cronómetro
+        // Mostrar primera postura inmediatamente
         mostrarPostura(0);
-        // NO llamar iniciarCronometro() aquí
+        
+        // Iniciar cronómetro total
+        iniciarCronometroTotal();
         
       } else {
         throw new Error(data.message || "Error al cargar posturas");
       }
     } catch (e) {
       console.error("❌ Error cargando posturas:", e);
-      alert("Error al cargar la rutina: " + e.message);
+      
+      // En caso de error, mostrar el loading view con mensaje de error
+      if (loadingView) {
+        loadingView.innerHTML = `
+          <div class="error-message">
+            <h2>Error al cargar la rutina</h2>
+            <p>${e.message}</p>
+            <button onclick="window.cargarContenido('InfoRutina')" class="btn btn-primary">
+              Volver a Rutina
+            </button>
+          </div>
+        `;
+        loadingView.style.display = 'block';
+      }
+      
+      if (rutinaView) {
+        rutinaView.style.display = 'none';
+      }
     }
   }
 
