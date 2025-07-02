@@ -544,7 +544,7 @@ function cargarPosturasSeries(serieID) {
             contenedor.style.display = 'none';
         }, 3500);
     }
-    // --- FIN: Sistema de advertencias bonitas ---
+
 
 
 
