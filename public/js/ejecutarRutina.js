@@ -97,6 +97,9 @@ function inicializarEjecutarRutina() {
   console.log("▶ Iniciando cronómetro total automáticamente al entrar a la ventana");
   inicializarCronometroTotal();
 
+  // ✅ Mostrar skeleton de postura inmediatamente
+  mostrarSkeletonPostura();
+
   // Cargar datos de rutina inmediatamente
   cargarPosturasRutina();
 
@@ -120,6 +123,36 @@ function inicializarEjecutarRutina() {
     }
   });
 
+  function mostrarSkeletonPostura() {
+    console.log("▶ Mostrando skeleton mientras cargan los datos...");
+    
+    // Mostrar valores temporales inmediatamente
+    posturaActualElement.textContent = "1";
+    totalPosturasElement.textContent = "...";
+    posturaNombreElement.textContent = "Cargando postura...";
+    posturaSubtituloElement.textContent = "Preparando sesión...";
+    estadoSesionElement.textContent = 'Cargando rutina...';
+    cronometroElement.textContent = "01:00";
+    
+    // Mostrar placeholder de imagen
+    const img = document.getElementById('posturaImagen');
+    const placeholder = document.getElementById('imagenPlaceholder');
+    
+    if (img) img.style.display = 'none';
+    if (placeholder) {
+      placeholder.style.display = 'block';
+      placeholder.textContent = 'Cargando imagen...';
+    }
+    
+    // Estado inicial de botones
+    btnIniciar.disabled = true;
+    btnIniciar.textContent = 'Cargando...';
+    btnPausar.disabled = true;
+    btnAnterior.disabled = true;
+    btnSiguiente.style.display = 'none';
+    btnFinalizar.style.display = 'none';
+  }
+
   async function cargarPosturasRutina() {
     try {
       console.log("▶ Cargando posturas de la rutina...");
@@ -142,10 +175,8 @@ function inicializarEjecutarRutina() {
         posturas = data.posturas;
         console.log("▶ Posturas cargadas:", posturas.length);
         
-        // Mostrar primera postura inmediatamente
+        // ✅ Mostrar primera postura inmediatamente después de cargar
         mostrarPostura(0);
-        
-        // ✅ NO llamar iniciarCronometroTotal() aquí porque ya se inició arriba
         
       } else {
         throw new Error(data.message || "Error al cargar posturas");
@@ -158,6 +189,12 @@ function inicializarEjecutarRutina() {
         clearInterval(tiempoTotalInterval);
         tiempoTotalInterval = null;
       }
+      
+      // Mostrar error en lugar del skeleton
+      posturaNombreElement.textContent = "Error al cargar rutina";
+      posturaSubtituloElement.textContent = e.message;
+      estadoSesionElement.textContent = 'Error';
+      btnIniciar.textContent = 'Error';
       
       // En caso de error, mostrar el loading view con mensaje de error
       if (loadingView) {
