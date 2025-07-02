@@ -1,5 +1,27 @@
 let rolActual = null;
 
+//============================Función para modificar el nombre en el sidebar================00
+function renderizarSidebarUsuario(usuario) {
+  const nombreElems = [
+    document.getElementById('nombre-usuario'),
+    document.getElementById('nombre-usuario-paciente')
+  ];
+  const correoElems = [
+    document.getElementById('correo-usuario'),
+    document.getElementById('correo-usuario-paciente')
+  ];
+
+  nombreElems.forEach(elem => {
+    if (elem) elem.textContent = usuario.nombre || 'Usuario';
+  });
+
+  correoElems.forEach(elem => {
+    if (elem) elem.textContent = usuario.correo || 'correo@desconocido.com';
+  });
+}
+
+
+
 // ========================== Cargar Usuario desde Sesión ==========================
 async function cargarUsuarioDesdeSesion() {
   try {
@@ -7,12 +29,8 @@ async function cargarUsuarioDesdeSesion() {
     const data = await res.json();
 
     if (data.status === 'ok') {
-      const nombreElem = document.getElementById('nombre-usuario');
-      const correoElem = document.getElementById('correo-usuario');
-
-      if (nombreElem) nombreElem.textContent = data.usuario.nombre;
-      if (correoElem) correoElem.textContent = data.usuario.correo;
-
+      renderizarSidebarUsuario(data.usuario);
+      console.log('🔧 Ejecutando renderizarSidebarUsuario con:', data.usuario); 
       rolActual = data.usuario.rol;
     } else {
       console.warn('No hay sesión activa');
@@ -122,24 +140,34 @@ function mostrarMenu(rol) {
         document.getElementById('dashboard-content').style.display = 'block';
         activarEventosMenu('dashboard-content-instructor');
       } else if (rol === 'paciente') {
-        document.getElementById('dashboard-content').style.display = 'block'; // Mostrar el contenedor principal
-        document.getElementById('menu-usuario') && (document.getElementById('menu-usuario').style.display = 'block');
-        activarEventosMenu('menu-usuario');
+        document.getElementById('dashboard-content').style.display = 'block';
+        const menuUsuario = document.getElementById('menu-usuario');
+        if (menuUsuario) {
+          menuUsuario.style.display = 'block';
+          activarEventosMenu('menu-usuario');
+        }
       }
+
+      cargarUsuarioDesdeSesion(); // ✅ Aquí solo una vez
     }, 500);
   } else {
-    // Si no existe el loginContainer, solo muestra los paneles según el rol
     if (rol === 'instructor') {
       document.getElementById('dashboard-content-instructor').style.display = 'block';
       document.getElementById('dashboard-content').style.display = 'block';
       activarEventosMenu('dashboard-content-instructor');
     } else if (rol === 'paciente') {
-      document.getElementById('menu-usuario') && (document.getElementById('menu-usuario').style.display = 'block');
-      document.getElementById('dashboard-content').style.display = 'block';
-      activarEventosMenu('menu-usuario');
+      const menuUsuario = document.getElementById('menu-usuario');
+      if (menuUsuario) {
+        menuUsuario.style.display = 'block';
+        document.getElementById('dashboard-content').style.display = 'block';
+        activarEventosMenu('menu-usuario');
+      }
     }
+
+    cargarUsuarioDesdeSesion(); // ✅ También si no hay login container
   }
 }
+
 
 function activarEventosMenu(menuId) {
   const menu = document.getElementById(menuId);
@@ -238,6 +266,7 @@ async function cargarContenido(rol, tab) {
         if (rol === 'paciente' && tab === 'usuarios') {
           window.cargarDatosPaciente?.();
           window.cargarDatosInstructor?.();
+          cargarUsuarioDesdeSesion();
         }
       };
 

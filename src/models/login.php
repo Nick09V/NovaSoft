@@ -48,6 +48,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Asigno como variable global el correo
         $_SESSION['correo'] = $username;
         $_SESSION['rol'] = 'instructor';
+        $_SESSION['nombre'] = $instructor['nombre'];
 
 
         echo json_encode([
@@ -75,6 +76,7 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         // Registro de sesión para paciente
         $_SESSION['correo'] = $username;
         $_SESSION['rol'] = 'paciente';
+        $_SESSION['nombre'] = $paciente['nombre'];
 
         echo json_encode([
             'status' => 'ok',
