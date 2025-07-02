@@ -32,10 +32,11 @@ function inicializarEjecutarRutina() {
   let posturas = [];
   let posturaActual = 0;
   let cronometroInterval = null;
-  let tiempoRestante = 60; // segundos por defecto
+  let tiempoRestante = 60;
   let tiempoTotalSesion = 0;
   let tiempoTotalInterval = null;
   let sesionEnPausa = false;
+  let cronometroActivo = false; // Nueva variable para controlar el estado del cronómetro
 
   // Elementos del DOM
   const loadingView = document.getElementById('loadingView');
@@ -50,6 +51,7 @@ function inicializarEjecutarRutina() {
   const estadoSesionElement = document.getElementById('estadoSesion');
 
   // Botones
+  const btnIniciar = document.getElementById('btnIniciar');
   const btnPausar = document.getElementById('btnPausar');
   const btnVideo = document.getElementById('btnVideo');
   const btnInstrucciones = document.getElementById('btnInstrucciones');
@@ -83,6 +85,7 @@ function inicializarEjecutarRutina() {
   iniciarCronometroTotal();
 
   // Event Listeners
+  btnIniciar.addEventListener('click', iniciarCronometro);
   btnPausar.addEventListener('click', togglePausa);
   btnAnterior.addEventListener('click', posturaAnterior);
   btnSiguiente.addEventListener('click', siguientePostura);
@@ -127,9 +130,9 @@ function inicializarEjecutarRutina() {
         loadingView.classList.add('hidden');
         rutinaView.classList.remove('hidden');
         
-        // Mostrar primera postura
+        // Mostrar primera postura sin iniciar cronómetro
         mostrarPostura(0);
-        iniciarCronometro();
+        // NO llamar iniciarCronometro() aquí
         
       } else {
         throw new Error(data.message || "Error al cargar posturas");
@@ -167,28 +170,48 @@ function inicializarEjecutarRutina() {
       placeholder.style.display = 'block';
     }
     
-    // Resetear cronómetro
+    // Resetear cronómetro y estado
+    detenerCronometro();
+    cronometroActivo = false;
     tiempoRestante = postura.duracion_segundos || 60;
     actualizarCronometro();
     
-    // Actualizar botones
+    // Actualizar estado de botones
+    btnIniciar.disabled = false;
+    btnIniciar.textContent = '▶ Iniciar Postura';
+    btnPausar.disabled = true;
+    btnPausar.textContent = 'Pausar';
+    estadoSesionElement.textContent = 'Listo para iniciar';
+    
+    // Actualizar botones de navegación
     btnAnterior.disabled = index === 0;
     btnSiguiente.style.display = index === posturas.length - 1 ? 'none' : 'inline-block';
     btnFinalizar.style.display = index === posturas.length - 1 ? 'inline-block' : 'none';
   }
 
   function iniciarCronometro() {
-    detenerCronometro();
-    cronometroInterval = setInterval(() => {
-      if (!sesionEnPausa) {
-        tiempoRestante--;
-        actualizarCronometro();
-        
-        if (tiempoRestante <= 0) {
-          siguientePostura();
+    if (!cronometroActivo) {
+      console.log("▶ Iniciando cronómetro manualmente");
+      cronometroActivo = true;
+      sesionEnPausa = false;
+      
+      // Actualizar estado de botones
+      btnIniciar.disabled = true;
+      btnPausar.disabled = false;
+      estadoSesionElement.textContent = 'En progreso';
+      
+      // Iniciar el intervalo del cronómetro
+      cronometroInterval = setInterval(() => {
+        if (!sesionEnPausa) {
+          tiempoRestante--;
+          actualizarCronometro();
+          
+          if (tiempoRestante <= 0) {
+            posturaCompletada();
+          }
         }
-      }
-    }, 1000);
+      }, 1000);
+    }
   }
 
   function detenerCronometro() {
@@ -196,6 +219,7 @@ function inicializarEjecutarRutina() {
       clearInterval(cronometroInterval);
       cronometroInterval = null;
     }
+    cronometroActivo = false;
   }
 
   function actualizarCronometro() {
@@ -207,7 +231,7 @@ function inicializarEjecutarRutina() {
 
   function iniciarCronometroTotal() {
     tiempoTotalInterval = setInterval(() => {
-      if (!sesionEnPausa) {
+      if (!sesionEnPausa && cronometroActivo) { // Solo contar cuando el cronómetro esté activo
         tiempoTotalSesion++;
         const minutos = Math.floor(tiempoTotalSesion / 60);
         const segundos = tiempoTotalSesion % 60;
@@ -218,26 +242,50 @@ function inicializarEjecutarRutina() {
   }
 
   function togglePausa() {
-    sesionEnPausa = !sesionEnPausa;
-    btnPausar.textContent = sesionEnPausa ? 'Reanudar' : 'Pausar';
-    estadoSesionElement.textContent = sesionEnPausa ? 'Pausado' : 'En progreso';
-    console.log("▶ Sesión", sesionEnPausa ? 'pausada' : 'reanudada');
+    if (cronometroActivo) {
+      sesionEnPausa = !sesionEnPausa;
+      btnPausar.textContent = sesionEnPausa ? 'Reanudar' : 'Pausar';
+      estadoSesionElement.textContent = sesionEnPausa ? 'Pausado' : 'En progreso';
+      console.log("▶ Sesión", sesionEnPausa ? 'pausada' : 'reanudada');
+    }
   }
 
   function posturaAnterior() {
     if (posturaActual > 0) {
       mostrarPostura(posturaActual - 1);
-      iniciarCronometro();
+      // No iniciar automáticamente el cronómetro
     }
   }
 
   function siguientePostura() {
     if (posturaActual < posturas.length - 1) {
       mostrarPostura(posturaActual + 1);
-      iniciarCronometro();
+      // No iniciar automáticamente el cronómetro
     } else {
-      // Última postura completada
+      // Última postura
       detenerCronometro();
+      btnFinalizar.style.display = 'inline-block';
+      btnSiguiente.style.display = 'none';
+      btnIniciar.disabled = true;
+      btnPausar.disabled = true;
+    }
+  }
+
+  function posturaCompletada() {
+    console.log("▶ Postura completada automáticamente");
+    detenerCronometro();
+    
+    // Mostrar mensaje de postura completada
+    estadoSesionElement.textContent = 'Postura completada';
+    btnIniciar.textContent = '✓ Completada';
+    
+    // Si no es la última postura, habilitar el botón siguiente
+    if (posturaActual < posturas.length - 1) {
+      setTimeout(() => {
+        siguientePostura();
+      }, 2000); // Esperar 2 segundos antes de pasar a la siguiente
+    } else {
+      // Es la última postura
       btnFinalizar.style.display = 'inline-block';
       btnSiguiente.style.display = 'none';
     }
