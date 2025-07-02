@@ -93,6 +93,10 @@ function inicializarEjecutarRutina() {
     rutinaView.classList.remove('hidden');
   }
 
+  // ✅ Iniciar cronómetro total INMEDIATAMENTE al cargar la ventana
+  console.log("▶ Iniciando cronómetro total automáticamente al entrar a la ventana");
+  inicializarCronometroTotal();
+
   // Cargar datos de rutina inmediatamente
   cargarPosturasRutina();
 
@@ -141,14 +145,19 @@ function inicializarEjecutarRutina() {
         // Mostrar primera postura inmediatamente
         mostrarPostura(0);
         
-        // Iniciar cronómetro total
-        iniciarCronometroTotal();
+        // ✅ NO llamar iniciarCronometroTotal() aquí porque ya se inició arriba
         
       } else {
         throw new Error(data.message || "Error al cargar posturas");
       }
     } catch (e) {
       console.error("❌ Error cargando posturas:", e);
+      
+      // En caso de error, detener el cronómetro total
+      if (tiempoTotalInterval) {
+        clearInterval(tiempoTotalInterval);
+        tiempoTotalInterval = null;
+      }
       
       // En caso de error, mostrar el loading view con mensaje de error
       if (loadingView) {
@@ -256,9 +265,14 @@ function inicializarEjecutarRutina() {
       `${minutos.toString().padStart(2, '0')}:${segundos.toString().padStart(2, '0')}`;
   }
 
-  function iniciarCronometroTotal() {
+  function inicializarCronometroTotal() {
+    // ✅ Iniciar inmediatamente cuando se carga la ventana de ejecutar rutina
+    console.log("▶ Iniciando cronómetro total automáticamente");
+    
     tiempoTotalInterval = setInterval(() => {
-      if (!sesionEnPausa && cronometroActivo) { // Solo contar cuando el cronómetro esté activo
+      // ✅ Contar SIEMPRE, independientemente del estado de las posturas
+      // Solo pausar si el usuario pausa explícitamente la sesión
+      if (!sesionEnPausa) {
         tiempoTotalSesion++;
         const minutos = Math.floor(tiempoTotalSesion / 60);
         const segundos = tiempoTotalSesion % 60;
@@ -269,12 +283,18 @@ function inicializarEjecutarRutina() {
   }
 
   function togglePausa() {
+    sesionEnPausa = !sesionEnPausa;
+    
     if (cronometroActivo) {
-      sesionEnPausa = !sesionEnPausa;
       btnPausar.textContent = sesionEnPausa ? 'Reanudar' : 'Pausar';
-      estadoSesionElement.textContent = sesionEnPausa ? 'Pausado' : 'En progreso';
-      console.log("▶ Sesión", sesionEnPausa ? 'pausada' : 'reanudada');
     }
+    
+    // ✅ El estado de pausa afecta tanto el cronómetro de postura como el total
+    estadoSesionElement.textContent = sesionEnPausa ? 'Pausado' : 
+      (cronometroActivo ? 'En progreso' : 'Listo para iniciar');
+    
+    console.log("▶ Sesión", sesionEnPausa ? 'pausada' : 'reanudada');
+    console.log("▶ Cronómetro total", sesionEnPausa ? 'pausado' : 'activo');
   }
 
   function posturaAnterior() {
@@ -380,11 +400,15 @@ function inicializarEjecutarRutina() {
   async function finalizarSesion() {
     try {
       console.log("▶ Finalizando sesión...");
+      console.log("▶ Tiempo total de sesión:", tiempoTotalSesion, "segundos");
       
-      // Detener cronómetros
-      detenerCronometro();
+      // ✅ Detener TODOS los cronómetros
+      detenerCronometro(); // Cronómetro de postura
+      
       if (tiempoTotalInterval) {
         clearInterval(tiempoTotalInterval);
+        tiempoTotalInterval = null;
+        console.log("▶ Cronómetro total detenido");
       }
       
       // Guardar información para la página de dolor final
@@ -392,7 +416,7 @@ function inicializarEjecutarRutina() {
       window.posturasCompletadas = posturas.length;
       
       console.log("▶ Redirigiendo a dolor final...");
-      console.log("▶ Tiempo total sesión:", tiempoTotalSesion);
+      console.log("▶ Tiempo total final:", tiempoTotalSesion, "segundos");
       console.log("▶ Posturas completadas:", posturas.length);
       
       // Cargar la página de dolor final
@@ -402,4 +426,14 @@ function inicializarEjecutarRutina() {
       alert("Error al finalizar la sesión: " + e.message);
     }
   }
+
+  // ✅ Función para limpiar cronómetros al salir de la página
+  window.addEventListener('beforeunload', function() {
+    if (tiempoTotalInterval) {
+      clearInterval(tiempoTotalInterval);
+    }
+    if (cronometroInterval) {
+      clearInterval(cronometroInterval);
+    }
+  });
 }
