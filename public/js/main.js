@@ -1,4 +1,157 @@
 let rolActual = null;
+let usuarioActual = ''; // Para track el email actual
+let intervaloBLoqueo = null; // Para el contador regresivo
+
+// ========================== Sistema de Intentos de Login ==========================
+
+function guardarIntentosEnStorage(email, intentos, tiempoBloqueoRestante = 0) {
+  const data = {
+    email: email,
+    intentos: intentos,
+    timestamp: Date.now(),
+    tiempoBloqueoRestante: tiempoBloqueoRestante
+  };
+  localStorage.setItem(`login_attempts_${email}`, JSON.stringify(data));
+}
+
+function cargarIntentosDeStorage(email) {
+  const stored = localStorage.getItem(`login_attempts_${email}`);
+  if (!stored) {
+    return { intentos: 0, tiempoBloqueoRestante: 0 };
+  }
+  
+  try {
+    const data = JSON.parse(stored);
+    // Verificar si el bloqueo temporal ha expirado
+    if (data.tiempoBloqueoRestante > 0) {
+      const tiempoTranscurrido = Math.floor((Date.now() - data.timestamp) / 1000);
+      const tiempoRestante = Math.max(0, data.tiempoBloqueoRestante - tiempoTranscurrido);
+      return {
+        intentos: data.intentos,
+        tiempoBloqueoRestante: tiempoRestante
+      };
+    }
+    return { intentos: data.intentos, tiempoBloqueoRestante: 0 };
+  } catch (e) {
+    console.error('Error parsing login attempts:', e);
+    return { intentos: 0, tiempoBloqueoRestante: 0 };
+  }
+}
+
+function limpiarIntentosDeStorage(email) {
+  localStorage.removeItem(`login_attempts_${email}`);
+}
+
+function detectarCambioDeEmail() {
+  const emailField = document.querySelector('input[name="username"]');
+  if (!emailField) return;
+  
+  const emailActual = emailField.value.trim();
+  if (emailActual !== usuarioActual) {
+    usuarioActual = emailActual;
+    // Cargar estado del nuevo email
+    if (emailActual) {
+      const estado = cargarIntentosDeStorage(emailActual);
+      if (estado.tiempoBloqueoRestante > 0) {
+        iniciarBloqueo(estado.tiempoBloqueoRestante);
+      }
+    }
+  }
+}
+
+function iniciarBloqueo(segundos) {
+  const submitBtn = document.querySelector('.btn[type="submit"]');
+  const mensajeError = document.getElementById('mensajeError');
+  
+  if (!submitBtn) return;
+  
+  submitBtn.disabled = true;
+  
+  // Crear o actualizar el mensaje de countdown
+  let countdownDiv = document.getElementById('countdown-message');
+  if (!countdownDiv) {
+    countdownDiv = document.createElement('div');
+    countdownDiv.id = 'countdown-message';
+    countdownDiv.className = 'countdown-message';
+    mensajeError.parentNode.insertBefore(countdownDiv, mensajeError.nextSibling);
+  }
+  
+  function actualizarCountdown() {
+    if (segundos <= 0) {
+      // Terminar bloqueo
+      submitBtn.disabled = false;
+      countdownDiv.style.display = 'none';
+      if (intervaloBLoqueo) {
+        clearInterval(intervaloBLoqueo);
+        intervaloBLoqueo = null;
+      }
+      return;
+    }
+    
+    countdownDiv.style.display = 'block';
+    countdownDiv.textContent = `Tu cuenta estará bloqueada por ${segundos} segundos`;
+    segundos--;
+    
+    // Actualizar en localStorage
+    if (usuarioActual) {
+      const estado = cargarIntentosDeStorage(usuarioActual);
+      guardarIntentosEnStorage(usuarioActual, estado.intentos, segundos + 1);
+    }
+  }
+  
+  // Iniciar inmediatamente
+  actualizarCountdown();
+  
+  // Continuar cada segundo
+  if (intervaloBLoqueo) clearInterval(intervaloBLoqueo);
+  intervaloBLoqueo = setInterval(actualizarCountdown, 1000);
+}
+
+function determinarTiempoBloqueo(intentos) {
+  if (intentos >= 9) {
+    return -1; // Bloqueo permanente
+  } else if (intentos === 6) {
+    return 10; // 10 segundos después del 6to intento (ciclo 2)
+  } else if (intentos === 3) {
+    return 5; // 5 segundos después del 3er intento (ciclo 1)
+  }
+  return 0; // Sin bloqueo
+}
+
+function mostrarMensajeIntentos(intentos) {
+  const mensajeError = document.getElementById('mensajeError');
+  const h1 = mensajeError.querySelector('h1');
+  
+  if (intentos >= 9) {
+    h1.textContent = '¡Credenciales Incorrectas! Tu cuenta está bloqueada permanentemente';
+  } else if (intentos === 3 || intentos === 6 || intentos === 9) {
+    // Después del 3er, 6to, o 9no intento
+    h1.textContent = '¡Credenciales Incorrectas! Tienes 0 intentos restantes';
+  } else {
+    // Calcular intentos restantes en el ciclo actual
+    let intentosRestantes;
+    if (intentos === 1) {
+      intentosRestantes = 2; // 3-1=2
+    } else if (intentos === 2) {
+      intentosRestantes = 1; // 3-2=1
+    } else if (intentos === 4) {
+      intentosRestantes = 2; // 6-4=2
+    } else if (intentos === 5) {
+      intentosRestantes = 1; // 6-5=1
+    } else if (intentos === 7) {
+      intentosRestantes = 2; // 9-7=2
+    } else if (intentos === 8) {
+      intentosRestantes = 1; // 9-8=1
+    } else {
+      intentosRestantes = 0;
+    }
+    
+    const textoIntento = intentosRestantes === 1 ? 'intento restante' : 'intentos restantes';
+    h1.textContent = `¡Credenciales Incorrectas! Tienes ${intentosRestantes} ${textoIntento}`;
+  }
+  
+  mensajeError.style.display = 'block';
+}
 
 //============================Función para modificar el nombre en el sidebar================00
 function renderizarSidebarUsuario(usuario) {
@@ -69,6 +222,19 @@ async function cerrarSesion() {
 // ========================== Login ==========================
 async function login(username, password) {
   try {
+    // Verificar si está bloqueado
+    const estado = cargarIntentosDeStorage(username);
+    
+    if (estado.tiempoBloqueoRestante > 0) {
+      iniciarBloqueo(estado.tiempoBloqueoRestante);
+      return;
+    }
+    
+    if (estado.intentos >= 9) {
+      mostrarMensajeIntentos(estado.intentos);
+      return;
+    }
+    
     const res = await fetch('../src/models/login.php', {
       method: 'POST',
       headers: { 'Content-Type': 'application/json' },
@@ -77,10 +243,36 @@ async function login(username, password) {
 
     const data = await res.json();
     if (!res.ok || data.status !== 'ok') {
-      mostrarMensajeError(data.message || 'Credenciales incorrectas');
+      // Incrementar intentos fallidos
+      const nuevosIntentos = estado.intentos + 1;
+      
+      // Mostrar mensaje con intentos restantes
+      mostrarMensajeIntentos(nuevosIntentos);
+      
+      // Determinar si necesita bloqueo
+      const tiempoBloqueo = determinarTiempoBloqueo(nuevosIntentos);
+      
+      if (tiempoBloqueo === -1) {
+        // Bloqueo permanente
+        guardarIntentosEnStorage(username, nuevosIntentos, 0);
+      } else if (tiempoBloqueo > 0) {
+        // Bloqueo temporal
+        guardarIntentosEnStorage(username, nuevosIntentos, tiempoBloqueo);
+        iniciarBloqueo(tiempoBloqueo);
+      } else {
+        // Sin bloqueo, solo guardar intentos
+        guardarIntentosEnStorage(username, nuevosIntentos, 0);
+      }
+      
       return;
     }
 
+    // Login exitoso - limpiar intentos
+    limpiarIntentosDeStorage(username);
+    document.getElementById('mensajeError').style.display = 'none';
+    const countdownDiv = document.getElementById('countdown-message');
+    if (countdownDiv) countdownDiv.style.display = 'none';
+    
     rolActual = data.rol;
     cargarUsuarioDesdeSesion(); // Obtiene los datos reales desde sesión
     mostrarMenu(rolActual);
@@ -88,7 +280,28 @@ async function login(username, password) {
 
   } catch (error) {
     console.error('Error en login:', error);
-    mostrarMensajeError('Ocurrió un error inesperado. Intenta de nuevo.');
+    
+    // Even if backend fails, track attempts for invalid credentials
+    const estado = cargarIntentosDeStorage(username);
+    const nuevosIntentos = estado.intentos + 1;
+    
+    // Mostrar mensaje con intentos restantes
+    mostrarMensajeIntentos(nuevosIntentos);
+    
+    // Determinar si necesita bloqueo
+    const tiempoBloqueo = determinarTiempoBloqueo(nuevosIntentos);
+    
+    if (tiempoBloqueo === -1) {
+      // Bloqueo permanente
+      guardarIntentosEnStorage(username, nuevosIntentos, 0);
+    } else if (tiempoBloqueo > 0) {
+      // Bloqueo temporal
+      guardarIntentosEnStorage(username, nuevosIntentos, tiempoBloqueo);
+      iniciarBloqueo(tiempoBloqueo);
+    } else {
+      // Sin bloqueo, solo guardar intentos
+      guardarIntentosEnStorage(username, nuevosIntentos, 0);
+    }
   }
 }
 
@@ -99,6 +312,30 @@ function mostrarMensajeError(mensaje) {
 // ========================== Eventos al cargar ==========================
 document.addEventListener('DOMContentLoaded', () => {
   cargarUsuarioDesdeSesion();
+
+  // Configurar detección de cambio de email
+  const emailField = document.querySelector('input[name="username"]');
+  if (emailField) {
+    // Cargar estado inicial si hay email pre-llenado
+    usuarioActual = emailField.value.trim();
+    if (usuarioActual) {
+      const estado = cargarIntentosDeStorage(usuarioActual);
+      if (estado.tiempoBloqueoRestante > 0) {
+        iniciarBloqueo(estado.tiempoBloqueoRestante);
+      } else if (estado.intentos >= 9) {
+        mostrarMensajeIntentos(estado.intentos);
+      }
+    }
+    
+    // Event listeners para cambios de email
+    emailField.addEventListener('input', detectarCambioDeEmail);
+    emailField.addEventListener('focus', detectarCambioDeEmail);
+    emailField.addEventListener('blur', detectarCambioDeEmail);
+    
+    // Verificación múltiple para asegurar carga del estado
+    setTimeout(detectarCambioDeEmail, 100);
+    setTimeout(detectarCambioDeEmail, 500);
+  }
 
   document.addEventListener('click', function (e) {
     if (e.target.closest('#btn-cerrar-sesion')) {
@@ -113,6 +350,14 @@ document.addEventListener('DOMContentLoaded', () => {
     const username = e.target.username.value;
     const password = e.target.password.value;
     console.log('Datos de login:', { username, password });
+    
+    // Verificar estado antes de enviar
+    const estado = cargarIntentosDeStorage(username);
+    if (estado.tiempoBloqueoRestante > 0 || estado.intentos >= 9) {
+      // Evitar submit si está bloqueado
+      return;
+    }
+    
     login(username, password).catch(err => alert(err.message));
   });
 
