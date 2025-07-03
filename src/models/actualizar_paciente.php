@@ -26,9 +26,14 @@ $correo     = strtolower(trim($input['correo'] ?? ''));
 $telefono   = trim($input['telefono'] ?? '');
 $direccion  = trim($input['direccion'] ?? '');
 $ciudad     = trim($input['ciudad'] ?? '');
+$estado     = $input['estado'] ?? 'activo'; // ← AGREGAR esta línea
 
-// Validar campos obligatorios
-if (!$pacienteId || empty($nombre) || empty($apellido) || empty($correo) || empty($telefono) || empty($direccion) || empty($ciudad)) {
+// Debug logs
+error_log("Datos recibidos: " . json_encode($input));
+error_log("Estado recibido: " . $estado);
+
+// Validar campos obligatorios - QUITAR telefono de requeridos
+if (!$pacienteId || empty($nombre) || empty($apellido) || empty($correo) || empty($direccion) || empty($ciudad)) {
     echo json_encode(['success' => false, 'message' => 'Faltan datos requeridos']);
     exit;
 }
@@ -52,21 +57,33 @@ try {
         exit;
     }
 
-    // Actualizar datos del paciente
+    // ⭐ CORREGIR: Actualizar datos del paciente INCLUYENDO EL ESTADO
     $stmt = $pdo->prepare("
         UPDATE paciente 
-        SET nombre = ?, apellido = ?, correo = ?, telefono = ?, direccion = ?, ciudad = ? 
+        SET nombre = ?, apellido = ?, correo = ?, telefono = ?, direccion = ?, ciudad = ?, estado = ?
         WHERE id = ? AND id_instructor = ?
     ");
-    $stmt->execute([$nombre, $apellido, $correo, $telefono, $direccion, $ciudad, $pacienteId, $instructorId]);
+    $stmt->execute([$nombre, $apellido, $correo, $telefono, $direccion, $ciudad, $estado, $pacienteId, $instructorId]);
+
+    // Debug de la actualización
+    error_log("Filas afectadas: " . $stmt->rowCount());
+    error_log("Estado actualizado a: " . $estado);
 
     if ($stmt->rowCount() > 0) {
-        echo json_encode(['success' => true, 'message' => 'Paciente actualizado correctamente']);
+        echo json_encode([
+            'success' => true, 
+            'message' => 'Paciente actualizado correctamente',
+            'debug' => [
+                'estado_actualizado' => $estado,
+                'filas_afectadas' => $stmt->rowCount()
+            ]
+        ]);
     } else {
         echo json_encode(['success' => false, 'message' => 'No se realizaron cambios']);
     }
 
 } catch (PDOException $e) {
+    error_log("Error PDO: " . $e->getMessage());
     echo json_encode([
         'success' => false,
         'message' => 'Error al actualizar el paciente: ' . $e->getMessage()

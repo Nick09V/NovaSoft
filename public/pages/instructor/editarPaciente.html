@@ -30,6 +30,15 @@
           <i class="fa-solid fa-city"></i>
           <input type="text" id="ciudad" name="ciudad" placeholder="Ciudad" required>
         </div>
+        <div class="input-field">
+          <i class="fa-solid fa-toggle-on"></i>
+          <label for="estado" style="display: block; margin-bottom: 0.5rem; font-weight: 500; color: var(--color3);">Estado del paciente:</label>
+          <select id="estado" name="estado" required style="width: 100%; padding: 14px 18px; border-radius: 8px; border: 1.5px solid #ccc; background: #f3f3f3;">
+            <option value="activo">Activo</option>
+            <option value="inactivo">Inactivo</option>
+          </select>
+        </div>
+
       </div>
       <div class="btn-field">
         <button id="guardar" type="submit">Guardar Cambios</button>

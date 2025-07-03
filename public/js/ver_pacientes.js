@@ -15,13 +15,9 @@ function cargarPacientesInstructor() {
         fila.innerHTML = `
           <td>${p.nombre} ${p.apellido}</td>
           <td>${p.ciudad || '-'}</td>
-          <td>${p.estado}</td>
+          <td><span class="${p.estado === 'activo' ? 'estado-activo' : 'estado-inactivo'}">${p.estado}</span></td>
           <td>${p.series_asignadas}</td>
-          <td>
-            <button class="btn-editar" data-id="${p.id}" onclick="editarPaciente(${p.id})">
-              Editar
-            </button>
-          </td>
+          <td><button onclick="editarPaciente(${p.id})" class="btn-editar"> Editar</button></td>
         `;
         tbody.appendChild(fila);
       });
@@ -33,22 +29,23 @@ function cargarPacientesInstructor() {
     });
 }
 
-// 🔁 Ejecutar inmediatamente porque el script fue cargado dinámicamente
-cargarPacientesInstructor();
-
-// Función para editar paciente
 function editarPaciente(pacienteId) {
-  console.log('Editando paciente con ID:', pacienteId);
-  // Usar el sistema de navegación existente para cargar la página de edición
-  if (typeof cargarContenido === 'function') {
-    // Almacenar el ID del paciente para ser usado por la página de edición
+    console.log('Editando paciente:', pacienteId);
+    
+    // Guardar el ID en sessionStorage
     sessionStorage.setItem('editandoPacienteId', pacienteId);
-    cargarContenido('instructor', 'editarPaciente');
-  } else {
-    console.error('Función cargarContenido no disponible');
-  }
+    
+    // Cargar la página de edición
+    if (typeof cargarContenido === 'function') {
+        cargarContenido('instructor', 'editarPaciente');
+    } else {
+        console.error('Función cargarContenido no disponible');
+    }
 }
 
-// Hacer la función global para que pueda ser llamada desde el HTML
+
 window.editarPaciente = editarPaciente;
+
+// 🔁 Ejecutar inmediatamente porque el script fue cargado dinámicamente
+cargarPacientesInstructor();
 

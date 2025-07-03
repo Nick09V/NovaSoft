@@ -22,7 +22,7 @@ if (!$pacienteId) {
 try {
     // Obtener datos del paciente, asegurándose de que pertenece al instructor
     $stmt = $pdo->prepare("
-        SELECT id, nombre, apellido, correo, telefono, direccion, ciudad 
+        SELECT id, nombre, apellido, correo, telefono, direccion, ciudad, estado
         FROM paciente 
         WHERE id = ? AND id_instructor = ?
     ");

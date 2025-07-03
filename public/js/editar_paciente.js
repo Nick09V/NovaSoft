@@ -56,8 +56,10 @@
                 document.getElementById('telefono').value = paciente.telefono || '';
                 document.getElementById('direccion').value = paciente.direccion || '';
                 document.getElementById('ciudad').value = paciente.ciudad || '';
+                document.getElementById('estado').value = paciente.estado || 'activo';
 
                 console.log('Datos del paciente cargados correctamente');
+                console.log('🔍 Estado cargado:', paciente.estado); // ← AGREGADO: Debug estado
             } else {
                 alert(result.message || 'Error al cargar los datos del paciente');
                 cancelarEdicion();
@@ -88,6 +90,19 @@
             data.telefono = data.telefono.replace(/[^0-9]/g, '');
         }
 
+        // ⭐ AGREGADO: Debug para verificar datos antes de enviar
+        console.log('🔍 Datos a enviar:', data);
+        console.log('🔍 Estado seleccionado:', data.estado);
+        
+        // ⭐ AGREGADO: Verificar que el campo estado existe y forzar su valor
+        const estadoSelect = document.getElementById('estado');
+        if (estadoSelect) {
+            console.log('✅ Campo estado encontrado, valor actual:', estadoSelect.value);
+            data.estado = estadoSelect.value; // Forzar el valor por si acaso
+        } else {
+            console.error('❌ Campo estado NO encontrado en el DOM');
+        }
+
         try {
             const response = await fetch('/NovaSoft/src/models/actualizar_paciente.php', {
                 method: 'POST',
@@ -98,10 +113,18 @@
             });
 
             const result = await response.json();
+            
+            // ⭐ AGREGADO: Debug de respuesta del servidor
+            console.log('📨 Respuesta completa del servidor:', result);
 
             if (result.success) {
                 alert(result.message || 'Paciente actualizado exitosamente');
                 console.log('Paciente actualizado');
+                
+                // ⭐ AGREGADO: Mostrar info de debug si existe
+                if (result.debug) {
+                    console.log('🔍 Debug del servidor:', result.debug);
+                }
                 
                 // Limpiar sessionStorage y volver a la lista de pacientes
                 sessionStorage.removeItem('editandoPacienteId');
