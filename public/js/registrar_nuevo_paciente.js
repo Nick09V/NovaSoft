@@ -90,11 +90,7 @@
             submitBtn.disabled = false;
             return;
         }
-        if (!data.fecha_nacimiento || data.fecha_nacimiento.trim() === "") {
-            mostrarAdvertencia("Por favor, ingrese la fecha de nacimiento.");
-            submitBtn.disabled = false;
-            return;
-        }
+
         if (!data.correo || data.correo.trim() === "") {
             mostrarAdvertencia("Por favor, ingrese el correo electrónico.");
             submitBtn.disabled = false;
