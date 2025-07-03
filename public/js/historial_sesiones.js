@@ -1,5 +1,6 @@
-async function cargarHistorialSesiones() {
-  try {
+async function cargarHistorialSesionesInstructor() {
+   console.log('cargarHistorialSesiones() fue llamada'); 
+    try {
     const res = await fetch('/NovaSoft/src/models/historial_sesiones.php');
     const data = await res.json();
 
@@ -36,4 +37,4 @@ async function cargarHistorialSesiones() {
   }
 }
 
-cargarHistorialSesiones();
+cargarHistorialSesionesInstructor();
