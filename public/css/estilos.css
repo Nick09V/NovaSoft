@@ -181,3 +181,30 @@ input:-webkit-autofill:active {
     transition: background-color 5000s ease-in-out 0s;
 }
 
+
+
+/* Estilos para botón de editar */
+.btn-editar {
+    background-color: #0066cc;
+    color: #FFFFFF;
+    border: none;
+    padding: 8px 12px;
+    border-radius: 5px;
+    cursor: pointer;
+    font-size: 14px;
+    transition: background-color 0.3s;
+}
+
+.btn-editar:hover {
+    background-color: #0052a3;
+}
+
+/* Estilos para formulario de edición - botones */
+.btn-field button#cancelar {
+    background-color: #999999;
+    margin-left: 10px;
+}
+
+.btn-field button#cancelar:hover {
+    background-color: #777777;
+}
