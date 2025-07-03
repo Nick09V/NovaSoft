@@ -1,4 +1,32 @@
 <div class="login-container">
+  <style>
+.alerta-paciente {
+  position: fixed;
+  top: 20px;
+  right: 20px;
+  background-color: #2d9cdb;
+  color: white;
+  padding: 12px 18px;
+  border-radius: 8px;
+  font-weight: 500;
+  font-size: 15px;
+  box-shadow: 0 4px 12px rgba(0, 0, 0, 0.15);
+  z-index: 9999;
+  transition: all 0.3s ease-in-out;
+  opacity: 1;
+}
+.alerta-paciente.success {
+  background-color: #27ae60;
+}
+.alerta-paciente.error {
+  background-color: #e74c3c;
+}
+.alerta-paciente.oculto {
+  display: none;
+}
+</style>
+
+  <div id="alerta-edicion-paciente" class="alerta-paciente oculto"></div>
   <div class="formulariosGeneral">
     <h1 id="title">Editar Datos del Paciente</h1>
     <form id="editar-paciente" action="" method="POST">

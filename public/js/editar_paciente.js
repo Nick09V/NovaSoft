@@ -31,7 +31,7 @@
         const pacienteId = sessionStorage.getItem('editandoPacienteId');
         
         if (!pacienteId) {
-            alert('No se especificó el paciente a editar');
+            mostrarAdvertencia('No se especificó el paciente a editar', 'error');
             cancelarEdicion();
             return;
         }
@@ -61,12 +61,12 @@
                 console.log('Datos del paciente cargados correctamente');
                 console.log('🔍 Estado cargado:', paciente.estado); // ← AGREGADO: Debug estado
             } else {
-                alert(result.message || 'Error al cargar los datos del paciente');
+                mostrarAdvertencia(result.message || 'Error al cargar los datos del paciente', 'error');
                 cancelarEdicion();
             }
         } catch (error) {
             console.error('Error al cargar datos del paciente:', error);
-            alert('Error al cargar los datos del paciente');
+            mostrarAdvertencia('Error al cargar los datos del paciente', 'error');
             cancelarEdicion();
         } finally {
             submitBtn.disabled = false;
@@ -118,7 +118,7 @@
             console.log('📨 Respuesta completa del servidor:', result);
 
             if (result.success) {
-                alert(result.message || 'Paciente actualizado exitosamente');
+                mostrarAdvertencia(result.message || 'Paciente actualizado exitosamente', 'success');
                 console.log('Paciente actualizado');
                 
                 // ⭐ AGREGADO: Mostrar info de debug si existe
@@ -134,19 +134,60 @@
                     cargarContenido('instructor', 'verPacientes');
                 }
             } else {
-                alert(result.message || 'Error al actualizar paciente');
+                mostrarAdvertencia(result.message || 'Error al actualizar paciente', 'error');
+
                 console.warn('Error:', result.message);
             }
 
         } catch (error) {
             console.error('Error en la solicitud:', error);
-            alert('Ocurrió un error al actualizar el paciente. Intenta nuevamente.');
+            mostrarAdvertencia('Ocurrió un error al actualizar el paciente. Intenta nuevamente.', 'error');
+
         } finally {
             submitBtn.disabled = false;
         }
     }
 
 })();
+ function crearContenedorAdvertencias() {
+        if (!document.getElementById('contenedorAdvertencias')) {
+            const div = document.createElement('div');
+            div.id = 'contenedorAdvertencias';
+            div.style.position = 'fixed';
+            div.style.top = '30px';
+            div.style.left = '50%';
+            div.style.transform = 'translateX(-50%)';
+            div.style.zIndex = '9999';
+            div.style.display = 'none';
+            document.body.appendChild(div);
+        }
+    }
+
+function mostrarAdvertencia(mensaje) {
+        crearContenedorAdvertencias();
+        const contenedor = document.getElementById('contenedorAdvertencias');
+        contenedor.innerHTML = `
+            <div style="
+                background: #fff3cd;
+                color: #856404;
+                border: 1px solid #ffeeba;
+                border-radius: 6px;
+                padding: 16px 32px;
+                font-size: 1.1em;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+                margin-bottom: 10px;
+                min-width: 280px;
+                text-align: center;
+                ">
+                <strong>Advertencia:</strong> ${mensaje}
+            </div>
+        `;
+        contenedor.style.display = 'block';
+        setTimeout(() => {
+            contenedor.style.display = 'none';
+        }, 3500);
+    }
+
 
 // Función global para cancelar edición
 function cancelarEdicion() {
@@ -165,3 +206,4 @@ function cancelarEdicion() {
 
 // Hacer la función global
 window.cancelarEdicion = cancelarEdicion;
+window.mostrarAdvertencia = mostrarAdvertencia;
