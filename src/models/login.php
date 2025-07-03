@@ -65,15 +65,13 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
     }
 
     // Buscar en tabla paciente si no se encontró en instructor
-    $stmt = $pdo->prepare("SELECT nombre, contrasena FROM paciente WHERE correo = ?");
+    $stmt = $pdo->prepare("SELECT id, nombre, contrasena, estado FROM paciente WHERE correo = ?");
     $stmt->execute([$username]);
     $paciente = $stmt->fetch();
 
-    if ($paciente && password_verify($password, $paciente['contrasena'])) {
-        $stmt = $pdo->prepare("SELECT id FROM paciente WHERE correo = ?");
-        $stmt->execute([$username]);
-        $_SESSION['id'] = $stmt->fetchColumn();
-        // Registro de sesión para paciente
+    if ($paciente && password_verify($password, $paciente['contrasena']) && strtolower($paciente['estado']) === 'activo') {
+
+        $_SESSION['id'] = $paciente['id'];
         $_SESSION['correo'] = $username;
         $_SESSION['rol'] = 'paciente';
         $_SESSION['nombre'] = $paciente['nombre'];
@@ -85,12 +83,14 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
                 'nombreeeee' => $paciente['nombre'],
                 'rol' => 'paciente',
                 'correo' => $_SESSION['correo'],
-                'session' => $_SESSION['id']
+                'session' => $_SESSION['id'],
+                'estado' => $paciente['estado']
             ]
         ]);
     } else {
-        echo json_encode(['status' => 'error', 'message' => 'Credenciales incorrectas']);
+        echo json_encode(['status' => 'error', 'message' => 'Credenciales incorrectas o cuenta inactiva']);
     }
+
 } else {
     echo json_encode(['status' => 'error', 'message' => 'Método no permitido']);
 }
