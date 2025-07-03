@@ -58,7 +58,6 @@ function cargarEstadisticasDashboard() {
                 <td>${p.nombre} ${p.apellido}</td>
                 <td>${p.ciudad || '-'}</td>
                 <td>${p.correo}</td>
-                <td><button onclick="asignarSerie(${p.id})">Asignar serie</button></td>
               `;
               tablaPacientes.appendChild(fila);
             });
