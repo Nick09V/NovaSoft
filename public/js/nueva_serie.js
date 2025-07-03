@@ -399,6 +399,8 @@ function cargarPosturasSeries(serieID) {
             });
     }
 
+    let usuarioSeleccionadoIndex = null; // Asegúrate de que esta variable esté declarada globalmente
+
     usuariosAsociarSerie.addEventListener('change', (e) => {
         console.log('Usuario seleccionado para asociar serie:', e.target.value);
         usuarioSeleccionadoIndex = e.target.value; // Guardar el ID del usuario seleccionado
@@ -486,18 +488,52 @@ function cargarPosturasSeries(serieID) {
 
 
 
-    botonRegistrar.addEventListener('click', (e) => {
+    botonRegistrar.addEventListener('click', async (e) => {
         e.preventDefault();
         console.log('Botón de registrar serie terapéutica presionado');
-        try {
-            console.log("selectedSerieID", selectedSerieID);
-        }catch (error) {
-            console.error('Error al acceder a selectedSerieID:', error);
+
+        // Obtener la serie seleccionada y el paciente seleccionado
+        const selectedSerieID = posturasSeries.value;
+        const selectedPacienteID = usuarioSeleccionadoIndex;
+        console.log('Paciente seleccionado para asociar serie:', selectedPacienteID);
+        console.log('Serie seleccionada para asociar:', selectedSerieID);
+
+        // Validaciones
+        if (!selectedSerieID || selectedSerieID.trim() === "") {
             mostrarAdvertencia('Debe seleccionar una serie antes de registrar.');
             return;
         }
-        //usuarioSeleccionadoIndex
-        console.log('Usuario seleccionado para asociar serie:', usuarioSeleccionadoIndex);
+        if (!selectedPacienteID || selectedPacienteID.trim() === "") {
+            mostrarAdvertencia('Debe seleccionar un paciente antes de registrar.');
+            return;
+        }
+
+        try {
+            const response = await fetch('/NovaSoft/src/models/serie/asociarSeriePaciente.php', {
+                method: 'POST',
+                headers: { 'Content-Type': 'application/json' },
+                body: JSON.stringify({
+                    serieID: selectedSerieID,
+                    pacienteID: selectedPacienteID
+                })
+            });
+
+            if (!response.ok) throw new Error('Error al asociar la serie al paciente');
+
+            const data = await response.json();
+
+            if (data.ok) {
+                mostrarAdvertencia(data.message || 'Serie asociada correctamente al paciente.');
+                // Opcional: limpiar selección
+                posturasSeries.value = "";
+                usuariosAsociarSerie.value = "";
+            } else {
+                mostrarAdvertencia(data.error || 'No se pudo asociar la serie al paciente.');
+            }
+        } catch (error) {
+            console.error('Error al asociar serie y paciente:', error);
+            mostrarAdvertencia('Ocurrió un error al asociar la serie. Inténtalo de nuevo.');
+        }
     });
 
 
@@ -544,7 +580,7 @@ function cargarPosturasSeries(serieID) {
             contenedor.style.display = 'none';
         }, 3500);
     }
-    // --- FIN: Sistema de advertencias bonitas ---
+
 
 
 

@@ -124,41 +124,71 @@ document.addEventListener('DOMContentLoaded', () => {
     form.addEventListener('submit', async (e) => {
         e.preventDefault();
         console.log('Intentando registrar instructor');
-        
         const formData = new FormData(form);
-        //const data = Object.fromEntries(formData.entries());
-        
-
         try {
             const res = await fetch('/NovaSoft/src/models/registrar_instructor.php', {
                 method: 'POST',
                 body: formData
             });
-            
             if (!res.ok) throw new Error('Error al registrar instructor');
-                
             const result = await res.json();
-            
             if (result.error) {
-                alert(result.error);
+                mostrarAdvertencia(result.error);
             } else if (result.ok) {
-                alert(result.message || 'Instructor registrado exitosamente');
+                mostrarAdvertencia(result.message || 'Instructor registrado exitosamente');
                 console.log('Instructor registrado exitosamente');
-                
-                // Redirigir a la página de inicio o a otra página
                 window.location.href = '/NovaSoft/public/index.html';
-                //form.reset(); // Limpiar el formulario
             } else {
-                alert('Respuesta inesperada del servidor');
+                mostrarAdvertencia('Respuesta inesperada del servidor');
             }
-
             form.reset(); // Limpiar el formulario
         } catch (err) {
             console.error(err);
-            alert(err.message || 'Error al registrar instructor');
+            mostrarAdvertencia(err.message || 'Error al registrar instructor');
         }
     });
 
 
+
+    // --- INICIO: Sistema de advertencias bonitas ---
+    function crearContenedorAdvertencias() {
+        if (!document.getElementById('contenedorAdvertencias')) {
+            const div = document.createElement('div');
+            div.id = 'contenedorAdvertencias';
+            div.style.position = 'fixed';
+            div.style.top = '30px';
+            div.style.left = '50%';
+            div.style.transform = 'translateX(-50%)';
+            div.style.zIndex = '9999';
+            div.style.display = 'none';
+            document.body.appendChild(div);
+        }
+    }
+
+    function mostrarAdvertencia(mensaje) {
+        crearContenedorAdvertencias();
+        const contenedor = document.getElementById('contenedorAdvertencias');
+        contenedor.innerHTML = `
+            <div style="
+                background: #fff3cd;
+                color: #856404;
+                border: 1px solid #ffeeba;
+                border-radius: 6px;
+                padding: 16px 32px;
+                font-size: 1.1em;
+                box-shadow: 0 2px 8px rgba(0,0,0,0.08);
+                margin-bottom: 10px;
+                min-width: 280px;
+                text-align: center;
+                ">
+                <strong>Advertencia:</strong> ${mensaje}
+            </div>
+        `;
+        contenedor.style.display = 'block';
+        setTimeout(() => {
+            contenedor.style.display = 'none';
+        }, 3500);
+    }
+    // --- FIN: Sistema de advertencias bonitas ---
 
 });
