@@ -54,7 +54,7 @@ try {
         FROM sesion s
         JOIN asignacion_serie a ON s.asignacion_id = a.id
         JOIN paciente p ON a.paciente_id = p.id
-        WHERE p.id_instructor = ?
+        WHERE p.id_instructor = ? AND s.dolor_fin IS NOT NULL
         GROUP BY s.dolor_fin
     ");
     $stmt->execute([$instructorId]);
@@ -64,7 +64,7 @@ try {
     $dolorPorNivel = array_fill_keys($categorias, 0);
 
     foreach ($resultadosDolor as $fila) {
-        $nivel = strtoupper(trim($fila['dolor_fin']));
+        $nivel = strtoupper(trim($fila['dolor_fin'] ?? ''));
         if (array_key_exists($nivel, $dolorPorNivel)) {
             $dolorPorNivel[$nivel] = (int)$fila['cantidad'];
         }

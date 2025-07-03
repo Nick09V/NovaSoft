@@ -1,0 +1,64 @@
+<div class="card">
+  <h2 class="card-title">Historial de Sesiones</h2>
+  <table class="tabla-sesiones">
+    <thead>
+      <tr>
+        <th>Fecha</th>
+        <th>Dolor Inicial</th>
+        <th>Dolor Final</th>
+        <th>Comentario</th>
+        <th>Serie</th>
+        <th>Tiempo Efectivo</th>
+      </tr>
+    </thead>
+    <tbody id="tabla-sesiones">
+      <!-- Sesiones cargadas por JS -->
+    </tbody>
+  </table>
+</div>
+
+<style>
+  .card {
+    background: #fff;
+    padding: 1.5rem;
+    border-radius: 12px;
+    box-shadow: 0 2px 8px rgba(0, 0, 0, 0.06);
+    margin: 2rem auto;
+    max-width: 1100px;
+  }
+
+  .card-title {
+    font-size: 1.5rem;
+    font-weight: bold;
+    margin-bottom: 1rem;
+    color: #333;
+  }
+
+  .tabla-sesiones {
+    width: 100%;
+    border-collapse: collapse;
+    font-family: 'Segoe UI', Tahoma, Geneva, Verdana, sans-serif;
+  }
+
+  .tabla-sesiones th,
+  .tabla-sesiones td {
+    text-align: left;
+    padding: 0.75rem 1rem;
+    border-bottom: 1px solid #ddd;
+  }
+
+  .tabla-sesiones th {
+    background-color: #f8f9fa;
+    font-weight: 600;
+    color: #333;
+  }
+
+  .tabla-sesiones tr:hover {
+    background-color: #f1f1f1;
+  }
+
+  .tabla-sesiones td {
+    color: #444;
+  }
+</style>
+ 
