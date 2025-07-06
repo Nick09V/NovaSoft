@@ -451,7 +451,7 @@ function cargarPosturasSeries(serieID) {
         console.log('terapia ID:', terapiaIDSeleccionada);
         console.log('Usuario seleccionado:', usuarioSeleccionado);
 
-        fetch('/NovaSoft/src/models/serie/crearSerie.php', {
+        fetch('/NovaSoft/src/models/serie/CrearSerie.php', {
             method: 'POST',
             headers: {'Content-Type': 'application/json'},
             body: JSON.stringify({

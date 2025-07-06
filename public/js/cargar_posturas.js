@@ -1,4 +1,4 @@
-// ⭐ EJECUTAR INMEDIATAMENTE - Sin esperar DOMContentLoaded
+  // ⭐ EJECUTAR INMEDIATAMENTE - Sin esperar DOMContentLoaded
 (function() {
   console.log('🔍 Script cargar_posturas.js iniciado INMEDIATAMENTE');
   
@@ -75,8 +75,8 @@
       try {
         // ⭐ URL absoluta que sabemos que funciona
         const url = terapiaId
-          ? `http://localhost/NovaSoft/src/models/posturas.php?terapia=${terapiaId}`
-          : 'http://localhost/NovaSoft/src/models/posturas.php';
+          ? `/NovaSoft/src/models/posturas.php?terapia=${terapiaId}`
+          : '/NovaSoft/src/models/posturas.php';
 
         console.log('🌐 URL de petición:', url);
         
