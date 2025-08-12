@@ -11,5 +11,7 @@ if (!isset($input['nombreSerieTerapeutica'], $input['terapia'])) {
 
 // Aquí iría tu lógica para guardar en la base de datos...
 
+http_response_code(201);
 echo json_encode(['ok' => true, 'message' => 'Serie registrada exitosamente']);
+exit;
 ?>

@@ -1,28 +1,9 @@
 <?php
 header('Content-Type: application/json');
 
+require_once __DIR__ . '/../config/connect.php';
+
 session_start();
-
-// Datos de conexión a Clever Cloud
-$host = 'b0lflvqb9csc4alyandu-mysql.services.clever-cloud.com';
-$db = 'b0lflvqb9csc4alyandu';
-$user = 'uzefq8lry0rofvv9';
-$pass = 'CZVclQlesL8eJd3h3CM9';
-$port = '3306';
-
-$dsn = "mysql:host=$host;port=$port;dbname=$db;charset=utf8mb4";
-$options = [
-    PDO::ATTR_ERRMODE => PDO::ERRMODE_EXCEPTION,
-    PDO::ATTR_DEFAULT_FETCH_MODE => PDO::FETCH_ASSOC,
-    PDO::ATTR_EMULATE_PREPARES => false,
-];
-
-try {
-    $pdo = new PDO($dsn, $user, $pass, $options);
-} catch (PDOException $e) {
-    echo json_encode(['status' => 'error', 'message' => 'Error de conexión a la base de datos']);
-    exit;
-}
 
 // Solo aceptar método POST
 if ($_SERVER['REQUEST_METHOD'] === 'POST') {
@@ -37,7 +18,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
 
     // Buscar en tabla instructor
     $stmt = $pdo->prepare("SELECT nombre, contrasena FROM instructor WHERE correo = ?");
-
     $stmt->execute([$username]);
     $instructor = $stmt->fetch();
 
@@ -45,7 +25,6 @@ if ($_SERVER['REQUEST_METHOD'] === 'POST') {
         $stmt = $pdo->prepare("SELECT id FROM instructor WHERE correo = ?");
         $stmt->execute([$username]);
         $_SESSION['id'] = $stmt->fetchColumn();
-        // Asigno como variable global el correo
         $_SESSION['correo'] = $username;
         $_SESSION['rol'] = 'instructor';
         $_SESSION['nombre'] = $instructor['nombre'];
