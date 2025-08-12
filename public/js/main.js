@@ -221,7 +221,7 @@ function iniciarBloqueo(segundos) {
   cuentaBloqueada = true;
   tiempoBloqueo = segundos;
   
-  console.log('🔒 Iniciando bloqueo de', segundos, 'segundos');
+  console.log('Iniciando bloqueo de', segundos, 'segundos');
   
   // Guardar estado de bloqueo
   if (usuarioActual) {
@@ -245,7 +245,7 @@ function iniciarBloqueo(segundos) {
     }
     
     if (tiempoBloqueo <= 0) {
-      console.log('✅ Bloqueo finalizado');
+      console.log('Bloqueo finalizado');
       clearInterval(intervalBloqueo);
       intervalBloqueo = null;
       cuentaBloqueada = false;
@@ -401,7 +401,7 @@ async function login(username, password) {
   
   // Asegurar que el usuario actual esté sincronizado
   if (email !== usuarioActual) {
-    console.log('🔄 Sincronizando usuario antes del login:', email);
+    console.log(' Sincronizando usuario antes del login:', email);
     usuarioActual = email;
     cargarEstadoUsuario(email);
   }
@@ -431,7 +431,7 @@ async function login(username, password) {
       // Incrementar intentos fallidos
       intentosFallidos++;
       
-      console.log('❌ Login fallido. Intentos totales:', intentosFallidos, 'para email:', email);
+      console.log(' Login fallido. Intentos totales:', intentosFallidos, 'para email:', email);
       
       // Guardar inmediatamente en storage
       guardarIntentosEnStorage(email, intentosFallidos, 0);
@@ -440,7 +440,7 @@ async function login(username, password) {
       const posicionEnCiclo = ((intentosFallidos - 1) % 3) + 1;
       const intentosRestantes = 3 - posicionEnCiclo;
       
-      console.log('📊 Ciclo:', cicloActual, 'Posición en ciclo:', posicionEnCiclo, 'Restantes:', intentosRestantes);
+      console.log(' Ciclo:', cicloActual, 'Posición en ciclo:', posicionEnCiclo, 'Restantes:', intentosRestantes);
       
       if (intentosFallidos >= 9) {
         // 9 intentos fallidos = cuenta bloqueada permanentemente
@@ -472,7 +472,7 @@ async function login(username, password) {
     }
 
     // Login exitoso - limpiar todo
-    console.log('✅ Login exitoso para:', email);
+    console.log(' Login exitoso para:', email);
     limpiarIntentosDeStorage(email);
     intentosFallidos = 0;
     cuentaBloqueada = false;
@@ -507,7 +507,7 @@ function mostrarMensajeError(mensaje) {
 
 // ========================== Eventos al cargar Mejorados ==========================
 document.addEventListener('DOMContentLoaded', () => {
-  console.log('🚀 DOM Content Loaded - Inicializando sistema');
+  console.log(' DOM Content Loaded - Inicializando sistema');
   
   // Inicializar inmediatamente
   inicializarSistemaIntentos();
@@ -515,7 +515,7 @@ document.addEventListener('DOMContentLoaded', () => {
   // Verificaciones adicionales para asegurar inicialización
   setTimeout(() => {
     if (!sistemaInicializado) {
-      console.log('⚠️ Sistema no inicializado, reintentando...');
+      console.log(' Sistema no inicializado, reintentando...');
       inicializarSistemaIntentos();
     }
   }, 200);
@@ -534,7 +534,7 @@ document.addEventListener('DOMContentLoaded', () => {
   if (form) {
     form.addEventListener('submit', e => {
       e.preventDefault();
-      console.log('📝 Formulario de login enviado');
+      console.log(' Formulario de login enviado');
       
       const username = e.target.username.value;
       const password = e.target.password.value;
@@ -550,7 +550,7 @@ document.addEventListener('DOMContentLoaded', () => {
         return;
       }
       
-      console.log('📧 Intentando login para:', username);
+      console.log(' Intentando login para:', username);
       login(username, password).catch(err => console.error('Error en login:', err));
     });
   }
@@ -569,12 +569,12 @@ document.addEventListener('DOMContentLoaded', () => {
 
 // ========================== Inicialización adicional al cargar ventana ==========================
 window.addEventListener('load', () => {
-  console.log('🚀 Window Load - Verificación final');
+  console.log(' Window Load - Verificación final');
   
   // Verificación final después de que todo esté cargado
   setTimeout(() => {
     if (!sistemaInicializado) {
-      console.log('⚠️ Inicialización final fallback');
+      console.log(' Inicialización final fallback');
       inicializarSistemaIntentos();
     } else {
       // Re-verificar estado actual
@@ -611,7 +611,7 @@ function mostrarMenu(rol) {
         }
       }
 
-      cargarUsuarioDesdeSesion(); // ✅ Aquí solo una vez
+      cargarUsuarioDesdeSesion(); //  Aquí solo una vez
     }, 500);
   } else {
     if (rol === 'instructor') {
@@ -627,7 +627,7 @@ function mostrarMenu(rol) {
       }
     }
 
-    cargarUsuarioDesdeSesion(); // ✅ También si no hay login container
+    cargarUsuarioDesdeSesion(); //  También si no hay login container
   }
 }
 
